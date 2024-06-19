@@ -36,18 +36,33 @@ cmake_minimum_required(VERSION 3.5.0)
 #   4) #make
 #
 
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 option(WITH_ESMI         "Support e-smi (EPYC cpus)"              ON)
 option(WITH_ROCM_SMI     "Support Rocm smi (MI200)"              OFF)
+else()
+  add_definitions(-DENABLE_ESMI_LIB)
+option(WITH_AMDSMI       "Support Amd smi (EPYC cpus, MI200)"              ON)
+endif()
 
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 set(ESMI_DIR "" CACHE PATH "path to e_smi installation")
 set(ROCM_SMI_DIR "" CACHE PATH "path to rocm_smi installation")
+else()
+set(AMDSMI_DIR "" CACHE PATH "path to amdsmi installation")
+endif()
 
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 if(WITH_ESMI)
 include(deps/SetupEsmi.cmake)
 endif()
 
 if(WITH_ROCM_SMI)
 include(deps/SetupRocmsmi.cmake)
+endif()
+else()
+if(WITH_AMDSMI)
+include(deps/SetupAmdsmi.cmake)
+endif()
 endif()
 
 set(GOAMDSMI_SHIM "goamdsmi_shim")
@@ -126,6 +141,8 @@ set(go_amd_smi_sources)
 
 set(go_amd_smi_includes)
 
+
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 if(WITH_ESMI)
     add_subdirectory(esmi)
     list(APPEND go_amd_smi_headers esmi/esmi_go_shim.h ${go_amd_smi_headers})
@@ -139,6 +156,14 @@ if(WITH_ROCM_SMI)
     list(APPEND go_amd_smi_sources rsmi/rocm_smi_go_shim.c)
     list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/rsmi)
 endif()
+else()
+if(WITH_AMDSMI)
+    add_subdirectory(amdsmi)
+    list(APPEND go_amd_smi_headers amdsmi/amdsmi_go_shim.h ${go_amd_smi_headers})
+    list(APPEND go_amd_smi_sources amdsmi/amdsmi_go_shim.c)
+    list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/amdsmi)
+endif()
+endif()
 
 add_library(${GOAMDSMI_SHIM_TARGET} SHARED
 	    ${go_amd_smi_sources}
@@ -146,6 +171,7 @@ add_library(${GOAMDSMI_SHIM_TARGET} SHARED
 	    ${go_amd_smi_includes})
 
 target_link_libraries(${GOAMDSMI_SHIM_TARGET} pthread rt m)
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 if(WITH_ROCM_SMI)
 	target_link_libraries(${GOAMDSMI_SHIM_TARGET} rocm_smi64)
 	target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${ROCM_SMI_DIR}/lib)
@@ -154,6 +180,12 @@ endif()
 if(WITH_ESMI)
 	target_link_libraries(${GOAMDSMI_SHIM_TARGET} e_smi64)
 	target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${ESMI_DIR}/lib)
+endif()
+else()
+if(WITH_AMDSMI)
+        target_link_libraries(${GOAMDSMI_SHIM_TARGET} rocm_smi64)
+        target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${AMDSMI_DIR}/lib)
+endif()
 endif()
 
 ## Set the VERSION and SOVERSION values
@@ -169,10 +201,19 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL Release)
 	  POST_BUILD COMMAND ${CMAKE_STRIP} lib${GOAMDSMI_SHIM_TARGET}.so)
 endif ()
 
+
+if(NOT DEFINED ENABLE_AMDSMI_LIB)
 set(go_amd_smi_install_headers
     esmi/esmi_go_shim.h
     rsmi/rocm_smi_go_shim.h
 )
+else()
+set(go_amd_smi_install_headers
+    esmi/esmi_go_shim.h
+    rsmi/rocm_smi_go_shim.h
+    amdsmi/amdsmi_go_shim.h
+)
+endif()
 
 ## Add the install directives for the runtime library.
 install(TARGETS ${GOAMDSMI_SHIM_TARGET}
@@ -181,3 +222,4 @@ install(FILES ${go_amd_smi_install_headers}
 	DESTINATION include)
 
 include_directories(${go_amd_smi_includes})
+
