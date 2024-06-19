@@ -49,7 +49,6 @@ import "C"
 
 //GPU ROCM calls
 func GO_rsmi_init() (uint) {
-	mmmm
   return uint(C.go_shim_rsmi_init())
 }
 
