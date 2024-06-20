@@ -130,7 +130,7 @@ int32_t go_shim_amdsmicpu_threads_per_core_get()
 int32_t go_shim_amdsmicpu_number_of_threads_get()
 {
 	uint32_t total_num_threads    = 0;
-	uint32_t num_threads_per_core = go_shim_amdsmi_threads_per_core_get();
+	uint32_t num_threads_per_core = go_shim_amdsmicpu_threads_per_core_get();
 
 	total_num_threads = num_cpu_physicalCore_inAllSocket*num_threads_per_core;
 
