@@ -44,6 +44,7 @@ package goamdsmi
 #include <stdint.h>
 #include <esmi_go_shim.h>
 #include <rocm_smi_go_shim.h>
+#include <amdsmi_go_shim.h>
 */
 import "C"
 
