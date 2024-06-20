@@ -38,7 +38,7 @@ cmake_minimum_required(VERSION 3.5.0)
 
 if(NOT DEFINED ENABLE_AMDSMI_LIB)
 option(WITH_ESMI         "Support e-smi (EPYC cpus)"              ON)
-option(WITH_ROCM_SMI     "Support Rocm smi (MI200)"              OFF)
+option(WITH_ROCM_SMI     "Support Rocm smi (MI200)"               ON)
 else()
   add_definitions(-DENABLE_ESMI_LIB)
 option(WITH_AMDSMI       "Support Amd smi (EPYC cpus, MI200)"              ON)
