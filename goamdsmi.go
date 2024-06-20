@@ -203,7 +203,7 @@ func GO_amdsmigpu_num_monitor_devices() (uint) {
 //        return C.go_shim_amdsmigpu_dev_name_get(C.uint(i))
 //}
 
-func GO_amdsmi_dev_id_get(i int) (C.uint16_t) {
+func GO_amdsmigpu_dev_id_get(i int) (C.uint16_t) {
 	return C.uint16_t(C.go_shim_amdsmigpu_dev_id_get(C.uint(i)))
 }
 
