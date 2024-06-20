@@ -117,7 +117,7 @@ int32_t go_shim_amdsmicpu_init()
 	return 0;
 }
 
-int32_t go_shim_amdsmi_threads_per_core_get()
+int32_t go_shim_amdsmicpu_threads_per_core_get()
 {
 	uint32_t num_threads_per_core = 0;
 
@@ -127,7 +127,7 @@ int32_t go_shim_amdsmi_threads_per_core_get()
 	return 0;
 }
 
-int32_t go_shim_amdsmi_number_of_threads_get()
+int32_t go_shim_amdsmicpu_number_of_threads_get()
 {
 	uint32_t total_num_threads    = 0;
 	uint32_t num_threads_per_core = go_shim_amdsmi_threads_per_core_get();
@@ -137,12 +137,12 @@ int32_t go_shim_amdsmi_number_of_threads_get()
 	return total_num_threads;
 }
 
-int32_t go_shim_amdsmi_number_of_sockets_get()
+int32_t go_shim_amdsmicpu_number_of_sockets_get()
 {
     return num_sockets;
 }
 
-uint64_t go_shim_amdsmi_core_energy_get(uint32_t thread_index)
+uint64_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index)
 {
 	uint64_t core_penergy		  = 0;
 	uint32_t physicalCore_index   = thread_index%num_cpu_physicalCore_inAllSocket;
@@ -153,7 +153,7 @@ uint64_t go_shim_amdsmi_core_energy_get(uint32_t thread_index)
 	return 0;
 }
 
-uint64_t go_shim_amdsmi_s_get(uint32_t socket_index)
+uint64_t go_shim_amdsmicpu_s_get(uint32_t socket_index)
 {
 	uint64_t socket_penergy = 0;
 
@@ -163,7 +163,7 @@ uint64_t go_shim_amdsmi_s_get(uint32_t socket_index)
 	return 0;
 }
 
-uint32_t go_shim_amdsmi_prochot_status_get(uint32_t socket_index)
+uint32_t go_shim_amdsmicpu_prochot_status_get(uint32_t socket_index)
 {
 	uint32_t prochot = 0;
 
@@ -173,7 +173,7 @@ uint32_t go_shim_amdsmi_prochot_status_get(uint32_t socket_index)
  	return 0;
 }
 
-uint32_t go_shim_amdsmi_socket_power_get(uint32_t socket_index)
+uint32_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index)
 {
 	uint32_t ppower = 0;
 
@@ -183,7 +183,7 @@ uint32_t go_shim_amdsmi_socket_power_get(uint32_t socket_index)
 	return 0;
 }
 
-uint32_t go_shim_amdsmi_socket_power_cap_get(uint32_t socket_index)
+uint32_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index)
 {
 	uint32_t pcap = 0;
 
@@ -193,7 +193,7 @@ uint32_t go_shim_amdsmi_socket_power_cap_get(uint32_t socket_index)
 	return 0;
 }
 
-uint32_t go_shim_amdsmi_core_boostlimit_get(uint32_t thread_index)
+uint32_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index)
 {
 	uint32_t boostlimit			  = 0;
 	uint32_t physicalCore_index   = thread_index%num_cpu_physicalCore_inAllSocket;
