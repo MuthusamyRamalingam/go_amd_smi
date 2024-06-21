@@ -154,10 +154,16 @@ func GO_rsmi_od_volt_freq_range_max_get_mclk(i int) (C.uint64_t) {
 }
 
 func GO_rsmi_dev_gpu_busy_percent_get(i int) (C.uint64_t) {
+	if 1 == C.go_shim_amdsmigpu_init() {
+		C.go_shim_amdsmigpu_dev_gpu_busy_percent_get(C.uint(i));
+	}
     return C.go_shim_rsmi_dev_gpu_busy_percent_get(C.uint(i))
 }
 
 func GO_rsmi_dev_gpu_memory_busy_percent_get(i int) (C.uint64_t) {
+	if 1 == C.go_shim_amdsmigpu_init() {
+		C.go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(C.uint(i));
+	}
     return C.go_shim_rsmi_dev_gpu_memory_busy_percent_get(C.uint(i))
 }
 

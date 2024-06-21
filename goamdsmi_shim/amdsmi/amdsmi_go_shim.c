@@ -286,21 +286,21 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind)
 
 uint64_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind)
 {
-	 uint64_t usage = 0;
+	uint64_t usage = 0;
 
-     //if(AMDSMI_STATUS_SUCCESS == rsmi_dev_busy_percent_get(dv_ind, &usage))
-     //           return usage;
+    //if(AMDSMI_STATUS_SUCCESS == rsmi_dev_busy_percent_get(dv_ind, &usage))
+    //           return usage;
 
-        return 0;
+    return 0;
 }
 
 
 uint64_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind)
 {
-     uint64_t usage = 0;
-	 uint64_t total = 0;
+    uint64_t usage = 0;
+	uint64_t total = 0;
 
-      /*if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &usage) && 
+    /*if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &usage) && 
 	     AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_total_get(dv_ind, RSMI_MEM_TYPE_VRAM, &total))
 		return (uint64_t)(usage*100)/total;*/
 
