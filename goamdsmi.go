@@ -57,6 +57,9 @@ func GO_rsmi_init() (uint) {
 }
 
 func GO_rsmi_shutdown() (uint) {
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmigpu_shutdown())
+	}
     return uint(C.go_shim_rsmi_shutdown())
 }
 
