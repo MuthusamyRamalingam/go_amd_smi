@@ -43,19 +43,19 @@
 
 #define nullptr ((void*)0)
 #define MAX_SOCKET_ACROSS_SYSTEM	     4
-#define CPU_NODE_0						 0
+#define CPU_0						     0
 #define GPU_SENSOR_0					 0
-#define MAX_NODE_PER_SOCKET              1
+#define MAX_CPU_PER_SOCKET               1
 #define MAX_PHYSICALCORE_ACROSS_SYSTEM 384
 #define MAX_LOGICALCORE_ACROSS_SYSTEM  768
 #define MAX_GPU_DEVICE_ACROSS_SYSTEM    24
 
 static uint32_t num_sockets					       = 0;
-static uint32_t num_cpu_nodes_inAllSocket          = 0;
+static uint32_t num_cpu_inAllSocket          = 0;
 static uint32_t num_cpu_physicalCore_inAllSocket   = 0;
 static uint32_t num_gpu_devices_inAllSocket        = 0;
 static amdsmi_socket_handle     amdsmi_socket_handle_all_socket[MAX_SOCKET_ACROSS_SYSTEM]										 = {0};
-static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_node_across_socket[MAX_SOCKET_ACROSS_SYSTEM*MAX_NODE_PER_SOCKET] = {0};
+static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_across_socket[MAX_SOCKET_ACROSS_SYSTEM*MAX_CPU_PER_SOCKET]      = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_physicalCore_across_socket[MAX_LOGICALCORE_ACROSS_SYSTEM]        = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_socket[MAX_GPU_DEVICE_ACROSS_SYSTEM]				 = {0};
 
@@ -81,16 +81,16 @@ bool go_shim_amdsmiapu_init()
 
 	for(uint32_t socket_counter = 0; socket_counter < num_sockets; socket_counter++)
 	{
-		uint32_t num_cpu_nodes		   = 0;
+		uint32_t num_cpu		   = 0;
 		uint32_t num_cpu_physicalCores = 0;
 		uint32_t num_gpu_devices       = 0;
 
-		processor_type_t cpu_node_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
-		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_node_processor_type, nullptr, &num_cpu_nodes)) &&
-			(0 != num_cpu_nodes) &&
-			(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_node_processor_type, &amdsmi_processor_handle_all_cpu_node_across_socket[num_cpu_nodes_inAllSocket], &num_cpu_nodes)))
+		processor_type_t cpu_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
+		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, nullptr, &num_cpu)) &&
+			(0 != num_cpu) &&
+			(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, &amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket], &num_cpu)))
 		{
-			num_cpu_nodes_inAllSocket = num_cpu_nodes_inAllSocket+num_cpu_nodes;
+			num_cpu_inAllSocket = num_cpu_inAllSocket+num_cpu;
 		}
 
 		processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
@@ -118,7 +118,7 @@ int32_t go_shim_amdsmicpu_init()
 	//return (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_CPUS)) ? 1 : 0;
 	if(go_shim_amdsmiapu_init())
 	{
-		if((num_cpu_nodes_inAllSocket) && (num_cpu_physicalCore_inAllSocket))
+		if((num_cpu_inAllSocket) && (num_cpu_physicalCore_inAllSocket))
 			return 1;
 	}
 	return 0;
@@ -164,7 +164,7 @@ uint64_t go_shim_amdsmicpu_s_get(uint32_t socket_index)
 {
 	uint64_t socket_penergy = 0;
 
-	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_energy(amdsmi_processor_handle_all_cpu_node_across_socket[socket_index], &socket_penergy)))
+	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_energy(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &socket_penergy)))
 		return socket_penergy;
 
 	return 0;
@@ -174,7 +174,7 @@ uint32_t go_shim_amdsmicpu_prochot_status_get(uint32_t socket_index)
 {
 	uint32_t prochot = 0;
 
-	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_prochot_status(amdsmi_processor_handle_all_cpu_node_across_socket[socket_index], &prochot)))
+	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_prochot_status(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &prochot)))
 		return prochot;
 
  	return 0;
@@ -184,7 +184,7 @@ uint32_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index)
 {
 	uint32_t ppower = 0;
 
-	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power(amdsmi_processor_handle_all_cpu_node_across_socket[socket_index], &ppower)))
+	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &ppower)))
 		return ppower;
 
 	return 0;
@@ -194,7 +194,7 @@ uint32_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index)
 {
 	uint32_t pcap = 0;
 
-	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power_cap(amdsmi_processor_handle_all_cpu_node_across_socket[socket_index], &pcap)))
+	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power_cap(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &pcap)))
 		return pcap;
 
 	return 0;
