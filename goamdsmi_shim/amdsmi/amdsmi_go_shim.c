@@ -69,7 +69,7 @@ bool go_shim_amdsmiapu_init()
 {
 	if(0 != num_sockets) return true;
 
-	if(!go_shim_amdsmicpu_present()) return false;
+	if(!go_shim_amdsmi_present()) return false;
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_sockets, nullptr)) || 
