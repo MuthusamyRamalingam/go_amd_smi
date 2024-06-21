@@ -58,11 +58,18 @@ static amdsmi_socket_handle     amdsmi_socket_handle_all_socket[MAX_SOCKET_ACROS
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_node_across_socket[MAX_SOCKET_ACROSS_SYSTEM*MAX_NODE_PER_SOCKET] = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_physicalCore_across_socket[MAX_LOGICALCORE_ACROSS_SYSTEM]        = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_socket[MAX_GPU_DEVICE_ACROSS_SYSTEM]				 = {0};
+
+int32_t go_shim_amdsmi_present()
+{
+	if(-1 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) return 0;
+	return 1;
+}
+
 bool go_shim_amdsmiapu_init()
 {
 	if(0 != num_sockets) return true;
 
-	if(access("/opt/rocm/lib/libamd_smi.so", F_OK)) return false;
+	if(!go_shim_amdsmicpu_present()) return false;
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_sockets, nullptr)) || 
@@ -217,9 +224,29 @@ int32_t go_shim_amdsmigpu_init()
 	return 0;
 }
 
+int32_t go_shim_amdsmigpu_shutdown()
+{
+    //return (AMDSMI_STATUS_SUCCESS == rsmi_shut_down()) ? 1 : 0;
+	return 0;
+}
+
 int32_t go_shim_amdsmigpu_num_monitor_devices()
 {
 	return num_gpu_devices_inAllSocket;
+}
+
+char* go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind)
+{
+    /*uint32_t len = 256;
+    char *dev_name = (char*)malloc(sizeof(char)*len);
+    dev_name[0] = '\0';
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_name_get(dv_ind, dev_name, &len))
+    {
+            return dev_name;
+    }*/
+
+    return NULL;
 }
 
 uint16_t go_shim_amdsmigpu_dev_id_get(uint32_t dv_ind)
@@ -230,6 +257,42 @@ uint16_t go_shim_amdsmigpu_dev_id_get(uint32_t dv_ind)
 			return id;
 
 	return 0;
+}
+
+uint64_t go_shim_amdsmigpu_dev_pci_id_get(uint32_t dv_ind)
+{
+    /*uint64_t id = 0;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_pci_id_get(dv_ind, &id))
+            return id;*/
+
+    return 0;
+}
+
+char* go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind)
+{
+    /*uint32_t len = 256;
+    char *vendor_name = (char*)malloc(sizeof(char)*len);
+    vendor_name[0] = '\0';
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_vendor_name_get(dv_ind, vendor_name, &len))
+            return vendor_name;*/
+
+    return NULL;
+}
+
+char* go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind)
+{
+    /*uint32_t len = 256;
+    char *vbios_ver = (char*)malloc(sizeof(char)*len);
+    vbios_ver[0] = '\0';
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_vbios_version_get(dv_ind, vbios_ver, &len))
+    {
+            return vbios_ver;
+    }*/
+
+    return NULL;
 }
 
 uint64_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind)
@@ -262,6 +325,36 @@ uint64_t go_shim_amdsmigpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor,
 	return 0;
 }
 
+uint32_t go_shim_amdsmigpu_dev_overdrive_level_get(uint32_t dv_ind)
+{
+    /*uint32_t od;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_overdrive_level_get(dv_ind, &od))
+            return od;*/
+
+    return 0;
+}
+
+uint32_t go_shim_amdsmigpu_dev_mem_overdrive_level_get(uint32_t dv_ind)
+{
+    /*uint32_t od;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_mem_overdrive_level_get(dv_ind, &od))
+            return od;*/
+
+    return 0;
+}
+
+uint32_t go_shim_amdsmigpu_dev_perf_level_get(uint32_t dv_ind)
+{
+    /*rsmi_dev_perf_level_t perf;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_perf_level_get(dv_ind, &perf))
+            return perf;*/
+
+    return 0;
+}
+
 uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 {
 	amdsmi_frequencies_t freq;
@@ -284,12 +377,52 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind)
 	return 0;
 }
 
+uint64_t go_shim_amdsmigpu_od_volt_freq_range_min_get_sclk(uint32_t dv_ind)
+{
+    /*rsmi_od_volt_freq_data_t odv;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_od_volt_info_get(dv_ind, &odv))
+            return odv.curr_sclk_range.lower_bound;*/
+
+    return 0;
+}
+
+uint64_t go_shim_amdsmigpu_od_volt_freq_range_min_get_mclk(uint32_t dv_ind)
+{
+    /*rsmi_od_volt_freq_data_t odv;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_od_volt_info_get(dv_ind, &odv))
+            return odv.curr_mclk_range.lower_bound;*/
+
+    return 0;
+}
+
+uint64_t go_shim_amdsmigpu_od_volt_freq_range_max_get_sclk(uint32_t dv_ind)
+{
+    /*rsmi_od_volt_freq_data_t odv;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_od_volt_info_get(dv_ind, &odv))
+            return odv.curr_sclk_range.upper_bound;*/
+
+    return 0;
+}
+
+uint64_t go_shim_amdsmigpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind)
+{
+    /*rsmi_od_volt_freq_data_t odv;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_od_volt_info_get(dv_ind, &odv))
+            return odv.curr_mclk_range.upper_bound;*/
+
+    return 0;
+}
+
 uint64_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind)
 {
-	uint64_t usage = 0;
+	/*uint64_t usage = 0;
 
-    //if(AMDSMI_STATUS_SUCCESS == rsmi_dev_busy_percent_get(dv_ind, &usage))
-    //           return usage;
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_busy_percent_get(dv_ind, &usage))
+               return usage;*/
 
     return 0;
 }
@@ -297,13 +430,33 @@ uint64_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind)
 
 uint64_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind)
 {
-    uint64_t usage = 0;
+    /*uint64_t usage = 0;
 	uint64_t total = 0;
 
-    /*if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &usage) && 
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &usage) && 
 	     AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_total_get(dv_ind, RSMI_MEM_TYPE_VRAM, &total))
 		return (uint64_t)(usage*100)/total;*/
 
 	return 0;
+}
+
+uint64_t go_shim_amdsmigpu_dev_gpu_memory_usage_get(uint32_t dv_ind)
+{
+    /*uint64_t usage = 0;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &usage))
+            return (uint64_t)usage;*/
+
+    return 0;
+}
+
+uint64_t go_shim_amdsmigpu_dev_gpu_memory_total_get(uint32_t dv_ind)
+{
+    /*uint64_t total = 0;
+
+    if(AMDSMI_STATUS_SUCCESS == rsmi_dev_memory_total_get(dv_ind, RSMI_MEM_TYPE_VRAM, &total))
+            return (uint64_t)total;*/
+
+    return 0;
 }
 
