@@ -36,6 +36,16 @@
  *
  */
 
+/**
+ *  @brief Go language stub to check the AMDSMI library present
+ *
+ *  @retval ::int32_t value of 1 upon success
+ *  @retval Zero is returned upon failure.
+ *
+ */
+
+int32_t go_shim_amdsmi_present()
+
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the AMDSMI library
