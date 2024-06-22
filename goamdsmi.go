@@ -207,10 +207,7 @@ func GO_rsmi_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 
 //CPU ESMI calls
 func GO_esmi_init() (uint) {
-	if 1 == C.go_shim_amdsmi_present() {
-		return uint(C.go_shim_amdsmicpu_init())
-	}
-	return uint(C.go_shim_esmi_init())
+	return uint(C.go_shim_amdsmicpu_init())
 }
 
 func GO_esmi_number_of_sockets_get() (uint) {
