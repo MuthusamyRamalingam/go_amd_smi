@@ -112,7 +112,8 @@ bool go_shim_amdsmiapu_init()
 
 		printf("go_shim_amdsmiapu_init()7\n");
 		processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
-		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+		if(   ( 0 != num_cpu) &&
+		      (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 		{
 			printf("check2:%d\n",num_cpu_physicalCores);
 		}
