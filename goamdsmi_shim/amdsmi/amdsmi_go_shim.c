@@ -93,7 +93,7 @@ bool go_shim_amdsmiapu_init()
 		return false;
 	}
 
-	printf("num_apuSockets:%d\n",num_sockets);
+	printf("num_apuSockets:%d\n",num_apuSockets);
 	for(uint32_t socket_counter = 0; socket_counter < num_apuSockets; socket_counter++)
 	{
 		uint32_t num_cpu		       = 0;
