@@ -72,7 +72,7 @@ int32_t go_shim_amdsmi_present()
 	return 0;
 }
 
-bool go_shim_amdsmiapu_init(bool cpuInit)
+bool go_shim_amdsmiapu_init()
 {
 	printf("go_shim_amdsmiapu_init()1\n");
 	if(0 != num_sockets) return true;
