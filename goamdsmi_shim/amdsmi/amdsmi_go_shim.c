@@ -65,13 +65,10 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_so
 
 int32_t go_shim_amdsmi_present()
 {
-	printf("go_shim_amdsmi_present11\n");
 	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
 	{
-		printf("go_shim_amdsmi_present22\n");
 		return 1;
 	}
-	printf("go_shim_amdsmi_present33\n");
 	return 0;
 }
 
@@ -125,51 +122,38 @@ bool go_shim_amdsmiapu_init()
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 int32_t go_shim_amdsmicpu_init()	
 {
-	//if(access("/opt/rocm/lib/libamd_smi.so", F_OK)) return 0;
-	//return (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_CPUS)) ? 1 : 0;
-	printf("go_shim_amdsmicpu_init1\n");
 	if(go_shim_amdsmiapu_init())
 	{
-		printf("go_shim_amdsmicpu_init2\n");
 		if((num_cpu_inAllSocket) && (num_cpu_physicalCore_inAllSocket))
-		{
-			printf("go_shim_amdsmicpu_init3\n");
 			return 1;
-		}
 	}
-	printf("go_shim_amdsmicpu_init4\n");
 	return 0;
 }
 
 int32_t go_shim_amdsmicpu_threads_per_core_get()
 {
-	printf("go_shim_amdsmicpu_threads_per_core_get1\n");
 	uint32_t num_threads_per_core = 0;
 
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_threads_per_core(&num_threads_per_core)))
-	{
-		printf("go_shim_amdsmicpu_threads_per_core_get2\n");
 		return num_threads_per_core;
-	}
-	printf("go_shim_amdsmicpu_threads_per_core_get3\n");
+	
 	return 0;
 }
 
 int32_t go_shim_amdsmicpu_number_of_threads_get()
 {
-	printf("go_shim_amdsmicpu_number_of_threads_get1\n");
 	uint32_t total_num_threads    = 0;
 	uint32_t num_threads_per_core = go_shim_amdsmicpu_threads_per_core_get();
 
 	total_num_threads = num_cpu_physicalCore_inAllSocket*num_threads_per_core;
 
-	printf("go_shim_amdsmicpu_number_of_threads_get2\n");
+	printf("go_shim_amdsmicpu_number_of_threads_get:%d\n",total_num_threads);
 	return total_num_threads;
 }
 
 int32_t go_shim_amdsmicpu_number_of_sockets_get()
 {
-	printf("go_shim_amdsmicpu_number_of_sockets_get1\n");
+	printf("go_shim_amdsmicpu_number_of_sockets_get:%d\n",num_cpuSockets);
     return num_cpuSockets;
 }
 
@@ -179,7 +163,10 @@ uint64_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index)
 	uint32_t physicalCore_index   = thread_index%num_cpu_physicalCore_inAllSocket;
 
 	if(AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_core_energy(amdsmi_processor_handle_all_cpu_physicalCore_across_socket[physicalCore_index], &core_penergy))
+	{
+		printf("go_shim_amdsmicpu_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,physicalCore_index,core_penergy);
 		return core_penergy;
+	}
 
 	return 0;
 }
@@ -189,7 +176,10 @@ uint64_t go_shim_amdsmicpu_s_get(uint32_t socket_index)
 	uint64_t socket_penergy = 0;
 
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_energy(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &socket_penergy)))
+	{
+		printf("go_shim_amdsmicpu_core_energy_get[%d]:socket_penergy:%d\n",socket_index,socket_penergy);
 		return socket_penergy;
+	}
 
 	return 0;
 }
@@ -199,7 +189,10 @@ uint32_t go_shim_amdsmicpu_prochot_status_get(uint32_t socket_index)
 	uint32_t prochot = 0;
 
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_prochot_status(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &prochot)))
+	{
+		printf("go_shim_amdsmicpu_prochot_status_get[%d]:prochot:%d\n",socket_index,prochot);
 		return prochot;
+	}
 
  	return 0;
 }
@@ -209,7 +202,10 @@ uint32_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index)
 	uint32_t ppower = 0;
 
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &ppower)))
+	{
+		printf("go_shim_amdsmicpu_socket_power_get[%d]:ppower:%d\n",socket_index,ppower);
 		return ppower;
+	}
 
 	return 0;
 }
@@ -219,7 +215,10 @@ uint32_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index)
 	uint32_t pcap = 0;
 
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_power_cap(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &pcap)))
+	{
+		printf("go_shim_amdsmicpu_socket_power_cap_get[%d]:pcap:%d\n",socket_index,pcap);
 		return pcap;
+	}
 
 	return 0;
 }
@@ -230,7 +229,10 @@ uint32_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index)
 	uint32_t physicalCore_index   = thread_index%num_cpu_physicalCore_inAllSocket;
 
 	if(AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_core_boostlimit(amdsmi_processor_handle_all_cpu_physicalCore_across_socket[physicalCore_index], &boostlimit))
+	{
+		printf("go_shim_amdsmicpu_core_boostlimit_get[%d]:pc:%d:boostlimit:%d\n",thread_index,physicalCore_index,boostlimit);
 		return boostlimit;
+	}
 
 	return 0;
 }
@@ -238,19 +240,11 @@ uint32_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index)
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 int32_t go_shim_amdsmigpu_init()
 {
-	//if(access("/opt/rocm/lib/libamd_smi.so", F_OK)) return 0;
-	//return (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_GPUS)) ? 1 : 0;
-	printf("go_shim_amdsmigpu_init1\n");
 	if(go_shim_amdsmiapu_init())
 	{
-		printf("go_shim_amdsmigpu_init2\n");
 		if((num_gpu_devices_inAllSocket))
-		{
-			printf("go_shim_amdsmigpu_init3\n");
 			return 1;
-		}
 	}
-	printf("go_shim_amdsmigpu_init4\n");
 	return 0;
 }
 
@@ -262,7 +256,7 @@ int32_t go_shim_amdsmigpu_shutdown()
 
 int32_t go_shim_amdsmigpu_num_monitor_devices()
 {
-	printf("go_shim_amdsmigpu_num_monitor_devices1\n");
+	printf("go_shim_amdsmigpu_num_monitor_devices:%d\n",num_gpu_devices_inAllSocket);
 	return num_gpu_devices_inAllSocket;
 }
 
@@ -284,11 +278,12 @@ uint16_t go_shim_amdsmigpu_dev_id_get(uint32_t dv_ind)
 {
 	uint16_t id = 0;
 	
-	printf("go_shim_amdsmigpu_dev_id_get1\n");
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_id(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &id)))
-			return id;
+	{
+		printf("go_shim_amdsmigpu_dev_id_get[%d]:id:%d\n",dv_ind,id);
+		return id;
+	}
 
-	printf("go_shim_amdsmigpu_dev_id_get2\n");
 	return 0;
 }
 
@@ -333,7 +328,10 @@ uint64_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind)
 	amdsmi_power_cap_info_t amdsmi_power_cap_info_temp;
 
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_power_cap_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], GPU_SENSOR_0, &amdsmi_power_cap_info_temp)))
-			return amdsmi_power_cap_info_temp.power_cap;
+	{
+		printf("go_shim_amdsmigpu_dev_power_cap_get[%d]:power_cap:%d\n",dv_ind,amdsmi_power_cap_info_temp.power_cap);
+		return amdsmi_power_cap_info_temp.power_cap;
+	}
 
 	return 0;
 }
@@ -343,7 +341,10 @@ uint64_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind)
 	amdsmi_power_info_t amdsmi_power_info_temp;
 
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_power_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_power_info_temp)))
-			return amdsmi_power_info_temp.average_socket_power;
+	{
+		printf("go_shim_amdsmigpu_dev_power_ave_get[%d]:average_socket_power:%d\n",dv_ind,amdsmi_power_info_temp.average_socket_power);
+		return amdsmi_power_info_temp.average_socket_power;
+	}
 
 	return 0;
 }
@@ -353,7 +354,10 @@ uint64_t go_shim_amdsmigpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor,
 	uint64_t temperature = 0;
 
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_temp_metric(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], sensor, metric, &temperature)))
-			return temperature;
+	{
+		printf("go_shim_amdsmigpu_dev_temp_metric_get[dv_ind:%d:sensor:%d:metric:%d]:temperature:%d\n",dv_ind,sensor,metric,temperature);
+		return temperature;
+	}
 
 	return 0;
 }
@@ -394,7 +398,10 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 	amdsmi_clk_type_t clk_type = AMDSMI_CLK_TYPE_SYS;
 
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_clk_freq(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], clk_type, &freq)))
-			return freq.frequency[freq.current];
+	{
+		printf("go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
+		return freq.frequency[freq.current];
+	}
 
 	return 0;
 }
@@ -405,7 +412,10 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind)
 	amdsmi_clk_type_t clk_type = AMDSMI_CLK_TYPE_MEM;
 
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_clk_freq(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], clk_type, &freq)))
-			return freq.frequency[freq.current];
+	{
+		printf("go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
+		return freq.frequency[freq.current];
+	}
 
 	return 0;
 }
