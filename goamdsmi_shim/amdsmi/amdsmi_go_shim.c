@@ -181,14 +181,14 @@ uint64_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index)
 	return 0;
 }
 
-uint64_t go_shim_amdsmicpu_s_get(uint32_t socket_index)
+uint64_t go_shim_amdsmicpu_socket_energy_get(uint32_t socket_index)
 {
 	uint64_t socket_penergy = 0;
 
-	printf("enter go_shim_amdsmicpu_core_energy_get[%d]:socket_penergy:%d\n",socket_index,socket_penergy);
+	printf("enter go_shim_amdsmicpu_s_get[%d]:socket_penergy:%d\n",socket_index,socket_penergy);
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_cpu_socket_energy(amdsmi_processor_handle_all_cpu_across_socket[socket_index], &socket_penergy)))
 	{
-		printf("go_shim_amdsmicpu_core_energy_get[%d]:socket_penergy:%d\n",socket_index,socket_penergy);
+		printf("go_shim_amdsmicpu_s_get[%d]:socket_penergy:%d\n",socket_index,socket_penergy);
 		return socket_penergy;
 	}
 
