@@ -62,13 +62,13 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_so
 
 int32_t go_shim_amdsmi_present()
 {
-	printf("go_shim_amdsmi_present()1\n");
+	printf("go_shim_amdsmi_present()11\n");
 	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
 	{
-		printf("go_shim_amdsmi_present()2\n");
+		printf("go_shim_amdsmi_present()22\n");
 		return 0;
 	}
-	printf("go_shim_amdsmi_present()3\n");
+	printf("go_shim_amdsmi_present()33\n");
 	return 1;
 }
 
