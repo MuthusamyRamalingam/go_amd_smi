@@ -158,7 +158,7 @@ bool go_shim_amdsmiapu_init()
 		}
 	}
 	processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
-	fot(int i =0; i < 4; i++)
+	for(int i =0; i < 4; i++)
 	{
 		printf("i=%d, %p\n",i,amdsmi_processor_handle_all_cpu_across_socket[i]);
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[i], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
