@@ -157,6 +157,8 @@ bool go_shim_amdsmiapu_init()
 			 printf("num_gpuSockets:%d\n",num_gpuSockets);
 		}
 	}
+
+	uint32_t num_cpu_physicalCores = 0;
 	processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
 	for(int i =0; i < 4; i++)
 	{
