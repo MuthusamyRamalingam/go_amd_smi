@@ -102,7 +102,6 @@ bool go_shim_amdsmiapu_init()
 
 		printf("go_shim_amdsmiapu_init6\n");
 		processor_type_t cpu_processor_type			= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
-		processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, nullptr, &num_cpu)) )
 		{
 			printf("check0:%d\n",num_cpu);
@@ -114,9 +113,18 @@ bool go_shim_amdsmiapu_init()
 			printf("check1:%d\n",num_cpu);
 			//for(uint32_t cpu_counter = 0; cpu_counter < num_cpu; cpu_counter++)
 			{
+				processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
 				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket/*+cpu_counter*/], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 				{
 					printf("check2:%d\n",num_cpu_physicalCores);
+				}
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket+1/*+cpu_counter*/], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+				{
+					printf("check6:%d\n",num_cpu_physicalCores);
+				}
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+				{
+					printf("check7:%d\n",num_cpu_physicalCores);
 				}
 				
 				if	((0 != num_cpu_physicalCores) &&
