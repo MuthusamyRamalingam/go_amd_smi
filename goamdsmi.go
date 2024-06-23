@@ -114,14 +114,14 @@ func GO_rsmi_dev_power_cap_get(i int) (C.uint64_t) {
 
 func GO_rsmi_dev_power_ave_get(i int) (C.uint64_t) {
     if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_power_ave_get(C.uint(i))
+		return C.go_shim_amdsmigpu_dev_power_ave_get(C.uint(i))
 	}
 	return C.go_shim_rsmi_dev_power_ave_get(C.uint(i))
 }
 
 func GO_rsmi_dev_temp_metric_get(i int, sensor int, metric int) (C.uint64_t) {
     if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_temp_metric_get(C.uint(i), C.uint(sensor), C.uint(metric))
+		return C.go_shim_amdsmigpu_dev_temp_metric_get(C.uint(i), C.uint(sensor), C.uint(metric))
 	}
 	return C.go_shim_rsmi_dev_temp_metric_get(C.uint(i), C.uint(sensor), C.uint(metric))
 }
@@ -149,14 +149,14 @@ func GO_rsmi_dev_mem_overdrive_level_get(i int) (C.uint32_t) {
 
 func GO_rsmi_dev_gpu_clk_freq_get_sclk(i int) (C.uint64_t) {
 	if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(C.uint(i));
+		return C.go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(C.uint(i));
 	}
 	return C.go_shim_rsmi_dev_gpu_clk_freq_get_sclk(C.uint(i))
 }
 
 func GO_rsmi_dev_gpu_clk_freq_get_mclk(i int) (C.uint64_t) {
     if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(C.uint(i));
+		return C.go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(C.uint(i));
 	}
 	return C.go_shim_rsmi_dev_gpu_clk_freq_get_mclk(C.uint(i))
 }
@@ -191,14 +191,14 @@ func GO_rsmi_od_volt_freq_range_max_get_mclk(i int) (C.uint64_t) {
 
 func GO_rsmi_dev_gpu_busy_percent_get(i int) (C.uint64_t) {
 	if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_gpu_busy_percent_get(C.uint(i));
+		return C.go_shim_amdsmigpu_dev_gpu_busy_percent_get(C.uint(i));
 	}
     return C.go_shim_rsmi_dev_gpu_busy_percent_get(C.uint(i))
 }
 
 func GO_rsmi_dev_gpu_memory_busy_percent_get(i int) (C.uint64_t) {
 	if 1 == C.go_shim_amdsmi_present() {
-		C.go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(C.uint(i));
+		return C.go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(C.uint(i));
 	}
     return C.go_shim_rsmi_dev_gpu_memory_busy_percent_get(C.uint(i))
 }
