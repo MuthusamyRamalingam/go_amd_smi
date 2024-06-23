@@ -46,7 +46,7 @@
 #define MAX_SOCKET_ACROSS_SYSTEM	     4
 #define CPU_0						     0
 #define GPU_SENSOR_0					 0
-#define MAX_CPU_PER_SOCKET               1
+#define MAX_CPU_PER_SOCKET               4
 #define MAX_PHYSICALCORE_ACROSS_SYSTEM 384
 #define MAX_LOGICALCORE_ACROSS_SYSTEM  768
 #define MAX_GPU_DEVICE_ACROSS_SYSTEM    24
@@ -99,6 +99,7 @@ bool go_shim_amdsmiapu_init()
 		uint32_t num_cpu		       = 0;
 		uint32_t num_cpu_physicalCores = 0;
 		uint32_t num_gpu_devices       = 0;
+		uint32_t indexCounter		   = 0;
 
 		printf("go_shim_amdsmiapu_init6\n");
 		processor_type_t cpu_processor_type			= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
@@ -113,16 +114,23 @@ bool go_shim_amdsmiapu_init()
 		{
 			printf("check1:%d\n",num_cpu);
 			//for(uint32_t cpu_counter = 0; cpu_counter < num_cpu; cpu_counter++)
+			if(0)
 			{
-				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket/*+cpu_counter*/], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+				indexCounter = num_cpu_inAllSocket/*+cpu_counter*/;
+				printf("p0_indexCounter:%d\n",indexCounter);
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[indexCounter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 				{
 					printf("check2:%d\n",num_cpu_physicalCores);
 				}
-				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket+1/*+cpu_counter*/], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+				indexCounter = num_cpu_inAllSocket+1/*+cpu_counter*/;
+				printf("p1_indexCounter:%d\n",indexCounter);
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[indexCounter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 				{
 					printf("check6:%d\n",num_cpu_physicalCores);
 				}
-				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
+				indexCounter = socket_counter;
+				printf("p2_indexCounter:%d\n",indexCounter);
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[indexCounter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 				{
 					printf("check7:%d\n",num_cpu_physicalCores);
 				}
@@ -144,7 +152,7 @@ bool go_shim_amdsmiapu_init()
 			printf("num_cpu_inAllSocket:%d\n",num_cpu_inAllSocket);
 		}
 		
-		printf("go_shim_amdsmiapu_init7\n");
+		/*printf("go_shim_amdsmiapu_init7\n");
 		processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], gpu_device_processor_type, nullptr, &num_gpu_devices)) &&
 			(0 != num_gpu_devices) &&
@@ -155,13 +163,13 @@ bool go_shim_amdsmiapu_init()
 			 printf("num_gpu_devices:%d\n",num_gpu_devices);
 			 printf("num_gpu_devices_inAllSocket:%d\n",num_gpu_devices_inAllSocket);
 			 printf("num_gpuSockets:%d\n",num_gpuSockets);
-		}
+		}*/
 	}
 
 	uint32_t num_cpu_physicalCores = 0;
-	processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
-	for(int i =0; i < 4; i++)
+	for(int i =0; i < 15; i++)
 	{
+		processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
 		printf("i=%d, %p\n",i,amdsmi_processor_handle_all_cpu_across_socket[i]);
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[i], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 		{
