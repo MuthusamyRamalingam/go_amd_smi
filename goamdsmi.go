@@ -50,15 +50,24 @@ import "C"
 
 //GPU ROCM calls
 func GO_rsmi_init() (uint) {
-	return uint(C.go_shim_amdsmigpu_init())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmigpu_init())
+	}
+	return uint(C.go_shim_rsmi_init())
 }
 
 func GO_rsmi_shutdown() (uint) {
-    return uint(C.go_shim_amdsmigpu_shutdown())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmigpu_shutdown())
+	}
+    return uint(C.go_shim_rsmi_shutdown())
 }
 
 func GO_rsmi_num_monitor_devices() (uint) {
-	return uint(C.go_shim_amdsmigpu_num_monitor_devices())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmigpu_num_monitor_devices())
+	}
+	return uint(C.go_shim_rsmi_num_monitor_devices())
 }
 
 func GO_rsmi_dev_name_get(i int) (*C.char) {
@@ -69,7 +78,10 @@ func GO_rsmi_dev_name_get(i int) (*C.char) {
 }
 
 func GO_rsmi_dev_id_get(i int) (C.uint16_t) {
-	return C.uint16_t(C.go_shim_amdsmigpu_dev_id_get(C.uint(i)))
+	if 1 == C.go_shim_amdsmi_present() {
+		return C.uint16_t(C.go_shim_amdsmigpu_dev_id_get(C.uint(i)))
+	}
+	return C.uint16_t(C.go_shim_rsmi_dev_id_get(C.uint(i)))
 }
 
 func GO_rsmi_dev_pci_id_get(i int) (C.uint64_t) {
@@ -207,19 +219,31 @@ func GO_rsmi_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 
 //CPU ESMI calls
 func GO_esmi_init() (uint) {
-	return uint(C.go_shim_amdsmicpu_init())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmicpu_init())
+	}
+	return uint(C.go_shim_esmi_init())
 }
 
 func GO_esmi_number_of_sockets_get() (uint) {
-	return uint(C.go_shim_amdsmicpu_number_of_sockets_get())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmicpu_number_of_sockets_get())
+	}
+	return uint(C.go_shim_esmi_number_of_sockets_get())
 }
 
 func GO_esmi_number_of_threads_get() (uint) {
-	return uint(C.go_shim_amdsmicpu_number_of_threads_get())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmicpu_number_of_threads_get())
+	}
+	return uint(C.go_shim_esmi_number_of_threads_get())
 }
 
 func GO_esmi_threads_per_core_get() (uint) {
-	return uint(C.go_shim_amdsmicpu_threads_per_core_get())
+	if 1 == C.go_shim_amdsmi_present() {
+		return uint(C.go_shim_amdsmicpu_threads_per_core_get())
+	}
+	return uint(C.go_shim_esmi_threads_per_core_get())
 }
 
 func GO_esmi_core_energy_get(i int) (C.uint64_t) {
