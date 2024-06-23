@@ -103,16 +103,27 @@ bool go_shim_amdsmiapu_init()
 		printf("go_shim_amdsmiapu_init6\n");
 		processor_type_t cpu_processor_type			= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
 		processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
-		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, nullptr, &num_cpu)) &&
-			(0 != num_cpu) &&
+		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, nullptr, &num_cpu)) )
+		{
+			printf("check0:%d\n",num_cpu);
+		}
+		
+		if(	(0 != num_cpu) &&
 			(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_socket_handle_all_socket[socket_counter], cpu_processor_type, &amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket], &num_cpu)))
 		{
-			for(uint32_t cpu_counter = 0; cpu_counter < num_cpu; cpu_counter++)
+			printf("check1:%d\n",num_cpu);
+			//for(uint32_t cpu_counter = 0; cpu_counter < num_cpu; cpu_counter++)
 			{
-				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket+cpu_counter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)) &&
-					(0 != num_cpu_physicalCores) &&
-					(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket+cpu_counter], cpu_core_processor_type, &amdsmi_processor_handle_all_cpu_physicalCore_across_socket[num_cpu_physicalCore_inAllSocket], &num_cpu_physicalCores)))
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket/*+cpu_counter*/], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)))
 				{
+					printf("check2:%d\n",num_cpu_physicalCores);
+				}
+				
+				if	((0 != num_cpu_physicalCores) &&
+					(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket/*+cpu_counter*/], cpu_core_processor_type, &amdsmi_processor_handle_all_cpu_physicalCore_across_socket[num_cpu_physicalCore_inAllSocket], &num_cpu_physicalCores)))
+				{
+					printf("check3:%d\n",num_cpu_physicalCores);
+					
 					num_cpu_physicalCore_inAllSocket = num_cpu_physicalCore_inAllSocket+num_cpu_physicalCores;
 					num_cpuSockets = num_cpuSockets+1;
 					printf("num_cpu_physicalCores:%d\n",num_cpu_physicalCores);
