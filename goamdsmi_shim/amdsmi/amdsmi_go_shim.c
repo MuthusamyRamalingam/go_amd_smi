@@ -66,10 +66,10 @@ int32_t go_shim_amdsmi_present()
 	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
 	{
 		printf("go_shim_amdsmi_present()22\n");
-		return 0;
+		return 1;
 	}
 	printf("go_shim_amdsmi_present()33\n");
-	return 1;
+	return 0;
 }
 
 bool go_shim_amdsmiapu_init()
