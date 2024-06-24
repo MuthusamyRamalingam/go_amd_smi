@@ -146,43 +146,43 @@ func GO_rsmi_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 }
 
 //CPU ESMI or AMDSMI calls
-func GO_esmi_init() (uint) {
+func GO_cpu_init() (uint) {
 	return uint(C.goamdsmi_cpu_init())
 }
 
-func GO_esmi_number_of_sockets_get() (uint) {
+func GO_cpu_number_of_sockets_get() (uint) {
 	return uint(C.goamdsmi_cpu_number_of_sockets_get())
 }
 
-func GO_esmi_number_of_threads_get() (uint) {
+func GO_cpu_number_of_threads_get() (uint) {
 	return uint(C.goamdsmi_cpu_number_of_threads_get())
 }
 
-func GO_esmi_threads_per_core_get() (uint) {
+func GO_cpu_threads_per_core_get() (uint) {
 	return uint(C.goamdsmi_cpu_threads_per_core_get())
 }
 
-func GO_esmi_core_energy_get(i int) (C.uint64_t) {
+func GO_cpu_core_energy_get(i int) (C.uint64_t) {
 	return C.goamdsmi_cpu_core_energy_get(C.uint(i))
 }
 
-func GO_esmi_core_boostlimit_get(i int) (C.uint32_t) {
+func GO_cpu_core_boostlimit_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_core_boostlimit_get(C.uint(i))
 }
 
-func GO_esmi_socket_energy_get(i int) (C.uint64_t) {
+func GO_cpu_socket_energy_get(i int) (C.uint64_t) {
 	return C.goamdsmi_cpu_socket_energy_get(C.uint(i))
 }
 
-func GO_esmi_socket_power_get(i int) (C.uint32_t) {
+func GO_cpu_socket_power_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_socket_power_get(C.uint(i))
 }
 
-func GO_esmi_socket_power_cap_get(i int) (C.uint32_t) {
+func GO_cpu_socket_power_cap_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_socket_power_cap_get(C.uint(i))
 }
 
-func GO_esmi_prochot_status_get(i int) (C.uint32_t) {
+func GO_cpu_prochot_status_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_prochot_status_get(C.uint(i))
 }
 
