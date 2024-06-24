@@ -77,19 +77,19 @@ int32_t go_shim_amdsmi_present()
 	return 0;
 }
 
-bool go_shim_amdsmiapu_init()
+int32_t go_shim_amdsmiapu_init()
 {
 #ifdef AMDSMI_BUILD
-	if(0 != num_apuSockets) return true;
+	if(0 != num_apuSockets) return 1;
 
-	if(!go_shim_amdsmi_present()) return false;
+	if(!go_shim_amdsmi_present()) return 0;
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)) || 
 	    (AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) ||
 		(0 == num_apuSockets))
 	{
-		return false;
+		return 0;
 	}
 
 	for(uint32_t socket_counter = 0; socket_counter < num_apuSockets; socket_counter++)
@@ -123,9 +123,9 @@ bool go_shim_amdsmiapu_init()
 			 num_gpuSockets = num_gpuSockets+1;
 		}
 	}
-	return true;
+	return 1;
 #else
-	return false;
+	return 0;
 #endif
 }
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
