@@ -38,6 +38,7 @@
 
 #include <stdint.h>
 #include "goamdsmi_shim.h"
+#include <unistd.h>
 
 int32_t goamdsmi_amdsmi_present()
 {
