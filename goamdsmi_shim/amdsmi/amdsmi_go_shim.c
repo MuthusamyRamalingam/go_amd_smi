@@ -436,10 +436,10 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 	amdsmi_frequencies_t freq = {};
 
 	printf("enter go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
-	int a;scanf("%d",&a);
+	//int a;scanf("%d",&a);
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_clk_freq(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], AMDSMI_CLK_TYPE_SYS, &freq)))
 	{
-		scanf("%d",&a);
+		//scanf("%d",&a);
 		printf("go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
 		return freq.frequency[freq.current];
 	}
@@ -452,10 +452,10 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind)
 	amdsmi_frequencies_t freq = {};
 
 	printf("enter go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
-	int a;scanf("%d",&a);
+	//int a;scanf("%d",&a);
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_clk_freq(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], AMDSMI_CLK_TYPE_MEM, &freq)))
 	{
-		scanf("%d",&a);
+		//scanf("%d",&a);
 		printf("go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
 		return freq.frequency[freq.current];
 	}
