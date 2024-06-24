@@ -37,7 +37,9 @@
  */
 
 #include <stdint.h>
+#ifdef ESMI_BUILD
 #include <e_smi.h>
+#endif
 #include "esmi_go_shim.h"
 
 int32_t go_shim_esmi_init()
