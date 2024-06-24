@@ -38,6 +38,9 @@
 
 #include <stdint.h>
 #include "goamdsmi_shim.h"
+#include "../amdsmi/amdsmi_go_shim.h"
+#include "../esmi/esmi_go_shim.h"
+#include "../rsmi/rocm_smi_go_shim.h"
 #include <unistd.h>
 
 int32_t goamdsmi_amdsmi_present()
