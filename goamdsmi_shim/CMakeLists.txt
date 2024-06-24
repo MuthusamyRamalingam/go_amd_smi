@@ -194,7 +194,6 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL Release)
 endif ()
 
 set(go_amd_smi_install_headers
-	goamdsmi/goamdsmi_shim.h
     esmi/esmi_go_shim.h
     rsmi/rocm_smi_go_shim.h
     amdsmi/amdsmi_go_shim.h
