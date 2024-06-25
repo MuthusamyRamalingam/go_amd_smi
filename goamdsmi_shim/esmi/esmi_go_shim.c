@@ -175,11 +175,11 @@ goamdsmi_status_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index, uint32
 	*core_boostlimit				= 0;
 	uint32_t core_boostlimit_temp	= 0;
 
-	printf("CCCC go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,physicalCore_index,*core_boostlimit);
+	printf("CCCC go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,thread_index,*core_boostlimit);
 	if(ESMI_SUCCESS == esmi_core_boostlimit_get(thread_index, &core_boostlimit_temp))
 	{
 		*core_boostlimit = core_boostlimit_temp;
-		printf("DDDD go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,physicalCore_index,*core_boostlimit);
+		printf("DDDD go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,thread_index,*core_boostlimit);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
