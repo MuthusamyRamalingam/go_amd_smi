@@ -103,11 +103,11 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	*core_energy				= 0;
 	uint64_t core_energy_temp	= 0;
 
-	printf("CCCC go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,physicalCore_index,*core_energy);
+	printf("CCCC go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,thread_index,*core_energy);
 	if(ESMI_SUCCESS == esmi_core_energy_get(thread_index, &core_energy_temp))
 	{
 		*core_energy = core_energy_temp;
-		printf("DDDD go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,physicalCore_index,*core_energy);
+		printf("DDDD go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,thread_index,*core_energy);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
