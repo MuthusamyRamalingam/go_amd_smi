@@ -487,11 +487,11 @@ uint64_t goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind);
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU Activity use
+ *  @retval ::uint32_t GPU Activity use
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
+uint32_t goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU Memory Use percent

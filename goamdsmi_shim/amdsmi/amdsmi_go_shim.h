@@ -521,7 +521,7 @@ goamdsmi_status_t go_shim_amdsmigpu_od_volt_freq_range_max_get_mclk(uint32_t dv_
  *  @retval GOAMDSMI_STATUS_FAILURE is returned upon failure.
  *
  */
-goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind, uint64_t* gpu_busy_percent);
+goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind, uint32_t* gpu_busy_percent);
 
 /**
  *  @brief Go language stub to get the GPU Memory Use percent

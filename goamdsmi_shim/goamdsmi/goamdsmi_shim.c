@@ -351,9 +351,9 @@ uint64_t goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind)
 	return 0;
 }
 
-uint64_t goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind)
+uint32_t goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind)
 {
-	uint64_t gpu_busy_percent = 0;
+	uint32_t gpu_busy_percent = 0;
 	
 	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_gpu_busy_percent_get(dv_ind, &gpu_busy_percent)))	{return gpu_busy_percent;}
 	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_gpu_busy_percent_get(dv_ind, &gpu_busy_percent)))		{return gpu_busy_percent;}
