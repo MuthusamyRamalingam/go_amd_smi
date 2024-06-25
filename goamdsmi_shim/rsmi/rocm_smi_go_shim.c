@@ -68,7 +68,7 @@ goamdsmi_status_t go_shim_rsmi_num_monitor_devices(uint32_t* gpu_num_monitor_dev
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char* gpu_dev_name)
+goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char** gpu_dev_name)
 {
     uint32_t len = 256;
     char *dev_name = (char*)malloc(sizeof(char)*len);
@@ -76,7 +76,7 @@ goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char* gpu_dev_name)
 
     if(RSMI_STATUS_SUCCESS == rsmi_dev_name_get(dv_ind, dev_name, &len))
     {
-        gpu_dev_name = dev_name;
+        *gpu_dev_name = dev_name;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
 	
@@ -113,7 +113,7 @@ goamdsmi_status_t go_shim_rsmi_dev_pci_id_get(uint32_t dv_ind, uint64_t* gpu_pci
 	return GOAMDSMI_STATUS_FAILURE;;
 }
 
-goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char* gpu_vendor_name)
+goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name)
 {
     uint32_t len = 256;
     char *vendor_name = (char*)malloc(sizeof(char)*len);
@@ -121,7 +121,7 @@ goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char* gpu_ve
 
     if(RSMI_STATUS_SUCCESS == rsmi_dev_vendor_name_get(dv_ind, vendor_name, &len))
     {
-        gpu_vendor_name = vendor_name;
+        *gpu_vendor_name = vendor_name;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
 
@@ -130,7 +130,7 @@ goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char* gpu_ve
     return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char* vbios_version)
+goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version)
 {
     uint32_t len = 256;
     char *vbios_ver = (char*)malloc(sizeof(char)*len);
@@ -138,7 +138,7 @@ goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char* vbio
 
     if(RSMI_STATUS_SUCCESS == rsmi_dev_vbios_version_get(dv_ind, vbios_ver, &len))
     {
-        vbios_version = vbios_ver;
+        *vbios_version = vbios_ver;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
 	free(vbios_ver);vbios_ver = NULL;
@@ -376,11 +376,11 @@ uint64_t go_shim_rsmi_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_me
 goamdsmi_status_t go_shim_rsmi_init()														{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_shutdown()													{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_num_monitor_devices(uint32_t* gpu_num_monitor_devices)		{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char* gpu_dev_name)			{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char** gpu_dev_name)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_id_get(uint32_t dv_ind, uint16_t* gpu_dev_id)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_pci_id_get(uint32_t dv_ind, uint64_t* gpu_pci_id)		{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char* gpu_vendor_name)	{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char* vbios_version)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_power_cap)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power_avg)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric, uint64_t* gpu_temperature)	{return GOAMDSMI_STATUS_FAILURE;}

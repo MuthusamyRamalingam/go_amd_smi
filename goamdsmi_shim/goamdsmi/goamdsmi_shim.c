@@ -43,6 +43,7 @@
 #include "../rsmi/rocm_smi_go_shim.h"
 #include "goamdsmi.h"
 #include <unistd.h>
+#include <stdbool.h>
 static bool amdsmi_init	= false;
 static bool esmi_init	= false; 		
 static bool rsmi_init	= false; 		
@@ -53,7 +54,7 @@ uint32_t goamdsmi_cpu_init()
 	goamdsmi_status_t esmi_		= go_shim_esmi_init();
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmi_)	{amdsmi_init = true;}
-	if(GOAMDSMI_STATUS_SUCCESS == esmi_))	{esmi_init = true;}
+	if(GOAMDSMI_STATUS_SUCCESS == esmi_)	{esmi_init = true;}
 	if(amdsmi_init || rsmi_init)			return 1;
 	
 	return 0;
@@ -93,8 +94,8 @@ uint64_t goamdsmi_cpu_core_energy_get(uint32_t thread_index)
 {
 	uint64_t core_energy = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_core_energy_get(&core_energy))){return core_energy;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_core_energy_get(&core_energy)))	 {return core_energy;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_core_energy_get(thread_index, &core_energy)))	{return core_energy;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_core_energy_get(thread_index, &core_energy)))	 	{return core_energy;}
 	
 	return 0;
 }
@@ -103,8 +104,8 @@ uint64_t goamdsmi_cpu_socket_energy_get(uint32_t socket_index)
 {
 	uint64_t socket_energy = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_energy_get(&socket_energy))){return socket_energy;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_energy_get(&socket_energy)))	 {return socket_energy;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_energy_get(socket_index, &socket_energy))){return socket_energy;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_energy_get(socket_index, &socket_energy)))	  {return socket_energy;}
 	
 	return 0;
 }
@@ -113,8 +114,8 @@ uint32_t goamdsmi_cpu_prochot_status_get(uint32_t socket_index)
 {
 	uint32_t prochot = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_prochot_status_get(&prochot))){return prochot;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_prochot_status_get(&prochot)))		{return prochot;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_prochot_status_get(socket_index, &prochot))){return prochot;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_prochot_status_get(socket_index, &prochot)))	 {return prochot;}
 	
 	return 0;
 }
@@ -123,8 +124,8 @@ uint32_t goamdsmi_cpu_socket_power_get(uint32_t socket_index)
 {
 	uint32_t socket_power = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_power_get(&socket_power)))	{return socket_power;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_power_get(&socket_power)))		{return socket_power;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_power_get(socket_index, &socket_power))){return socket_power;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_power_get(socket_index, &socket_power)))		{return socket_power;}
 	
 	return 0;
 }
@@ -133,8 +134,8 @@ uint32_t goamdsmi_cpu_socket_power_cap_get(uint32_t socket_index)
 {
 	uint32_t socket_power_cap = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_power_cap_get(&socket_power_cap)))	{return socket_power_cap;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_power_cap_get(&socket_power_cap)))		{return socket_power_cap;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_socket_power_cap_get(socket_index, &socket_power_cap))){return socket_power_cap;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_socket_power_cap_get(socket_index, &socket_power_cap)))		{return socket_power_cap;}
 	
 	return 0;
 }
@@ -143,8 +144,8 @@ uint32_t goamdsmi_cpu_core_boostlimit_get(uint32_t thread_index)
 {
 	uint32_t core_boostlimit = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_core_boostlimit_get(&core_boostlimit))){return core_boostlimit;}
-	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_core_boostlimit_get(&core_boostlimit)))	 {return core_boostlimit;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_core_boostlimit_get(thread_index, &core_boostlimit))){return core_boostlimit;}
+	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_core_boostlimit_get(thread_index, &core_boostlimit)))	  {return core_boostlimit;}
 	
 	return 0;
 }
@@ -184,8 +185,8 @@ char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind)
 {
 	char *dev_name = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_name_get(dev_name)))	{return dev_name;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_name_get(dev_name)))		{return dev_name;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_name_get(dv_ind, dev_name)))	{return dev_name;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_name_get(dv_ind, dev_name)))		{return dev_name;}
 	
 	return NULL;
 }
@@ -214,8 +215,8 @@ char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind)
 {
 	char *gpu_vendor_name = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vendor_name_get(gpu_vendor_name))){return gpu_vendor_name;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vendor_name_get(gpu_vendor_name)))		{return gpu_vendor_name;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vendor_name_get(dv_ind, gpu_vendor_name))){return gpu_vendor_name;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vendor_name_get(dv_ind, gpu_vendor_name)))		{return gpu_vendor_name;}
 	
 	return NULL;
 }
@@ -224,8 +225,8 @@ char* goamdsmi_gpu_dev_vbios_version_get(uint32_t dv_ind)
 {
 	char *vbios_version = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vbios_version_get(vbios_version))){return vbios_version;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vbios_version_get(vbios_version)))		{return vbios_version;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vbios_version_get(dv_ind, vbios_version))){return vbios_version;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vbios_version_get(dv_ind, vbios_version)))		{return vbios_version;}
 	
 	return NULL;
 }

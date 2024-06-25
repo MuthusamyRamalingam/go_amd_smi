@@ -41,7 +41,6 @@
 #ifdef WITH_ESMI
 #include <e_smi.h>
 #endif
-#include "../goamdsmi/goamdsmi.h"
 
 #ifdef WITH_ESMI
 goamdsmi_status_t go_shim_esmi_init()

@@ -41,7 +41,6 @@
 #ifdef WITH_AMDSMI
 #include <amd_smi/amdsmi.h>
 #endif
-#include "../goamdsmi/goamdsmi.h"
 #include <unistd.h>
 #include <stdio.h>
 
@@ -294,7 +293,7 @@ goamdsmi_status_t go_shim_amdsmigpu_num_monitor_devices(uint32_t* gpu_num_monito
     return GOAMDSMI_STATUS_SUCCESS;
 }
 
-goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char* gpu_dev_name)
+goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char** gpu_dev_name)
 {
 	printf("enter go_shim_amdsmigpu_dev_name_get\n");
     return GOAMDSMI_STATUS_FAILURE;
@@ -321,13 +320,13 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_pci_id_get(uint32_t dv_ind, uint64_t* gp
     return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char* gpu_vendor_name)
+goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name)
 {
 	printf("enter go_shim_amdsmigpu_dev_vendor_name_get\n");
     return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char* vbios_version)
+goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version)
 {
 	printf("enter go_shim_amdsmigpu_dev_vbios_version_get\n");
     return GOAMDSMI_STATUS_FAILURE;
@@ -500,11 +499,11 @@ goamdsmi_status_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index, u
 goamdsmi_status_t go_shim_amdsmigpu_init()														{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_shutdown()													{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_num_monitor_devices(uint32_t* gpu_num_monitor_devices)		{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char* gpu_dev_name)			{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char** gpu_dev_name)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_id_get(uint32_t dv_ind, uint16_t* gpu_dev_id)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_pci_id_get(uint32_t dv_ind, uint64_t* gpu_pci_id)		{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char* gpu_vendor_name)	{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char* vbios_version)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_power_cap)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power_avg)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric, uint64_t* gpu_temperature)	{return GOAMDSMI_STATUS_FAILURE;}

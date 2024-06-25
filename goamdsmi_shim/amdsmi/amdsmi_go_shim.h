@@ -222,13 +222,13 @@ goamdsmi_status_t go_shim_amdsmigpu_num_monitor_devices(uint32_t* gpu_num_monito
  *  function must free the allocated buffer for the device name.
  *
  *  @param[in] ::uint32_t device index
- *  @param[in] ::char* value of gpu device name
+ *  @param[in] ::char** value of gpu device name
  *
  *  @retval GOAMDSMI_STATUS_SUCCESS is returned upon success.
  *  @retval GOAMDSMI_STATUS_FAILURE is returned upon failure.
  *
  */
-goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char* gpu_dev_name);
+goamdsmi_status_t go_shim_amdsmigpu_dev_name_get(uint32_t dv_ind, char** gpu_dev_name);
 
 /**
  *  @brief Go language stub to get the GPU device id
@@ -275,13 +275,13 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_pci_id_get(uint32_t dv_ind, uint64_t* gp
  *  identifier
  *
  *  @param[in] ::uint32_t device index
- *  @param[in] ::char* GPU vendor name
+ *  @param[in] ::char** GPU vendor name
  *
  *  @retval GOAMDSMI_STATUS_SUCCESS is returned upon success.
  *  @retval GOAMDSMI_STATUS_FAILURE is returned upon failure.
  *
  */
-goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char* vbios_version);
+goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version);
 
 /**
  *  @brief Go language stub to get the vendor
@@ -294,13 +294,13 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind, char*
  *  buffer for the vbios identifier
  *
  *  @param[in] ::uint32_t device index
- *  @param[in] ::char* GPU vendor name
+ *  @param[in] ::char** GPU vendor name
  *
  *  @retval GOAMDSMI_STATUS_SUCCESS is returned upon success.
  *  @retval GOAMDSMI_STATUS_FAILURE is returned upon failure.
  *
  */
-goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char* gpu_vendor_name);
+goamdsmi_status_t go_shim_amdsmigpu_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name);
 
 /**
  *  @brief Go language stub to get the GPU power cap
