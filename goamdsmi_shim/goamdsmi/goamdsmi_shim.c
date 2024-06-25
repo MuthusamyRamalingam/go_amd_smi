@@ -157,7 +157,7 @@ uint32_t goamdsmi_gpu_init()
 	goamdsmi_status_t rsmi_		= go_shim_rsmi_init();
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmi_)	{amdsmi_init = true;}
-	if(GOAMDSMI_STATUS_SUCCESS == rsmi_))	{rsmi_init = true;}
+	if(GOAMDSMI_STATUS_SUCCESS == rsmi_)	{rsmi_init = true;}
 	if(amdsmi_init || rsmi_init)			return 1;
 	
 	return 0;
@@ -185,8 +185,8 @@ char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind)
 {
 	char *dev_name = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_name_get(dv_ind, dev_name)))	{return dev_name;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_name_get(dv_ind, dev_name)))		{return dev_name;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_name_get(dv_ind, &dev_name)))	{return dev_name;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_name_get(dv_ind, &dev_name)))		{return dev_name;}
 	
 	return NULL;
 }
@@ -215,8 +215,8 @@ char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind)
 {
 	char *gpu_vendor_name = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vendor_name_get(dv_ind, gpu_vendor_name))){return gpu_vendor_name;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vendor_name_get(dv_ind, gpu_vendor_name)))		{return gpu_vendor_name;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vendor_name_get(dv_ind, &gpu_vendor_name))){return gpu_vendor_name;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vendor_name_get(dv_ind, &gpu_vendor_name)))	 {return gpu_vendor_name;}
 	
 	return NULL;
 }
@@ -225,8 +225,8 @@ char* goamdsmi_gpu_dev_vbios_version_get(uint32_t dv_ind)
 {
 	char *vbios_version = NULL;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vbios_version_get(dv_ind, vbios_version))){return vbios_version;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vbios_version_get(dv_ind, vbios_version)))		{return vbios_version;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_vbios_version_get(dv_ind, &vbios_version))){return vbios_version;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_vbios_version_get(dv_ind, &vbios_version)))	 {return vbios_version;}
 	
 	return NULL;
 }
@@ -255,8 +255,8 @@ uint64_t goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint
 {
 	uint64_t gpu_temperature = 0;
 	
-	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_temp_metric_get(dv_ind, &gpu_temperature))){return gpu_temperature;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_temp_metric_get(dv_ind, &gpu_temperature)))	 {return gpu_temperature;}
+	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature))){return gpu_temperature;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature)))	 {return gpu_temperature;}
 	
 	return 0;
 }
