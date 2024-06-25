@@ -246,7 +246,7 @@ uint64_t goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind)
 	uint64_t gpu_power_avg = 0;
 	
 	if		((amdsmi_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_ave_get(dv_ind, &gpu_power_avg))){return gpu_power_avg;}
-	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_ave_get(dv_ind, &gpu_power_avg))){return gpu_power_avg;}
+	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_ave_get(dv_ind, &gpu_power_avg)))	 {return gpu_power_avg;}
 	
 	return 0;
 }
