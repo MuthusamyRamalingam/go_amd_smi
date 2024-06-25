@@ -36,25 +36,15 @@
  *
  */
 
-/**
- *  @brief Go language stub to check the AMDSMI library present
- *
- *  @retval ::int32_t value of 1 upon success
- *  @retval Zero is returned upon failure.
- *
- */
-
-int32_t goamdsmi_amdsmi_present();
-
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the AMDSMI or E-SMI library
  *
- *  @retval ::int32_t value of 1 upon success
+ *  @retval ::uint32_t value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-int32_t goamdsmi_cpu_init();
+uint32_t goamdsmi_cpu_init();
 
 /**
  *  @brief Go language stub to get the core energy for a given core
@@ -154,7 +144,7 @@ uint32_t goamdsmi_cpu_core_boostlimit_get(uint32_t socket);
  *  @retval ::Number of threads per core
  *  @retval Zero is returned upon failure.
  */
-int32_t goamdsmi_cpu_threads_per_core_get();
+uint32_t goamdsmi_cpu_threads_per_core_get();
 
 /**
  *  @brief Go stub to get the number of threads available in the system
@@ -162,36 +152,36 @@ int32_t goamdsmi_cpu_threads_per_core_get();
  *  @retval ::Number of threads
  *  @retval Zero is returned upon failure.
  */
-int32_t goamdsmi_cpu_number_of_threads_get();
+uint32_t goamdsmi_cpu_number_of_threads_get();
 
 /**
  *  @brief Go stub to get the total number of processor sockets 
  *  available in the system
  *
- *  @retval ::int32_t value of the socket number
+ *  @retval ::uint32_t value of the socket number
  *  @retval Zero is returned upon failure.
  */
-int32_t goamdsmi_cpu_number_of_sockets_get();
+uint32_t goamdsmi_cpu_number_of_sockets_get();
 
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the ROCm-SMI library
  *
- *  @retval ::int32_t value of 1 upon success
+ *  @retval ::uint32_t value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-int32_t goamdsmi_gpu_init();
+uint32_t goamdsmi_gpu_init();
 
 /**
  *  @brief Go language stub to shut down the ROCm-SMI library
  *  and do necessary clean up
  *
- *  @retval ::int32_t value of 1 upon success
+ *  @retval ::uint32_t value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-int32_t goamdsmi_gpu_shutdown();
+uint32_t goamdsmi_gpu_shutdown();
 
 /**
  *  @brief Go language stub to get the number of GPU devices
@@ -207,7 +197,7 @@ int32_t goamdsmi_gpu_shutdown();
  *  @retval zero is returned upon failure.
  *
  */
-int32_t goamdsmi_gpu_num_monitor_devices();
+uint32_t goamdsmi_gpu_num_monitor_devices();
 
 /**
  *  @brief Go language stub to get the gpu device name string

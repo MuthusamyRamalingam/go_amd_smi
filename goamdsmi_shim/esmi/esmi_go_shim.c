@@ -37,115 +37,153 @@
  */
 
 #include <stdint.h>
-#ifdef ESMI_BUILD
+#include "esmi_go_shim.h"
+#ifdef WITH_ESMI
 #include <e_smi.h>
 #endif
-#include "esmi_go_shim.h"
+#include "../goamdsmi/goamdsmi.h"
 
-int32_t go_shim_esmi_init()
+#ifdef WITH_ESMI
+goamdsmi_status_t go_shim_esmi_init()
 {
-#ifdef ESMI_BUILD
-	return (ESMI_SUCCESS == esmi_init()) ? 1 : 0;
-#endif
-	return 0;
+	return (ESMI_SUCCESS == esmi_init()) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;
 }
 
-int32_t go_shim_esmi_threads_per_core_get()
+goamdsmi_status_t go_shim_esmi_threads_per_core_get(uint32_t* threads_per_core)
 {
-#ifdef ESMI_BUILD
-	uint32_t num_threads_per_core;
+	*threads_per_core				= 0;
+	uint32_t threads_per_core_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_threads_per_core_get(&num_threads_per_core))
-		return num_threads_per_core;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_threads_per_core_get(&threads_per_core_temp))
+	{
+		*threads_per_core = threads_per_core_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-int32_t go_shim_esmi_number_of_threads_get()
+goamdsmi_status_t go_shim_esmi_number_of_threads_get(uint32_t* number_of_threads)
 {
-#ifdef ESMI_BUILD
-	uint32_t total_num_threads;
+	*number_of_threads 				= 0;
+	uint32_t number_of_threads_temp	= 0;
 
-	if(ESMI_SUCCESS ==  esmi_number_of_cpus_get(&total_num_threads))
-		return total_num_threads;
-#endif
-	return 0;
+	if(ESMI_SUCCESS ==  esmi_number_of_cpus_get(&number_of_threads_temp))
+	{
+		*number_of_threads = number_of_threads_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-int32_t go_shim_esmi_number_of_sockets_get()
+goamdsmi_status_t go_shim_esmi_number_of_sockets_get(uint32_t* number_of_sockets)
 {
-#ifdef ESMI_BUILD
-	uint32_t num_sockets;
+	*number_of_sockets				= 0;
+	uint32_t number_of_sockets_temp = 0;
 
-	if (ESMI_SUCCESS == esmi_number_of_sockets_get(&num_sockets))
-		return num_sockets;
-#endif
-    return 0;
+	if (ESMI_SUCCESS == esmi_number_of_sockets_get(&number_of_sockets_temp))
+	{
+		*number_of_sockets = number_of_sockets_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint64_t go_shim_esmi_core_energy_get(uint32_t thread_index)
+goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* core_energy)
 {
-#ifdef ESMI_BUILD
-	uint64_t core_penergy = 0;
+	*core_energy				= 0;
+	uint64_t core_energy_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_core_energy_get(thread_index, &core_penergy))
-		return core_penergy;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_core_energy_get(thread_index, &core_energy_temp))
+	{
+		*core_energy = core_energy_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint64_t go_shim_esmi_socket_energy_get(uint32_t socket_index)
+goamdsmi_status_t go_shim_esmi_socket_energy_get(uint32_t socket_index, uint64_t* socket_energy)
 {
-#ifdef ESMI_BUILD
-	uint64_t socket_penergy = 0;
+	*socket_energy				= 0;
+	uint64_t socket_energy_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_socket_energy_get(socket_index, &socket_penergy))
-		return socket_penergy;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_socket_energy_get(socket_index, &socket_energy_temp))
+	{
+		*socket_energy = socket_energy_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint32_t go_shim_esmi_prochot_status_get(uint32_t socket_index)
+goamdsmi_status_t go_shim_esmi_prochot_status_get(uint32_t socket_index, uint32_t* prochot)
 {
-#ifdef ESMI_BUILD
-	uint32_t prochot = 0;
+	*prochot				= 0;
+	uint32_t prochot_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_prochot_status_get(socket_index, &prochot))
-		return prochot;
-#endif
- 	return 0;
+	if(ESMI_SUCCESS == esmi_prochot_status_get(socket_index, &prochot_temp))
+	{
+		*prochot = prochot_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint32_t go_shim_esmi_socket_power_get(uint32_t socket_index)
+goamdsmi_status_t go_shim_esmi_socket_power_get(uint32_t socket_index, uint32_t* socket_power)
 {
-#ifdef ESMI_BUILD
-	uint32_t ppower;
+	*socket_power				= 0;
+	uint32_t socket_power_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_socket_power_get(socket_index, &ppower))
-		return ppower;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_socket_power_get(socket_index, &socket_power_temp))
+	{
+		*socket_power = socket_power_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint32_t go_shim_esmi_socket_power_cap_get(uint32_t socket_index)
+goamdsmi_status_t go_shim_esmi_socket_power_cap_get(uint32_t socket_index, uint32_t* socket_power_cap)
 {
-#ifdef ESMI_BUILD
-	uint32_t pcap;
+	*socket_power_cap 				= 0;
+	uint32_t socket_power_cap_temp 	= 0;
 
-	if(ESMI_SUCCESS == esmi_socket_power_cap_get(socket_index, &pcap))
-		return pcap;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_socket_power_cap_get(socket_index, &socket_power_cap_temp))
+	{
+		*socket_power_cap = socket_power_cap_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint32_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index)
+goamdsmi_status_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index, uint32_t* core_boostlimit)
 {
-#ifdef ESMI_BUILD
-	uint32_t boostlimit = 0;
+	*core_boostlimit				= 0;
+	uint32_t core_boostlimit_temp	= 0;
 
-	if(ESMI_SUCCESS == esmi_core_boostlimit_get(thread_index, &boostlimit))
-		return boostlimit;
-#endif
-	return 0;
+	if(ESMI_SUCCESS == esmi_core_boostlimit_get(thread_index, &core_boostlimit_temp))
+	{
+		*core_boostlimit = core_boostlimit_temp;
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	
+	return GOAMDSMI_STATUS_FAILURE;
 }
+#else
+goamdsmi_status_t go_shim_esmi_init()																	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_threads_per_core_get(uint32_t* threads_per_core)							{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_number_of_threads_get(uint32_t* number_of_threads)						{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_number_of_sockets_get(uint32_t* number_of_sockets)						{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* core_energy)			{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_socket_energy_get(uint32_t socket_index, uint64_t* socket_energy)		{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_prochot_status_get(uint32_t socket_index, uint32_t* prochot)				{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_socket_power_get(uint32_t socket_index, uint32_t* socket_power)			{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_socket_power_cap_get(uint32_t socket_index, uint32_t* socket_power_cap)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index, uint32_t* core_boostlimit)	{return GOAMDSMI_STATUS_FAILURE;}
+#endif	
 
