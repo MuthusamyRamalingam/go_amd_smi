@@ -79,9 +79,9 @@ goamdsmi_status_t go_shim_amdsmi_present()
 
 goamdsmi_status_t go_shim_amdsmiapu_init()
 {
-	if(0 != num_apuSockets) 		return GOAMDSMI_STATUS_SUCCESS;
+	if(0 != num_apuSockets) return GOAMDSMI_STATUS_SUCCESS;
 
-	if(!go_shim_amdsmi_present()) 	return GOAMDSMI_STATUS_FAILURE;
+	if(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmi_present()) 	return GOAMDSMI_STATUS_FAILURE;
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)) || 
@@ -127,12 +127,12 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 goamdsmi_status_t go_shim_amdsmicpu_init()	
 {
-	printf("enter go_shim_amdsmicpu_init");
+	printf("enter go_shim_amdsmicpu_init\n");
 	if(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmiapu_init())
 	{
 		if((num_cpu_inAllSocket) && (num_cpu_physicalCore_inAllSocket))
 		{
-			printf("enter go_shim_amdsmicpu_init success");
+			printf("enter go_shim_amdsmicpu_init success\n");
 			return GOAMDSMI_STATUS_SUCCESS;
 		}
 	}
