@@ -81,7 +81,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 {
 	if(0 != num_apuSockets) return GOAMDSMI_STATUS_SUCCESS;
 
-	if(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmi_present()) 	return GOAMDSMI_STATUS_FAILURE;
+	if(GOAMDSMI_STATUS_FAILURE == go_shim_amdsmi_present()) 	return GOAMDSMI_STATUS_FAILURE;
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)) || 
