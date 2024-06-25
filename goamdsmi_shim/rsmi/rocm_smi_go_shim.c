@@ -42,10 +42,12 @@
 #include <rocm_smi/rocm_smi.h>
 #endif
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifdef ROCM_BUILD
 goamdsmi_status_t go_shim_rsmi_init()
 {
+	printf("AAAA go_shim_rsmi_init()\n");
 	return (RSMI_STATUS_SUCCESS == rsmi_init(0)) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;
 }
 
@@ -59,9 +61,11 @@ goamdsmi_status_t go_shim_rsmi_num_monitor_devices(uint32_t* gpu_num_monitor_dev
 	*gpu_num_monitor_devices				= 0;
 	uint32_t gpu_num_monitor_devices_temp	= 0;
 
+	printf("AAAA go_shim_rsmi_num_monitor_devices:%d\n",*gpu_num_monitor_devices);
 	if(RSMI_STATUS_SUCCESS == rsmi_num_monitor_devices(&gpu_num_monitor_devices_temp))
 	{
 		*gpu_num_monitor_devices = gpu_num_monitor_devices_temp;
+		printf("BBBB go_shim_rsmi_num_monitor_devices:%d\n",*gpu_num_monitor_devices);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -90,9 +94,11 @@ goamdsmi_status_t go_shim_rsmi_dev_id_get(uint32_t dv_ind, uint16_t* gpu_dev_id)
 	*gpu_dev_id					= 0;
 	uint16_t gpu_dev_id_temp 	= 0;
 
+	printf("AAAA go_shim_rsmi_dev_id_get[%d]:gpu_dev_id:%d\n",dv_ind,*gpu_dev_id);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_id_get(dv_ind, &gpu_dev_id_temp))
 	{
 		*gpu_dev_id = gpu_dev_id_temp;
+		printf("BBBB go_shim_rsmi_dev_id_get[%d]:gpu_dev_id:%d\n",dv_ind,*gpu_dev_id);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
@@ -151,9 +157,11 @@ goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_
 	*gpu_power_cap					= 0;
 	uint64_t gpu_power_cap_temp 	= 0;
 
+	printf("AAAA go_shim_rsmi_dev_power_cap_get[%d]:power_cap:%d\n",dv_ind,*gpu_power_cap);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_cap_get(dv_ind, 0, &gpu_power_cap_temp))
 	{
 		*gpu_power_cap = gpu_power_cap_temp;
+		printf("BBBB go_shim_rsmi_dev_power_cap_get[%d]:power_cap:%d\n",dv_ind,*gpu_power_cap);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -165,8 +173,10 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 	*gpu_power_avg					= 0;
 	uint64_t gpu_power_avg_temp	 	= 0;
 
+	printf("AAAA go_shim_rsmi_dev_power_ave_get[%d]:gpu_power_avg:%d\n",dv_ind,*gpu_power_avg);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_ave_get(dv_ind, 0, &gpu_power_avg_temp))
 	{
+		printf("BBBB go_shim_rsmi_dev_power_ave_get[%d]:gpu_power_avg:%d\n",dv_ind,*gpu_power_avg);
 		*gpu_power_avg = gpu_power_avg_temp;
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -179,9 +189,11 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 	*gpu_temperature					= 0;
 	uint64_t gpu_temperature_temp	 	= 0;
 
+	printf("AAAA go_shim_rsmi_dev_temp_metric_get[dv_ind:%d:sensor:%d:metric:%d]:gpu_temperature:%d\n",dv_ind,sensor,metric,*gpu_temperature);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature_temp))
 	{
 		*gpu_temperature = gpu_temperature_temp;
+		printf("BBBB go_shim_rsmi_dev_temp_metric_get[dv_ind:%d:sensor:%d:metric:%d]:gpu_temperature:%d\n",dv_ind,sensor,metric,*gpu_temperature);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -235,9 +247,11 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind, uint64
 	*gpu_sclk_freq				= 0;
 	rsmi_frequencies_t freq		= {0};
 
+	printf("AAAA go_shim_rsmi_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,*gpu_sclk_freq);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_gpu_clk_freq_get(dv_ind, RSMI_CLK_TYPE_SYS, &freq))
 	{
 		*gpu_sclk_freq = freq.frequency[freq.current];
+		printf("BBBB go_shim_rsmi_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,*gpu_sclk_freq);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -249,9 +263,11 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind, uint64
 	*gpu_memclk_freq			= 0;
 	rsmi_frequencies_t freq		= {0};
 
+	printf("AAAA go_shim_rsmi_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,*gpu_memclk_freq);
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_gpu_clk_freq_get(dv_ind, RSMI_CLK_TYPE_MEM, &freq))
 	{
 		*gpu_memclk_freq = freq.frequency[freq.current];
+		printf("BBBB go_shim_rsmi_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,*gpu_memclk_freq);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	

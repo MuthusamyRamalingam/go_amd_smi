@@ -41,10 +41,12 @@
 #ifdef ESMI_BUILD
 #include <e_smi.h>
 #endif
+#include <stdio.h>
 
 #ifdef ESMI_BUILD
 goamdsmi_status_t go_shim_esmi_init()
 {
+	printf("CCCC go_shim_esmi_init\n");
 	return (ESMI_SUCCESS == esmi_init()) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;
 }
 
@@ -53,9 +55,11 @@ goamdsmi_status_t go_shim_esmi_threads_per_core_get(uint32_t* threads_per_core)
 	*threads_per_core				= 0;
 	uint32_t threads_per_core_temp	= 0;
 
+	printf("CCCC go_shim_esmi_threads_per_core_get");
 	if(ESMI_SUCCESS == esmi_threads_per_core_get(&threads_per_core_temp))
 	{
 		*threads_per_core = threads_per_core_temp;
+		printf("DDDD go_shim_esmi_threads_per_core_get:%d\n",*threads_per_core);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
@@ -67,9 +71,11 @@ goamdsmi_status_t go_shim_esmi_number_of_threads_get(uint32_t* number_of_threads
 	*number_of_threads 				= 0;
 	uint32_t number_of_threads_temp	= 0;
 
+	printf("CCCC go_shim_esmi_number_of_threads_get:%d\n",*number_of_threads);
 	if(ESMI_SUCCESS ==  esmi_number_of_cpus_get(&number_of_threads_temp))
 	{
 		*number_of_threads = number_of_threads_temp;
+		printf("DDDD go_shim_esmi_number_of_threads_get:%d\n",*number_of_threads);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
@@ -81,9 +87,11 @@ goamdsmi_status_t go_shim_esmi_number_of_sockets_get(uint32_t* number_of_sockets
 	*number_of_sockets				= 0;
 	uint32_t number_of_sockets_temp = 0;
 
+	printf("CCCC go_shim_esmi_number_of_sockets_get:%d\n",*number_of_sockets);
 	if (ESMI_SUCCESS == esmi_number_of_sockets_get(&number_of_sockets_temp))
 	{
 		*number_of_sockets = number_of_sockets_temp;
+		printf("DDDD go_shim_esmi_number_of_sockets_get:%d\n",*number_of_sockets);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -95,9 +103,11 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	*core_energy				= 0;
 	uint64_t core_energy_temp	= 0;
 
+	printf("CCCC go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,physicalCore_index,*core_energy);
 	if(ESMI_SUCCESS == esmi_core_energy_get(thread_index, &core_energy_temp))
 	{
 		*core_energy = core_energy_temp;
+		printf("DDDD go_shim_esmi_core_energy_get[%d]:pc:%d:energy:%d\n",thread_index,physicalCore_index,*core_energy);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
@@ -165,9 +175,11 @@ goamdsmi_status_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index, uint32
 	*core_boostlimit				= 0;
 	uint32_t core_boostlimit_temp	= 0;
 
+	printf("CCCC go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,physicalCore_index,*core_boostlimit);
 	if(ESMI_SUCCESS == esmi_core_boostlimit_get(thread_index, &core_boostlimit_temp))
 	{
 		*core_boostlimit = core_boostlimit_temp;
+		printf("DDDD go_shim_esmi_core_boostlimit_get[%d]:pc:%d:core_boostlimit:%d\n",thread_index,physicalCore_index,*core_boostlimit);
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
