@@ -158,7 +158,7 @@ goamdsmi_status_t go_shim_amdsmicpu_number_of_threads_get(uint32_t* number_of_th
 {
 	*number_of_threads 			  = 0;
 	uint32_t num_threads_per_core = 0;
-	if(GOAMDSMI_STATUS_SUCCESS = go_shim_amdsmicpu_threads_per_core_get(&num_threads_per_core))
+	if(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_threads_per_core_get(&num_threads_per_core))
 	{
 		*number_of_threads = num_cpu_physicalCore_inAllSocket*num_threads_per_core;
 		printf("enter go_shim_amdsmicpu_number_of_threads_get:%d\n",*number_of_threads);
@@ -248,7 +248,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index, 
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index, uint32_t* core_boostlimit))
+goamdsmi_status_t go_shim_amdsmicpu_core_boostlimit_get(uint32_t thread_index, uint32_t* core_boostlimit)
 {
 	*core_boostlimit				= 0;
 	uint32_t core_boostlimit_temp	= 0;

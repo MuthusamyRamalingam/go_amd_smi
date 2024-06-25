@@ -61,7 +61,7 @@ goamdsmi_status_t go_shim_rsmi_num_monitor_devices(uint32_t* gpu_num_monitor_dev
 
 	if(RSMI_STATUS_SUCCESS == rsmi_num_monitor_devices(&gpu_num_monitor_devices_temp))
 	{
-		*gpu_num_monitor_devices = gpu_num_monitor_devices_temp
+		*gpu_num_monitor_devices = gpu_num_monitor_devices_temp;
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
@@ -74,13 +74,13 @@ goamdsmi_status_t go_shim_rsmi_dev_name_get(uint32_t dv_ind, char** gpu_dev_name
     char *dev_name = (char*)malloc(sizeof(char)*len);
     dev_name[0] = '\0';
 
-    if(RSMI_STATUS_SUCCESS == rsmi_dev_name_get(dv_ind, dev_name, &len))
+    if(RSMI_STATUS_SUCCESS == rsmi_dev_name_get(dv_ind, dev_name, len))
     {
         *gpu_dev_name = dev_name;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
 	
-	free(dev_name);dev_name = NULL;
+	free(dev_name);
 	
     return GOAMDSMI_STATUS_FAILURE;
 }
@@ -119,13 +119,13 @@ goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char** gpu_v
     char *vendor_name = (char*)malloc(sizeof(char)*len);
     vendor_name[0] = '\0';
 
-    if(RSMI_STATUS_SUCCESS == rsmi_dev_vendor_name_get(dv_ind, vendor_name, &len))
+    if(RSMI_STATUS_SUCCESS == rsmi_dev_vendor_name_get(dv_ind, vendor_name, len))
     {
         *gpu_vendor_name = vendor_name;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
 
-	free(vendor_name);vendor_name = NULL;
+	free(vendor_name);
 	
     return GOAMDSMI_STATUS_FAILURE;
 }
@@ -136,12 +136,12 @@ goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char** vbi
     char *vbios_ver = (char*)malloc(sizeof(char)*len);
     vbios_ver[0] = '\0';
 
-    if(RSMI_STATUS_SUCCESS == rsmi_dev_vbios_version_get(dv_ind, vbios_ver, &len))
+    if(RSMI_STATUS_SUCCESS == rsmi_dev_vbios_version_get(dv_ind, vbios_ver, len))
     {
         *vbios_version = vbios_ver;
 		return GOAMDSMI_STATUS_SUCCESS;
     }
-	free(vbios_ver);vbios_ver = NULL;
+	free(vbios_ver);
 	
     return GOAMDSMI_STATUS_FAILURE;
 }
@@ -191,7 +191,7 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 goamdsmi_status_t go_shim_rsmi_dev_overdrive_level_get(uint32_t dv_ind, uint32_t* gpu_overdrive_level)
 {
 	*gpu_overdrive_level					= 0;
-	uint64_t gpu_overdrive_level_temp	 	= 0;
+	uint32_t gpu_overdrive_level_temp	 	= 0;
 
     if(RSMI_STATUS_SUCCESS == rsmi_dev_overdrive_level_get(dv_ind, &gpu_overdrive_level_temp))
 	{
@@ -205,7 +205,7 @@ goamdsmi_status_t go_shim_rsmi_dev_overdrive_level_get(uint32_t dv_ind, uint32_t
 goamdsmi_status_t go_shim_rsmi_dev_mem_overdrive_level_get(uint32_t dv_ind, uint32_t* gpu_mem_overdrive_level)
 {
 	*gpu_mem_overdrive_level				= 0;
-	uint64_t gpu_mem_overdrive_level_temp	= 0;
+	uint32_t gpu_mem_overdrive_level_temp	= 0;
 
     if(RSMI_STATUS_SUCCESS == rsmi_dev_mem_overdrive_level_get(dv_ind, &gpu_mem_overdrive_level_temp))
     {
@@ -331,14 +331,14 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_busy_percent_get(uint32_t dv_ind, uint64_
 
 goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_busy_percent_get(uint32_t dv_ind, uint64_t* gpu_memory_busy_percent)
 {
-	*gpu_memory_busy_percent 		= 0
-     uint64_t gpu_memory_total 		= 0;
+	*gpu_memory_busy_percent 		= 0;
+     uint64_t gpu_memory_usage_temp = 0;
 	 uint64_t gpu_memory_total_temp = 0;
 
-    if( (RSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &gpu_memory_total))&& 
+    if( (RSMI_STATUS_SUCCESS == rsmi_dev_memory_usage_get(dv_ind, RSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp))&& 
 		(RSMI_STATUS_SUCCESS == rsmi_dev_memory_total_get(dv_ind, RSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp)))
 	{
-		*gpu_memory_busy_percent = (uint64_t)(gpu_memory_total*100)/gpu_memory_total_temp;
+		*gpu_memory_busy_percent = (uint64_t)(gpu_memory_usage_temp*100)/gpu_memory_total_temp;
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 		
@@ -359,7 +359,7 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_usage_get(uint32_t dv_ind, uint64_
     return GOAMDSMI_STATUS_FAILURE;
 }
 
-uint64_t go_shim_rsmi_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_memory_total)
+goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_memory_total)
 {
 	*gpu_memory_total				= 0;
     uint64_t gpu_memory_total_temp	= 0;
@@ -397,5 +397,4 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_busy_percent_get(uint32_t dv_ind, uint64_
 goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_busy_percent_get(uint32_t dv_ind, uint64_t* gpu_memory_busy_percent)					{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_usage_get(uint32_t dv_ind, uint64_t* gpu_memory_usage)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_memory_total)			{return GOAMDSMI_STATUS_FAILURE;}
-#endif	
-
+#endif
