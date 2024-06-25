@@ -143,26 +143,20 @@ list(APPEND go_amd_smi_headers goamdsmi/goamdsmi_shim.h ${go_amd_smi_headers})
 list(APPEND go_amd_smi_sources goamdsmi/goamdsmi_shim.c)
 list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi)
 
-#if(WITH_ESMI)
-#    add_subdirectory(esmi)
-#    list(APPEND go_amd_smi_headers esmi/esmi_go_shim.h ${go_amd_smi_headers})
-#    list(APPEND go_amd_smi_sources esmi/esmi_go_shim.c)
-#    list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/esmi)
-#endif()
-#
-#if(WITH_ROCM_SMI)
-#    add_subdirectory(rsmi)
-#    list(APPEND go_amd_smi_headers rsmi/rocm_smi_go_shim.h ${go_amd_smi_headers})
-#    list(APPEND go_amd_smi_sources rsmi/rocm_smi_go_shim.c)
-#    list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/rsmi)
-#endif()
-#
-#if(WITH_AMDSMI)
-#    add_subdirectory(amdsmi)
-#    list(APPEND go_amd_smi_headers amdsmi/amdsmi_go_shim.h ${go_amd_smi_headers})
-#    list(APPEND go_amd_smi_sources amdsmi/amdsmi_go_shim.c)
-#    list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/amdsmi)
-#endif()
+add_subdirectory(esmi)
+list(APPEND go_amd_smi_headers esmi/esmi_go_shim.h ${go_amd_smi_headers})
+list(APPEND go_amd_smi_sources esmi/esmi_go_shim.c)
+list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/esmi)
+
+add_subdirectory(rsmi)
+list(APPEND go_amd_smi_headers rsmi/rocm_smi_go_shim.h ${go_amd_smi_headers})
+list(APPEND go_amd_smi_sources rsmi/rocm_smi_go_shim.c)
+list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/rsmi)
+
+add_subdirectory(amdsmi)
+list(APPEND go_amd_smi_headers amdsmi/amdsmi_go_shim.h ${go_amd_smi_headers})
+list(APPEND go_amd_smi_sources amdsmi/amdsmi_go_shim.c)
+list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/amdsmi)
 
 add_library(${GOAMDSMI_SHIM_TARGET} SHARED
 	    ${go_amd_smi_sources}

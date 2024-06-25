@@ -386,7 +386,7 @@ char* go_shim_amdsmigpu_dev_vbios_version_get(uint32_t dv_ind)
 uint64_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind)
 {
 #ifdef AMDSMI_BUILD
-	amdsmi_power_cap_info_t amdsmi_power_cap_info_temp = {};
+	amdsmi_power_cap_info_t amdsmi_power_cap_info_temp = {0};
 
 	printf("enter go_shim_amdsmigpu_dev_power_cap_get[%d]:power_cap:%d\n",dv_ind,amdsmi_power_cap_info_temp.power_cap);
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_power_cap_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], GPU_SENSOR_0, &amdsmi_power_cap_info_temp)))
@@ -401,7 +401,7 @@ uint64_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind)
 uint64_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind)
 {
 #ifdef AMDSMI_BUILD
-	amdsmi_power_info_t amdsmi_power_info_temp = {};
+	amdsmi_power_info_t amdsmi_power_info_temp = {0};
 
 	printf("enter go_shim_amdsmigpu_dev_power_ave_get[%d]:average_socket_power:%d\n",dv_ind,amdsmi_power_info_temp.average_socket_power);
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_power_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_power_info_temp)))
@@ -410,7 +410,7 @@ uint64_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind)
 		return amdsmi_power_info_temp.average_socket_power;
 	}
 
-	amdsmi_gpu_metrics_t metrics = {};
+	amdsmi_gpu_metrics_t metrics = {0};
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_metrics_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &metrics)))
 	{
 		printf("go_shim_amdsmigpu_dev_power_ave_get[%d]:average_socket_power:%d\n",dv_ind,amdsmi_power_info_temp.average_socket_power);
@@ -474,7 +474,7 @@ uint32_t go_shim_amdsmigpu_dev_perf_level_get(uint32_t dv_ind)
 uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 {
 #ifdef AMDSMI_BUILD
-	amdsmi_frequencies_t freq = {};
+	amdsmi_frequencies_t freq = {0};
 
 	printf("enter go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk[%d]:sclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
 	//int a;scanf("%d",&a);
@@ -491,7 +491,7 @@ uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 uint64_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind)
 {
 #ifdef AMDSMI_BUILD
-	amdsmi_frequencies_t freq = {};
+	amdsmi_frequencies_t freq = {0};
 
 	printf("enter go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk[%d]:mclkfrequency:%d\n",dv_ind,freq.frequency[freq.current]);
 	//int a;scanf("%d",&a);
