@@ -38,12 +38,12 @@
 
 #include <stdint.h>
 #include "rocm_smi_go_shim.h"
-#ifdef WITH_ROCM_SMI
+#ifdef ROCM_BUILD
 #include <rocm_smi/rocm_smi.h>
 #endif
 #include <stdlib.h>
 
-#ifdef WITH_ROCM_SMI
+#ifdef ROCM_BUILD
 goamdsmi_status_t go_shim_rsmi_init()
 {
 	return (RSMI_STATUS_SUCCESS == rsmi_init(0)) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;

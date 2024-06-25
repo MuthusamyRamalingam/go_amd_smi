@@ -38,11 +38,11 @@
 
 #include <stdint.h>
 #include "esmi_go_shim.h"
-#ifdef WITH_ESMI
+#ifdef ESMI_BUILD
 #include <e_smi.h>
 #endif
 
-#ifdef WITH_ESMI
+#ifdef ESMI_BUILD
 goamdsmi_status_t go_shim_esmi_init()
 {
 	return (ESMI_SUCCESS == esmi_init()) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;

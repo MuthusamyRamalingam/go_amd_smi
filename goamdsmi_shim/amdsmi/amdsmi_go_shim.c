@@ -38,7 +38,7 @@
 
 #include <stdint.h>
 #include "amdsmi_go_shim.h"
-#ifdef WITH_AMDSMI
+#ifdef AMDSMI_BUILD
 #include <amd_smi/amdsmi.h>
 #endif
 #include <unistd.h>
@@ -46,7 +46,7 @@
 
 #define nullptr ((void*)0)
 
-#ifdef WITH_AMDSMI
+#ifdef AMDSMI_BUILD
 #define MAX_SOCKET_ACROSS_SYSTEM	     4
 #define CPU_0						     0
 #define GPU_SENSOR_0					 0

@@ -46,14 +46,17 @@ set(ROCM_SMI_DIR "" CACHE PATH "path to rocm_smi installation")
 set(AMDSMI_DIR "" CACHE PATH "path to amdsmi installation")
 
 if(WITH_ESMI)
+add_definitions(-DESMI_BUILD)
 include(deps/SetupEsmi.cmake)
 endif()
 
 if(WITH_ROCM_SMI)
+add_definitions(-DROCM_BUILD)
 include(deps/SetupRocmsmi.cmake)
 endif()
 
 if(WITH_AMDSMI)
+add_definitions(-DAMDSMI_BUILD)
 add_definitions(-DENABLE_ESMI_LIB)
 include(deps/SetupAmdsmi.cmake)
 endif()
