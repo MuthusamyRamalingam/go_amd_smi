@@ -172,7 +172,7 @@ goamdsmi_status_t go_shim_amdsmicpu_number_of_threads_get(uint32_t* number_of_th
 goamdsmi_status_t go_shim_amdsmicpu_number_of_sockets_get(uint32_t* number_of_sockets)
 {
 	*number_of_sockets = num_cpuSockets;
-	printf("go_shim_amdsmicpu_number_of_sockets_get:%d\n",number_of_sockets);
+	printf("go_shim_amdsmicpu_number_of_sockets_get:%d\n",*number_of_sockets);
     return GOAMDSMI_STATUS_SUCCESS;
 }
 
