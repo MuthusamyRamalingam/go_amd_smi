@@ -35,7 +35,7 @@
  * the Advanced Micro Devices, Inc.
  *
  */
-#include "../goamdsmi/goamdsmi.h"
+#include "goamdsmi.h"
 /**
  *  @brief Go language stub to initialize the ROCm-SMI library
  *

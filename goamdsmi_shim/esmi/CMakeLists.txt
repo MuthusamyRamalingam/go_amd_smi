@@ -9,6 +9,7 @@ set(go_amd_smi_esmi_sources
     CACHE INTERNAL "")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${go_amd_smi_esmi_includes})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../goamdsmi ${go_amd_smi_esmi_includes})
 
 add_library(go_amd_smi_esmi OBJECT
             ${go_amd_smi_esmi_sources}
