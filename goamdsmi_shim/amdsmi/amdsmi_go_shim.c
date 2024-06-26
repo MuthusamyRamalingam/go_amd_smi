@@ -43,7 +43,7 @@
 #endif
 #include <unistd.h>
 #include <stdio.h>
-
+#define DEBUG_LEVEL "@DEBUG_LEVEL@"
 #define nullptr ((void*)0)
 
 #ifdef AMDSMI_BUILD
@@ -70,6 +70,7 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_so
 
 goamdsmi_status_t go_shim_amdsmi_present()
 {
+	if(3 == DEBUG_LEVEL)  printf("**gooddddddddddddddddddddddddddddd\n");
 	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
 	{
 		return GOAMDSMI_STATUS_SUCCESS;
