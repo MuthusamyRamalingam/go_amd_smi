@@ -70,7 +70,9 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_so
 
 goamdsmi_status_t go_shim_amdsmi_present()
 {
-	if(3 == DEBUG_LEVEL)  printf("**gooddddddddddddddddddddddddddddd\n");
+	printf("**************************************************************\n");
+	if(DEBUG_LEVEL == "3") printf("**gooddddddddddddddddddddddddddddd\n");
+	puts(DEBUG_LEVEL);
 	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
 	{
 		return GOAMDSMI_STATUS_SUCCESS;
