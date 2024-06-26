@@ -43,7 +43,7 @@
 #endif
 #include <unistd.h>
 #include <stdio.h>
-#define DEBUG_LEVEL @DEBUG_LEVEL@
+#define DEBUG_LEVEL "@DEBUG_LEVEL@"
 #define nullptr ((void*)0)
 
 #ifdef AMDSMI_BUILD
