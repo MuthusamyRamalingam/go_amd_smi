@@ -107,7 +107,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 		return GOAMDSMI_STATUS_FAILURE;
 	}
 #endif
-
+#if 0
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)) || 
 	    (AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) ||
@@ -118,7 +118,32 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 #endif	
 		return GOAMDSMI_STATUS_FAILURE;
 	}
-
+#else	
+	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)))
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, AMDSMI APU Init failure\n");
+#endif	
+		return GOAMDSMI_STATUS_FAILURE;
+	}
+	
+	if( (AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)))
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, Unable to get number of APU Sockets\n");
+#endif	
+		return GOAMDSMI_STATUS_FAILURE;
+	}
+	
+	if( (AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) ||
+		(0 == num_apuSockets))
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, Unable to get handler for ApuNumSockets=%d\n",num_apuSockets);
+#endif	
+		return GOAMDSMI_STATUS_FAILURE;
+	}
+#endif
 	for(uint32_t socket_counter = 0; socket_counter < num_apuSockets; socket_counter++)
 	{
 		uint32_t num_cpu		       = 0;
