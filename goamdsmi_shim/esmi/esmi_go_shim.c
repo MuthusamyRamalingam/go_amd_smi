@@ -118,7 +118,7 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%d\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
+		printf("ESMI, Success for Thread:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%d\n", thread_index, *core_energy, (*core_energy)/1000000);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -203,7 +203,7 @@ goamdsmi_status_t go_shim_esmi_core_boostlimit_get(uint32_t thread_index, uint32
 	{
 		*core_boostlimit = core_boostlimit_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Thread:%d PC:%d, CpuCoreBoostLimit:%d\n", thread_index, physicalCore_index, *core_boostlimit);
+		printf("ESMI, Success for Thread:%d, CpuCoreBoostLimit:%d\n", thread_index, *core_boostlimit);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
