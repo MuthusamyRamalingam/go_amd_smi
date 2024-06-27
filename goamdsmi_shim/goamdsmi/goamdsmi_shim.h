@@ -40,42 +40,42 @@
 /**
  *  @brief Go language stub to initialize the AMDSMI or E-SMI library
  *
- *  @retval ::uint32_t value of 1 upon success
+ *  @retval ::int value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_cpu_init();
+int goamdsmi_cpu_init();
 
 /**
  *  @brief Go language stub to get the core energy for a given core
  *
  *  @details Given a core index @p num, this function will call the
  *  esmi_core_energy_get() function to update the @p penergy in micro Joules.
- *  This value is then passed as a uint64_t val to the Go routine that called it.
+ *  This value is then passed as a int val to the Go routine that called it.
  *
  *  @param[in] num is the core index
  *
- *  @retval ::uint64_t value of the penergy in micro Joules.
+ *  @retval ::int value of the penergy in micro Joules.
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_cpu_core_energy_get(uint32_t num);
+int goamdsmi_cpu_core_energy_get(uint32_t num);
 
 /**
  *  @brief Go language stub to get the socket energy for a given socket
  *
  *  @details Given a socket index @p socket_idx, this function will call the
  *  esmi_socket_energy_get() function to get the socket energy counter of an
- *  online cpu in that socket. This value is then passed as a uint64_t val to 
+ *  online cpu in that socket. This value is then passed as a int val to 
  *  the Go routine that called it.
  *
  *  @param[in] socket_idx is the socket index
  *
- *  @retval ::uint64_t value of the socket energy counter
+ *  @retval ::int value of the socket energy counter
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_cpu_socket_energy_get(uint32_t socket_idx);
+int goamdsmi_cpu_socket_energy_get(uint32_t socket_idx);
 
 /**
  *  @brief Go language stub to get normalized status of 
@@ -87,11 +87,11 @@ uint64_t goamdsmi_cpu_socket_energy_get(uint32_t socket_idx);
  *
  *  @param[in] socket_idx a socket index
  *
- *  @retval ::uint32_t value of the prochot status
+ *  @retval ::int value of the prochot status
  *  @retval Zero is returned upon failure or if status is inactive.
  *
  */
-uint32_t goamdsmi_cpu_prochot_status_get(uint32_t socket_idx);
+int goamdsmi_cpu_prochot_status_get(uint32_t socket_idx);
 
 /**
  *  @brief Go language stub to get the instantaneous power 
@@ -102,11 +102,11 @@ uint32_t goamdsmi_cpu_prochot_status_get(uint32_t socket_idx);
  *
  *  @param[in] sock_ind a socket index
  *
- *  @retval ::uint32_t value of the socket power
+ *  @retval ::int value of the socket power
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_cpu_socket_power_get(uint32_t sock_ind);
+int goamdsmi_cpu_socket_power_get(uint32_t sock_ind);
 
 /**
  *  @brief Go language stub to get the current power cap value 
@@ -118,11 +118,11 @@ uint32_t goamdsmi_cpu_socket_power_get(uint32_t sock_ind);
  *
  *  @param[in] sock_ind a socket index
  *
- *  @retval ::uint32_t value of the socket power cap
+ *  @retval ::int value of the socket power cap
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_cpu_socket_power_cap_get(uint32_t sock_ind);
+int goamdsmi_cpu_socket_power_cap_get(uint32_t sock_ind);
 
 /**
  *  @brief Go language stub to get the boostlimit value for a given core
@@ -132,11 +132,11 @@ uint32_t goamdsmi_cpu_socket_power_cap_get(uint32_t sock_ind);
  *
  *  @param[in] socket a socket index
  *
- *  @retval ::uint32_t value of the boostlimit
+ *  @retval ::int value of the boostlimit
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_cpu_core_boostlimit_get(uint32_t socket);
+int goamdsmi_cpu_core_boostlimit_get(uint32_t socket);
 
 /**
  *  @brief Go stub to get the number of threads per core in the system
@@ -144,7 +144,7 @@ uint32_t goamdsmi_cpu_core_boostlimit_get(uint32_t socket);
  *  @retval ::Number of threads per core
  *  @retval Zero is returned upon failure.
  */
-uint32_t goamdsmi_cpu_threads_per_core_get();
+int goamdsmi_cpu_threads_per_core_get();
 
 /**
  *  @brief Go stub to get the number of threads available in the system
@@ -152,36 +152,36 @@ uint32_t goamdsmi_cpu_threads_per_core_get();
  *  @retval ::Number of threads
  *  @retval Zero is returned upon failure.
  */
-uint32_t goamdsmi_cpu_number_of_threads_get();
+int goamdsmi_cpu_number_of_threads_get();
 
 /**
  *  @brief Go stub to get the total number of processor sockets 
  *  available in the system
  *
- *  @retval ::uint32_t value of the socket number
+ *  @retval ::int value of the socket number
  *  @retval Zero is returned upon failure.
  */
-uint32_t goamdsmi_cpu_number_of_sockets_get();
+int goamdsmi_cpu_number_of_sockets_get();
 
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the ROCm-SMI library
  *
- *  @retval ::uint32_t value of 1 upon success
+ *  @retval ::int value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_init();
+int goamdsmi_gpu_init();
 
 /**
  *  @brief Go language stub to shut down the ROCm-SMI library
  *  and do necessary clean up
  *
- *  @retval ::uint32_t value of 1 upon success
+ *  @retval ::int value of 1 upon success
  *  @retval Zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_shutdown();
+int goamdsmi_gpu_shutdown();
 
 /**
  *  @brief Go language stub to get the number of GPU devices
@@ -197,7 +197,7 @@ uint32_t goamdsmi_gpu_shutdown();
  *  @retval zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_num_monitor_devices();
+int goamdsmi_gpu_num_monitor_devices();
 
 /**
  *  @brief Go language stub to get the gpu device name string
@@ -211,7 +211,7 @@ uint32_t goamdsmi_gpu_num_monitor_devices();
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::char* VBIOS identifier
- *  @retval NULL is returned upon failure.
+ *  @retval NA is returned upon failure.
  *
  */
 char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind);
@@ -221,16 +221,16 @@ char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind);
  *
  *  @details This function will call the rsmi_dev_id_get()
  *  function to return the GPU device id. This value is then
- *  passed as a uint16_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint16_t value of num GPUs
+ *  @retval ::int value of num GPUs
  *  @retval zero is returned upon failure.
  *
  */
-uint16_t goamdsmi_gpu_dev_id_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_id_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU unique pci id
@@ -238,15 +238,15 @@ uint16_t goamdsmi_gpu_dev_id_get(uint32_t dv_ind);
  *  @details This function will call the rsmi_dev_pci_id_get()
  *  function to return the unique PCI device identifier
  *  associated for a device. This value is then passed as
- *  a uint64_t val to the Go routine that called it.
+ *  a int val to the Go routine that called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t value of pci id
+ *  @retval ::int value of pci id
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_pci_id_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_pci_id_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the VBIOS identifier string
@@ -262,7 +262,7 @@ uint64_t goamdsmi_gpu_dev_pci_id_get(uint32_t dv_ind);
  *  @param[in] ::char* vbios buffer of length
  *
  *  @retval ::char* VBIOS identifier
- *  @retval NULL is returned upon failure
+ *  @retval NA is returned upon failure
  *
  */
 char* goamdsmi_gpu_dev_vbios_version_get(uint32_t dv_ind);
@@ -280,7 +280,7 @@ char* goamdsmi_gpu_dev_vbios_version_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::uint16_t value of subsystem id
- *  @retval NULL is returned upon failure.
+ *  @retval NA is returned upon failure.
  *
  */
 char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind);
@@ -290,253 +290,253 @@ char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind);
  *
  *  @details This function will call the rsmi_dev_power_cap_get()
  *  function to return the gpu power cap. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t GPU power cap
+ *  @retval ::int GPU power cap
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU power average
  *
  *  @details This function will call the rsmi_dev_power_ave_get()
  *  function to return the gpu power average. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t GPU power average
+ *  @retval ::int GPU power average
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU current temperature
  *
  *  @details This function will call the rsmi_dev_temp_metric_get()
  *  function to return the gpu current temperature. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, uint32_t sensor, uint32_t metric
  *
- *  @retval ::uint64_t GPU current temperature
+ *  @retval ::int GPU current temperature
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric);
+int goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric);
 
 /**
  *  @brief Go language stub to get the overdrive level of the device
  *
  *  @details This function will call the rsmi_dev_overdrive_level_get()
  *  function to return the overdrive percentage. This value is then
- *  passed as a uint32_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint32_t overdrive level
+ *  @retval ::int overdrive level
  *  @retval zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_dev_overdrive_level_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_overdrive_level_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the memory overdrive level of the device
  *
  *  @details This function will call the rsmi_dev_mem_overdrive_level_get()
  *  function to return the memory overdrive percentage. This value is then
- *  passed as a uint32_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint32_t memory overdrive level
+ *  @retval ::int memory overdrive level
  *  @retval zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_dev_mem_overdrive_level_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_mem_overdrive_level_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the performance level of the device
  *
  *  @details This function will call the rsmi_dev_perf_level_get()
  *  function to return the  rsmi_dev_perf_level_t. This value is then
- *  passed as a uint32_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint32_t performance level (rsmi_dev_perf_level_t)
+ *  @retval ::int performance level (rsmi_dev_perf_level_t)
  *  @retval zero is returned upon failure.
  *
  */
-uint32_t goamdsmi_gpu_dev_perf_level_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_perf_level_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU SCLK limit
  *
  *  @details This function will call the rsmi_dev_gpu_clk_freq_get()
  *  function to return the gpu SCLK Limit. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU SCLK Limit
+ *  @retval ::int GPU SCLK Limit
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU MCLK limit
  *
  *  @details This function will call the rsmi_dev_gpu_clk_freq_get()
  *  function to return the gpu MCLK Limit. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU MCLK Limit
+ *  @retval ::int GPU MCLK Limit
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the minimum supported SCLK frequency
  *
  *  @details This function will call the rsmi_od_volt_freq_data_get()
  *  function to return the minium supported SCLK frequency.
- *  This value is then passed as a uint64_t val to the Go routine that
+ *  This value is then passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t mimimum supported sclk frequency
+ *  @retval ::int mimimum supported sclk frequency
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_od_volt_freq_range_min_get_sclk(uint32_t dv_ind);
+int goamdsmi_gpu_od_volt_freq_range_min_get_sclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the minimum supported MCLK frequency
  *
  *  @details This function will call the rsmi_od_volt_freq_data_get()
  *  function to return the minium supported MCLK frequency.
- *  This value is then passed as a uint64_t val to the Go routine that
+ *  This value is then passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t mimimum supported mclk sfrequency
+ *  @retval ::int mimimum supported mclk sfrequency
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_od_volt_freq_range_min_get_mclk(uint32_t dv_ind);
+int goamdsmi_gpu_od_volt_freq_range_min_get_mclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the maximum supported SCLK frequency
  *
  *  @details This function will call the rsmi_od_volt_freq_data_get()
  *  function to return the maxium supported SCLK frequency.
- *  This value is then passed as a uint64_t val to the Go routine that
+ *  This value is then passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t maximum supported sclk frequency
+ *  @retval ::int maximum supported sclk frequency
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_od_volt_freq_range_max_get_sclk(uint32_t dv_ind);
+int goamdsmi_gpu_od_volt_freq_range_max_get_sclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the maximum supported MCLK frequency
  *
  *  @details This function will call the rsmi_od_volt_freq_data_get()
  *  function to return the maxium supported MCLK frequency.
- *  This value is then passed as a uint64_t val to the Go routine that
+ *  This value is then passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint64_t maximum supported mclk sfrequency
+ *  @retval ::int maximum supported mclk sfrequency
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind);
+int goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU Activity
  *
  *  @details This function will call the rsmi_dev_gpu_activity_get()
  *  function to return the current GPU use. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU Activity use
+ *  @retval ::int GPU Activity use
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU Memory Use percent
  *
  *  @details This function will call the rsmi_dev_memory_busy_percent_get()
  *  function to return the current device memory use percent. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU memory use percent
+ *  @retval ::int GPU memory use percent
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU Memory Usage
  *
  *  @details This function will call the rsmi_dev_memory_usage_get()
  *  function to return the amount of memory currently being used. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t GPU memory usage
+ *  @retval ::int GPU memory usage
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_memory_usage_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_memory_usage_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the Total amount of GPU Memory
  *
  *  @details This function will call the rsmi_dev_memory_total_get()
  *  function to return the total amount of memory. This value is then
- *  passed as a uint64_t val to the Go routine that
+ *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
- *  @retval ::uint64_t Total GPU memory
+ *  @retval ::int Total GPU memory
  *  @retval zero is returned upon failure.
  *
  */
-uint64_t goamdsmi_gpu_dev_gpu_memory_total_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_gpu_memory_total_get(uint32_t dv_ind);
