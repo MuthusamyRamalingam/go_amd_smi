@@ -44,4 +44,9 @@ typedef enum {
   GOAMDSMI_STATUS_FAILURE = 0xFFFFFFFF,        //!< Operation was failure
 } goamdsmi_status_t;
 
+typedef enum {
+  GOAMDSMI_CPU_INIT = 0x0,               //!< CPU Init
+  GOAMDSMI_GPU_INIT = 0x1,               //!< GPU Init
+} goamdsmi_Init_t;
+
 #endif
