@@ -60,7 +60,7 @@ int goamdsmi_cpu_init()
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmi_)	{amdsmi_init = true;}
 	if(GOAMDSMI_STATUS_SUCCESS == esmi_)	{esmi_init = true;}
-	if(amdsmi_init || rsmi_init)			return 1;
+	if(amdsmi_init || esmi_init)			return 1;
 
 #ifdef ENABLE_DEBUG_LEVEL_1
 	printf("GOAMDSMI, Failed, CpuInit:0\n");
