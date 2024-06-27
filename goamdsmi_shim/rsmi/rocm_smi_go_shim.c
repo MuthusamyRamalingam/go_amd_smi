@@ -49,15 +49,26 @@
 #ifdef ROCM_BUILD
 goamdsmi_status_t go_shim_rsmi_init()
 {
+	if(RSMI_STATUS_SUCCESS == rsmi_init(0))
+	{
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("ROCMSMI, Success, CpuInit:true\n");
-#endif	
-	return (RSMI_STATUS_SUCCESS == rsmi_init(0)) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;
+		printf("ROCMSMI, Success, GpuInit:1\n");
+#endif			
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
 goamdsmi_status_t go_shim_rsmi_shutdown()
 {
-    return (RSMI_STATUS_SUCCESS == rsmi_shut_down()) ? GOAMDSMI_STATUS_SUCCESS : GOAMDSMI_STATUS_FAILURE;
+    if (RSMI_STATUS_SUCCESS == rsmi_shut_down())
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("ROCMSMI, Success, GpuShutdown:1\n");
+#endif			
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+	return GOAMDSMI_STATUS_FAILURE;
 }
 
 goamdsmi_status_t go_shim_rsmi_num_monitor_devices(uint32_t* gpu_num_monitor_devices)

@@ -51,7 +51,7 @@ goamdsmi_status_t go_shim_esmi_init()
 	if(ESMI_SUCCESS == esmi_init()) 
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success, CpuInit:true\n");
+		printf("ESMI, Success, CpuInit:1\n");
 #endif		
 		GOAMDSMI_STATUS_SUCCESS;
 	}
