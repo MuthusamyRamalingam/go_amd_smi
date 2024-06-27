@@ -63,7 +63,7 @@ int goamdsmi_cpu_init()
 	if(amdsmi_init || rsmi_init)			return 1;
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuInit:0");
+	printf("GOAMDSMI, Failed, CpuInit:0\n");
 #endif		
 	return 0;
 }
@@ -76,7 +76,7 @@ int goamdsmi_cpu_threads_per_core_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_threads_per_core_get(&threads_per_core_temp)))		{return threads_per_core_temp;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuThreadsPerCore:0");
+	printf("GOAMDSMI, Failed, CpuThreadsPerCore:0\n");
 #endif
 	return 0;
 }
@@ -89,7 +89,7 @@ int goamdsmi_cpu_number_of_threads_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_threads_get(&num_threads_per_core)))		{return num_threads_per_core;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuNumThreads:0");
+	printf("GOAMDSMI, Failed, CpuNumThreads:0\n");
 #endif		
 	return 0;
 }
@@ -102,7 +102,7 @@ int goamdsmi_cpu_number_of_sockets_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(&number_of_sockets)))	 {return number_of_sockets;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuNumSockets:0");
+	printf("GOAMDSMI, Failed, CpuNumSockets:0\n");
 #endif	
 	return 0;
 }
