@@ -78,6 +78,13 @@ goamdsmi_status_t go_shim_amdsmi_present()
 #endif
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
+	if(0 == access("/opt/rocm/lib64/libamd_smi.so", F_OK)) 
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Success, AMDSMI Found /opt/rocm/lib64/libamd_smi.so\n");
+#endif
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
