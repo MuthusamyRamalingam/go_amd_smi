@@ -193,7 +193,7 @@ int goamdsmi_gpu_shutdown();
  *
  *  @param[in] ::
  *
- *  @retval ::uint value of num GPUs
+ *  @retval ::int value of num GPUs
  *  @retval zero is returned upon failure.
  *
  */
