@@ -228,7 +228,7 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 		else
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Success for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%d\n", dv_ind, i, *gpu_power_avg, (*gpu_power_avg)/1000000);
+			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%d\n", dv_ind, i, *gpu_power_avg, (*gpu_power_avg)/1000000);
 #endif	
 		}
 	}
@@ -267,7 +267,7 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 		else
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%d\n", dv_ind, i, metric, *gpu_temperature, (*gpu_temperature)/1000);
+			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%d\n", dv_ind, i, metric, *gpu_temperature, (*gpu_temperature)/1000);
 #endif	
 		}
 	}
