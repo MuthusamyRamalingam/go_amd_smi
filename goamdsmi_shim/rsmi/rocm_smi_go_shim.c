@@ -204,7 +204,7 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 	*gpu_power_avg					= 0;
 	uint64_t gpu_power_avg_temp	 	= 0;
 
-#if 0
+#if 1
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_ave_get(dv_ind, GPU_SENSOR_0, &gpu_power_avg_temp))
 	{
 		*gpu_power_avg = gpu_power_avg_temp;
@@ -243,7 +243,7 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 	*gpu_temperature					= 0;
 	uint64_t gpu_temperature_temp	 	= 0;
 
-#if 0
+#if 1
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature_temp))
 	{
 		*gpu_temperature = gpu_temperature_temp;
