@@ -140,7 +140,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 		}
 	}
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success, APUInit\n");
+	printf("AMDSMI, Success, APUInit\n");
 #endif	
 	return GOAMDSMI_STATUS_SUCCESS;
 }
@@ -165,7 +165,7 @@ goamdsmi_status_t go_shim_amdsmicpu_threads_per_core_get(uint32_t* threads_per_c
 	*threads_per_core 				= 0;
 	uint32_t threads_per_core_temp  = 0;
 
-	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_threads_per_core(&threads_per_core_temp)))
+	if(0)//$$(AMDSMI_STATUS_SUCCESS == amdsmi_get_threads_per_core(&threads_per_core_temp)))
 	{
 		*threads_per_core = threads_per_core_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
