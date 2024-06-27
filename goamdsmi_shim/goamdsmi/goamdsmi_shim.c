@@ -47,6 +47,8 @@
 #ifdef ENABLE_DEBUG_LEVEL_1	
 #include <stdio.h>
 #endif
+#include <stdlib.h>
+#include <string.h>
 static bool amdsmi_init	= false;
 static bool esmi_init	= false; 		
 static bool rsmi_init	= false; 		
