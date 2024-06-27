@@ -118,7 +118,7 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d\n", thread_index, physicalCore_index, *core_energy);
+		printf("ESMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%d\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -135,7 +135,7 @@ goamdsmi_status_t go_shim_esmi_socket_energy_get(uint32_t socket_index, uint64_t
 	{
 		*socket_energy = socket_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%d\n", socket_index, *socket_energy);
+		printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%d\n", socket_index, *socket_energy, (*socket_energy)/1000000);
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -169,7 +169,7 @@ goamdsmi_status_t go_shim_esmi_socket_power_get(uint32_t socket_index, uint32_t*
 	{
 		*socket_power = socket_power_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketPowerCap:%d\n", socket_index, *socket_power_cap);
+		printf("ESMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%d\n", socket_index, *socket_power, (*socket_power)/1000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -186,7 +186,7 @@ goamdsmi_status_t go_shim_esmi_socket_power_cap_get(uint32_t socket_index, uint3
 	{
 		*socket_power_cap = socket_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketPowerCap:%d\n", socket_index, *socket_power_cap);
+		printf("ESMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%d\n", socket_index, *socket_power_cap, (*socket_power_cap)/1000);
 #endif
 		return GOAMDSMI_STATUS_SUCCESS;
 	}

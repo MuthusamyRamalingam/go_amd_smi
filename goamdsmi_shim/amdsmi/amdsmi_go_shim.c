@@ -203,7 +203,7 @@ goamdsmi_status_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index, uint6
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d\n", thread_index, physicalCore_index, *core_energy);
+		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%d\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
 #endif		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -218,7 +218,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_energy_get(uint32_t socket_index, uin
 	{
 		*socket_energy = socket_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d\n", socket_index, *socket_energy);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%d\n", socket_index, *socket_energy, (*socket_energy)/1000000);
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -248,7 +248,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index, uint
 	{
 		*socket_power = socket_power_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d\n", socket_index, *socket_power);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%d\n", socket_index, *socket_power, (*socket_power)/1000);
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -263,7 +263,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index, 
 	{
 		*socket_power_cap = socket_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d\n", socket_index, *socket_power_cap);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%d\n", socket_index, *socket_power_cap, (*socket_power_cap)/1000);
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -362,7 +362,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind, uint64_t*
 	{
 		*gpu_power_cap = amdsmi_power_cap_info_temp.power_cap;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuPowerCap:%d\n", dv_ind, *gpu_power_cap);
+		printf("AMDSMI, Success for Gpu:%d, GpuPowerCap:%d, GpuPowerCapInWatt:%d\n", dv_ind, *gpu_power_cap, (*gpu_power_cap)/1000000);
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -378,7 +378,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind, uint64_t*
 	{
 		*gpu_power_avg = amdsmi_power_info_temp.average_socket_power;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuPowerAverage:%d\n", dv_ind, *gpu_power_avg);
+		printf("AMDSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%d\n", dv_ind, *gpu_power_avg, (*gpu_power_avg)/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -405,7 +405,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_temp_metric_get(uint32_t dv_ind, uint32_
 	{
 		*gpu_temperature = gpu_temperature_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d\n", dv_ind, sensor, metric, *gpu_temperature);
+		printf("AMDSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%d\n", dv_ind, sensor, metric, *gpu_temperature, (*gpu_temperature)/1000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -436,7 +436,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind, u
 	{
 		*gpu_sclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuSclkFreq:%d\n", dv_ind, *gpu_sclk_freq);
+		printf("AMDSMI, Success for Gpu:%d, GpuSclkFreq:%d, GpuSclkFreqMhz:%d\n", dv_ind, *gpu_sclk_freq, (*gpu_sclk_freq)/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -452,7 +452,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind, u
 	{
 		*gpu_memclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuMclkFreq:%d\n", dv_ind, *gpu_memclk_freq);
+		printf("AMDSMI, Success for Gpu:%d, GpuMclkFreq:%d, GpuMclkFreqMhz:%d\n", dv_ind, *gpu_memclk_freq, (*gpu_memclk_freq)/1000000);
 #endif		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
