@@ -98,7 +98,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
-#if 0
+#if 1
 	if(GOAMDSMI_STATUS_FAILURE == go_shim_amdsmi_present())
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1
@@ -119,7 +119,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 		return GOAMDSMI_STATUS_FAILURE;
 	}
 #else	
-	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)))
+	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_GPUS)))
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1
 		printf("AMDSMI, Failed, AMDSMI APU Init failure\n");
