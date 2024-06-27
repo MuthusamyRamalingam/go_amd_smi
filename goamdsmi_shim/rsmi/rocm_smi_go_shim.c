@@ -242,7 +242,7 @@ goamdsmi_status_t go_shim_rsmi_dev_overdrive_level_get(uint32_t dv_ind, uint32_t
 	{
 		*gpu_overdrive_level = gpu_overdrive_level_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuOverdriveLevel:%d\n", dv_ind, *gpu_overdrive_level_temp);
+		printf("ROCMSMI, Success for Gpu:%d, GpuOverdriveLevel:%d\n", dv_ind, *gpu_overdrive_level);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -259,7 +259,7 @@ goamdsmi_status_t go_shim_rsmi_dev_mem_overdrive_level_get(uint32_t dv_ind, uint
     {
 		*gpu_mem_overdrive_level = gpu_mem_overdrive_level_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuMemoryOverdriveLevel:%d\n", dv_ind, *gpu_mem_overdrive_level_temp);
+		printf("ROCMSMI, Success for Gpu:%d, GpuMemoryOverdriveLevel:%d\n", dv_ind, *gpu_mem_overdrive_level);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -276,7 +276,7 @@ goamdsmi_status_t go_shim_rsmi_dev_perf_level_get(uint32_t dv_ind, uint32_t *gpu
 	{
 		*gpu_perf = perf;				//Conversion from rsmi_dev_perf_level_t to uint32_t
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuPerfLevel:%d\n", dv_ind, *perf);
+		printf("ROCMSMI, Success for Gpu:%d, GpuPerfLevel:%d\n", dv_ind, *gpu_perf);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -395,7 +395,7 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_busy_percent_get(uint32_t dv_ind, uint32_
 	{
         *gpu_busy_percent = gpu_busy_percent_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuBusyPerc:%d\n", dv_ind, *gpu_busy_percent_temp);
+		printf("ROCMSMI, Success for Gpu:%d, GpuBusyPerc:%d\n", dv_ind, *gpu_busy_percent);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
