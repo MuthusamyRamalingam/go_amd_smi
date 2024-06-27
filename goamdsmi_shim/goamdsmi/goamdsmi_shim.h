@@ -88,7 +88,7 @@ int goamdsmi_cpu_socket_energy_get(uint32_t socket_idx);
  *  @param[in] socket_idx a socket index
  *
  *  @retval ::int value of the prochot status
- *  @retval Zero is returned upon failure or if status is inactive.
+ *  @retval -1 is returned upon failure or if status is inactive.
  *
  */
 int goamdsmi_cpu_prochot_status_get(uint32_t socket_idx);
@@ -103,7 +103,7 @@ int goamdsmi_cpu_prochot_status_get(uint32_t socket_idx);
  *  @param[in] sock_ind a socket index
  *
  *  @retval ::int value of the socket power
- *  @retval Zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_cpu_socket_power_get(uint32_t sock_ind);
@@ -119,7 +119,7 @@ int goamdsmi_cpu_socket_power_get(uint32_t sock_ind);
  *  @param[in] sock_ind a socket index
  *
  *  @retval ::int value of the socket power cap
- *  @retval Zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_cpu_socket_power_cap_get(uint32_t sock_ind);
@@ -133,7 +133,7 @@ int goamdsmi_cpu_socket_power_cap_get(uint32_t sock_ind);
  *  @param[in] socket a socket index
  *
  *  @retval ::int value of the boostlimit
- *  @retval Zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_cpu_core_boostlimit_get(uint32_t socket);
@@ -227,7 +227,7 @@ char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int value of num GPUs
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_id_get(uint32_t dv_ind);
@@ -243,7 +243,7 @@ int goamdsmi_gpu_dev_id_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int value of pci id
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_pci_id_get(uint32_t dv_ind);
@@ -279,7 +279,7 @@ char* goamdsmi_gpu_dev_vbios_version_get(uint32_t dv_ind);
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::uint16_t value of subsystem id
+ *  @retval ::char* vendor name
  *  @retval NA is returned upon failure.
  *
  */
@@ -296,7 +296,7 @@ char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int GPU power cap
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind);
@@ -312,7 +312,7 @@ int goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int GPU power average
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind);
@@ -328,7 +328,7 @@ int goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, uint32_t sensor, uint32_t metric
  *
  *  @retval ::int GPU current temperature
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric);
@@ -344,7 +344,7 @@ int goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t 
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int overdrive level
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_overdrive_level_get(uint32_t dv_ind);
@@ -360,7 +360,7 @@ int goamdsmi_gpu_dev_overdrive_level_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int memory overdrive level
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_mem_overdrive_level_get(uint32_t dv_ind);
@@ -376,7 +376,7 @@ int goamdsmi_gpu_dev_mem_overdrive_level_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int performance level (rsmi_dev_perf_level_t)
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_perf_level_get(uint32_t dv_ind);
@@ -392,7 +392,7 @@ int goamdsmi_gpu_dev_perf_level_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int GPU SCLK Limit
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind);
@@ -408,7 +408,7 @@ int goamdsmi_gpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int GPU MCLK Limit
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind);
@@ -424,7 +424,7 @@ int goamdsmi_gpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int mimimum supported sclk frequency
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_od_volt_freq_range_min_get_sclk(uint32_t dv_ind);
@@ -440,7 +440,7 @@ int goamdsmi_gpu_od_volt_freq_range_min_get_sclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int mimimum supported mclk sfrequency
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_od_volt_freq_range_min_get_mclk(uint32_t dv_ind);
@@ -456,7 +456,7 @@ int goamdsmi_gpu_od_volt_freq_range_min_get_mclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int maximum supported sclk frequency
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_od_volt_freq_range_max_get_sclk(uint32_t dv_ind);
@@ -472,7 +472,7 @@ int goamdsmi_gpu_od_volt_freq_range_max_get_sclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index
  *
  *  @retval ::int maximum supported mclk sfrequency
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind);
@@ -488,7 +488,7 @@ int goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int GPU Activity use
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
@@ -504,7 +504,7 @@ int goamdsmi_gpu_dev_gpu_busy_percent_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int GPU memory use percent
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind);
@@ -520,7 +520,7 @@ int goamdsmi_gpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int GPU memory usage
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_memory_usage_get(uint32_t dv_ind);
@@ -536,7 +536,7 @@ int goamdsmi_gpu_dev_gpu_memory_usage_get(uint32_t dv_ind);
  *  @param[in] ::uint32_t device index, flag, ptr to rsmi_frequencies_t
  *
  *  @retval ::int Total GPU memory
- *  @retval zero is returned upon failure.
+ *  @retval -1 is returned upon failure.
  *
  */
 int goamdsmi_gpu_dev_gpu_memory_total_get(uint32_t dv_ind);
