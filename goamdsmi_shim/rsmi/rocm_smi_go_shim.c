@@ -204,6 +204,7 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 	*gpu_power_avg					= 0;
 	uint64_t gpu_power_avg_temp	 	= 0;
 
+#if 0
 	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_ave_get(dv_ind, GPU_SENSOR_0, &gpu_power_avg_temp))
 	{
 		*gpu_power_avg = gpu_power_avg_temp;
@@ -212,6 +213,27 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
+#else
+	for(int i = 0;i < 100; i++)
+	{
+		rsmi_status_t temp = rsmi_dev_power_ave_get(dv_ind, i, &gpu_power_avg_temp);
+		printf("********ROCMSMI:i[%d]:%d",i,temp);
+		if(RSMI_STATUS_SUCCESS == temp)
+		{
+			*gpu_power_avg = gpu_power_avg_temp;
+#ifdef ENABLE_DEBUG_LEVEL_1
+			printf("ROCMSMI, Success for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%d\n", dv_ind, i, *gpu_power_avg, (*gpu_power_avg)/1000000);
+#endif			
+		}
+		else
+		{
+#ifdef ENABLE_DEBUG_LEVEL_1
+			printf("ROCMSMI, Success for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%d\n", dv_ind, i, *gpu_power_avg, (*gpu_power_avg)/1000000);
+#endif	
+		}
+	}
+	if(0 != *gpu_power_avg) return GOAMDSMI_STATUS_SUCCESS;
+#endif
 
 	return GOAMDSMI_STATUS_FAILURE;
 }
@@ -241,7 +263,6 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 #ifdef ENABLE_DEBUG_LEVEL_1
 			printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%d\n", dv_ind, i, metric, *gpu_temperature, (*gpu_temperature)/1000);
 #endif			
-			return GOAMDSMI_STATUS_SUCCESS;
 		}
 		else
 		{
@@ -250,6 +271,7 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 #endif	
 		}
 	}
+	if(0 != *gpu_temperature) return GOAMDSMI_STATUS_SUCCESS;
 #endif	
 	return GOAMDSMI_STATUS_FAILURE;
 }
