@@ -61,6 +61,10 @@ add_definitions(-DENABLE_ESMI_LIB)
 include(deps/SetupAmdsmi.cmake)
 endif()
 
+if(ENABLE_DEBUG)
+add_definitions(-DENABLE_DEBUG_LEVEL_1)
+endif()
+
 set(GOAMDSMI_SHIM "goamdsmi_shim")
 set(GOAMDSMI_SHIM_LIB "goamdsmi")
 set(GOAMDSMI_SHIM_COMPONENT "lib${GOAMDSMI_SHIM}")
