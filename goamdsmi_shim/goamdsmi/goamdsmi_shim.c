@@ -188,7 +188,7 @@ int goamdsmi_cpu_core_boostlimit_get(uint32_t thread_index)
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 int goamdsmi_gpu_init()
 {
-	goamdsmi_status_t amdsmi_	= go_shim_amdsmicpu_init();
+	goamdsmi_status_t amdsmi_	= go_shim_amdsmigpu_init();
 	goamdsmi_status_t rsmi_		= go_shim_rsmi_init();
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmi_)	{amdsmi_init = true;}
