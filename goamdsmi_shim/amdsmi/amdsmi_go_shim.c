@@ -98,13 +98,24 @@ goamdsmi_status_t go_shim_amdsmiapu_init()
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
-	if(GOAMDSMI_STATUS_FAILURE == go_shim_amdsmi_present()) 	return GOAMDSMI_STATUS_FAILURE;
+#if 0
+	if(GOAMDSMI_STATUS_FAILURE == go_shim_amdsmi_present())
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, AMDSMI libamd_smi.so not present in the System /opt/rocm/lib/ (or) /opt/rocm/lib64/\n");
+#endif
+		return GOAMDSMI_STATUS_FAILURE;
+	}
+#endif
 
 	if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_APUS)) ||
 		(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, nullptr)) || 
 	    (AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) ||
 		(0 == num_apuSockets))
 	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, ApuNumSockets=0\n");
+#endif	
 		return GOAMDSMI_STATUS_FAILURE;
 	}
 
