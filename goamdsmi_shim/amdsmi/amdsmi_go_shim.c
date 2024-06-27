@@ -130,7 +130,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		}
 	}
 
-#if 1
+#if 0
 	if(GOAMDSMI_STATUS_FAILURE == go_shim_amdsmi_present())
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1
@@ -150,7 +150,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 			(0 == num_cpuSockets))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Status, CpuNumSockets=0\n");
+			printf("AMDSMI, Failed, AMDSMICPUInit=0, CpuNumSockets=0\n");
 #endif	
 			return GOAMDSMI_STATUS_FAILURE;
 		}
@@ -196,7 +196,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 			(0 == num_gpuSockets))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Status, GpuNumSockets=0\n");
+			printf("AMDSMI, Failed, AMDSMIGPUInit=0, GpuNumSockets=0\n");
 #endif	
 			return GOAMDSMI_STATUS_FAILURE;
 		}
@@ -239,7 +239,7 @@ goamdsmi_status_t go_shim_amdsmicpu_init()
 		if((num_cpu_inAllSocket) && (num_cpu_physicalCore_inAllSocket))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Success, CpuInit:1, CpuNumSockets:%d, CpuNumPhysicalCore:%d\n", num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
+			printf("AMDSMI, Success, AMDSMICPUInit:1, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d,\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
 #endif	
 			return GOAMDSMI_STATUS_SUCCESS;
 		}
@@ -252,7 +252,6 @@ goamdsmi_status_t go_shim_amdsmicpu_threads_per_core_get(uint32_t* threads_per_c
 	*threads_per_core 				= 0;
 	uint32_t threads_per_core_temp  = 0;
 
-#if 1
 	if((AMDSMI_STATUS_SUCCESS == amdsmi_get_threads_per_core(&threads_per_core_temp)))
 	{
 		*threads_per_core = threads_per_core_temp;
@@ -261,16 +260,7 @@ goamdsmi_status_t go_shim_amdsmicpu_threads_per_core_get(uint32_t* threads_per_c
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
-#else
-	if(1)
-	{
-		*threads_per_core = 2;
-#ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success, CpuThreadsPerCore:%d\n", *threads_per_core);
-#endif	
-		return GOAMDSMI_STATUS_SUCCESS;
-	}
-#endif	
+	
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
@@ -400,7 +390,7 @@ goamdsmi_status_t go_shim_amdsmigpu_init()
 		if((num_gpu_devices_inAllSocket))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Success, GpuInit:1, GpuNumSockets:%d\n", num_gpu_devices_inAllSocket);
+			printf("AMDSMI, Success, AMDSMIGPUInit:1, GpuSocketCount:%d, GpuCount:%d\n", num_gpuSockets, num_gpu_devices_inAllSocket);
 #endif	
 			return GOAMDSMI_STATUS_SUCCESS;
 		}
