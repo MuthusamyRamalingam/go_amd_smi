@@ -194,7 +194,7 @@ endif()
 if(WITH_AMDSMI)
     target_link_libraries(${GOAMDSMI_SHIM_TARGET} amd_smi)
     target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${AMDSMI_DIR}/lib)
-	target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${AMDSMI_DIR}/lib64)
+    target_link_libraries(${GOAMDSMI_SHIM_TARGET} -L${AMDSMI_DIR}/lib64)
 endif()
 
 ## Set the VERSION and SOVERSION values
