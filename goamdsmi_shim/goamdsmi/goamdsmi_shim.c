@@ -61,9 +61,9 @@ int goamdsmi_cpu_init()
 	if(amdsmi_init || rsmi_init)			return 1;
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuInit:-1");
+	printf("GOAMDSMI, Failed, CpuInit:0");
 #endif		
-	return -1;
+	return 0;
 }
 
 int goamdsmi_cpu_threads_per_core_get()
@@ -74,9 +74,9 @@ int goamdsmi_cpu_threads_per_core_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_threads_per_core_get(&threads_per_core_temp)))		{return threads_per_core_temp;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuThreadsPerCore:-1");
+	printf("GOAMDSMI, Failed, CpuThreadsPerCore:0");
 #endif
-	return -1;
+	return 0;
 }
 
 int goamdsmi_cpu_number_of_threads_get()
@@ -87,9 +87,9 @@ int goamdsmi_cpu_number_of_threads_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_threads_get(&num_threads_per_core)))		{return num_threads_per_core;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuNumThreads:-1");
+	printf("GOAMDSMI, Failed, CpuNumThreads:0");
 #endif		
-	return -1;
+	return 0;
 }
 
 int goamdsmi_cpu_number_of_sockets_get()
@@ -100,9 +100,9 @@ int goamdsmi_cpu_number_of_sockets_get()
 	else if	((esmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(&number_of_sockets)))	 {return number_of_sockets;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, CpuNumSockets:-1");
+	printf("GOAMDSMI, Failed, CpuNumSockets:0");
 #endif	
-	return -1;
+	return 0;
 }
 
 int goamdsmi_cpu_core_energy_get(uint32_t thread_index)
@@ -194,9 +194,9 @@ int goamdsmi_gpu_init()
 	if(amdsmi_init || rsmi_init)			return 1;
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, GpuInit:-1\n");
+	printf("GOAMDSMI, Failed, GpuInit:0\n");
 #endif	
-	return -1;
+	return 0;
 }
 
 int goamdsmi_gpu_shutdown()
@@ -205,9 +205,9 @@ int goamdsmi_gpu_shutdown()
 	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_shutdown()))		{return 1;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, GpuShutdown:-1\n");
+	printf("GOAMDSMI, Failed, GpuShutdown:0\n");
 #endif
-	return -1;
+	return 0;
 }
 
 int goamdsmi_gpu_num_monitor_devices()
@@ -218,9 +218,9 @@ int goamdsmi_gpu_num_monitor_devices()
 	else if	((rsmi_init)  &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_num_monitor_devices(&gpu_num_monitor_devices)))	 {return gpu_num_monitor_devices;}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
-	printf("GOAMDSMI, Failed, GpuNumMonitorDevices:-1\n");
+	printf("GOAMDSMI, Failed, GpuNumMonitorDevices:0\n");
 #endif	
-	return -1;
+	return 0;
 }
 
 char* goamdsmi_gpu_dev_name_get(uint32_t dv_ind)
