@@ -217,7 +217,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		if((0 == num_gpuSockets)||(0 == num_gpu_devices_inAllSocket))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Failed, GPU Enumuration Success AMDSMIGPUInit:0, GpuSocketCount:%d, GpuCount:%d\n", num_gpuSockets, num_gpu_devices_inAllSocket);
+			printf("AMDSMI, Failed, GPU Enumuration Failed AMDSMIGPUInit:0, GpuSocketCount:%d, GpuCount:%d\n", num_gpuSockets, num_gpu_devices_inAllSocket);
 #endif	
 			return GOAMDSMI_STATUS_FAILURE;
 		}
