@@ -191,7 +191,7 @@ goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_
 	{
 		*gpu_power_cap = gpu_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuPowerCap:%d, GpuPowerCapInWatt:%.6f\n", dv_ind, (int)(*gpu_power_cap), (double)((*gpu_power_cap)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuPowerCap:%d, GpuPowerCapInWatt:%.6f\n", dv_ind, (int)(*gpu_power_cap), ((double)(*gpu_power_cap))/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -209,16 +209,15 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 	{
 		*gpu_power_avg = gpu_power_avg_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), (double)((*gpu_power_avg)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), ((double)(*gpu_power_avg))/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
-	
-	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_get(dv_ind, &gpu_power_avg_temp, RSMI_AVERAGE_POWER))
+	else if(RSMI_STATUS_SUCCESS == rsmi_dev_power_get(dv_ind, &gpu_power_avg_temp, RSMI_AVERAGE_POWER))
 	{
 		*gpu_power_avg = gpu_power_avg_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), (double)((*gpu_power_avg)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), ((double)(*gpu_power_avg))/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -231,13 +230,13 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 		{
 			*gpu_power_avg = gpu_power_avg_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Success for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, i, *gpu_power_avg, (double)((*gpu_power_avg)/1000000));
+			printf("ROCMSMI, Success for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, i, *gpu_power_avg, ((double)(*gpu_power_avg))/1000000);
 #endif			
 		}
 		else
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, i, *gpu_power_avg, (double)((*gpu_power_avg)/1000000));
+			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, i, *gpu_power_avg, ((double)(*gpu_power_avg))/1000000);
 #endif	
 		}
 	}
@@ -257,7 +256,7 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 	{
 		*gpu_temperature = gpu_temperature_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, sensor, metric, (int)(*gpu_temperature), (double)((*gpu_temperature)/1000));
+		printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, sensor, metric, (int)(*gpu_temperature), ((double)(*gpu_temperature))/1000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -270,13 +269,13 @@ goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sen
 		{
 			*gpu_temperature = gpu_temperature_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, i, metric, *gpu_temperature, (double)((*gpu_temperature)/1000));
+			printf("ROCMSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, i, metric, *gpu_temperature, ((double)(*gpu_temperature))/1000);
 #endif			
 		}
 		else
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, i, metric, *gpu_temperature, (double)((*gpu_temperature)/1000));
+			printf("ROCMSMI, Failed for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, i, metric, *gpu_temperature, ((double)(*gpu_temperature))/1000);
 #endif	
 		}
 	}
@@ -345,7 +344,7 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind, uint64
 	{
 		*gpu_sclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuSclkFreq:%d, GpuSclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_sclk_freq), (double)((*gpu_sclk_freq)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuSclkFreq:%d, GpuSclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_sclk_freq), ((double)(*gpu_sclk_freq))/1000000);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -362,7 +361,7 @@ goamdsmi_status_t go_shim_rsmi_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind, uint64
 	{
 		*gpu_memclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuMclkFreq:%d, GpuMclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_memclk_freq), (double)((*gpu_memclk_freq)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuMclkFreq:%d, GpuMclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_memclk_freq), ((double)(*gpu_memclk_freq))/1000000);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -379,7 +378,7 @@ goamdsmi_status_t go_shim_rsmi_od_volt_freq_range_min_get_sclk(uint32_t dv_ind, 
 	{
         *gpu_min_sclk = odv.curr_sclk_range.lower_bound;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuSclkMinfreq:%d, GpuSclkMinfreqMhz:%.6f\n", dv_ind, (int)(*gpu_min_sclk), (double)((*gpu_min_sclk)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuSclkMinfreq:%d, GpuSclkMinfreqMhz:%.6f\n", dv_ind, (int)(*gpu_min_sclk), ((double)(*gpu_min_sclk))/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -396,7 +395,7 @@ goamdsmi_status_t go_shim_rsmi_od_volt_freq_range_min_get_mclk(uint32_t dv_ind, 
 	{
         *gpu_min_memclk = odv.curr_mclk_range.lower_bound;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuMemclkMinfreq:%d, GpuMemclkMinfreqMhz:%.6f\n", dv_ind, (int)(*gpu_min_memclk), (double)((*gpu_min_memclk)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuMemclkMinfreq:%d, GpuMemclkMinfreqMhz:%.6f\n", dv_ind, (int)(*gpu_min_memclk), ((double)(*gpu_min_memclk))/1000000);
 #endif					
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -413,7 +412,7 @@ goamdsmi_status_t go_shim_rsmi_od_volt_freq_range_max_get_sclk(uint32_t dv_ind, 
 	{
         *gpu_max_sclk = odv.curr_sclk_range.upper_bound;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuSclkMaxfreq:%d, GpuSclkMaxfreqMhz:%.6f\n", dv_ind, (int)(*gpu_max_sclk), (double)((*gpu_max_sclk)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuSclkMaxfreq:%d, GpuSclkMaxfreqMhz:%.6f\n", dv_ind, (int)(*gpu_max_sclk), ((double)(*gpu_max_sclk))/1000000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -430,7 +429,7 @@ goamdsmi_status_t go_shim_rsmi_od_volt_freq_range_max_get_mclk(uint32_t dv_ind, 
 	{
         *gpu_max_memclk = odv.curr_mclk_range.upper_bound;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ROCMSMI, Success for Gpu:%d, GpuMemclkMaxfreq:%d, GpuMemclkMaxfreqMhz:%.6f\n", dv_ind, (int)(*gpu_max_memclk), (double)((*gpu_max_memclk)/1000000));
+		printf("ROCMSMI, Success for Gpu:%d, GpuMemclkMaxfreq:%d, GpuMemclkMaxfreqMhz:%.6f\n", dv_ind, (int)(*gpu_max_memclk), ((double)(*gpu_max_memclk))/1000000);
 #endif							
 		return GOAMDSMI_STATUS_SUCCESS;
 	}

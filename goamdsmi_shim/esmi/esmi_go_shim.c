@@ -118,7 +118,7 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Thread:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, (int)(*core_energy), (double)((*core_energy)/1000000));
+		printf("ESMI, Success for Thread:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, (int)(*core_energy), ((double)(*core_energy))/1000000);
 #endif	
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -135,7 +135,7 @@ goamdsmi_status_t go_shim_esmi_socket_energy_get(uint32_t socket_index, uint64_t
 	{
 		*socket_energy = socket_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, (int)(*socket_energy), (double)((*socket_energy)/1000000));
+		printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, (int)(*socket_energy), ((double)(*socket_energy))/1000000);
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -169,7 +169,7 @@ goamdsmi_status_t go_shim_esmi_socket_power_get(uint32_t socket_index, uint32_t*
 	{
 		*socket_power = socket_power_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%.3f\n", socket_index, *socket_power, (double)((*socket_power)/1000));
+		printf("ESMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%.3f\n", socket_index, *socket_power, ((double)(*socket_power))/1000);
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -186,7 +186,7 @@ goamdsmi_status_t go_shim_esmi_socket_power_cap_get(uint32_t socket_index, uint3
 	{
 		*socket_power_cap = socket_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("ESMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%.3f\n", socket_index, *socket_power_cap, (double)((*socket_power_cap)/1000));
+		printf("ESMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%.3f\n", socket_index, *socket_power_cap, ((double)(*socket_power_cap))/1000);
 #endif
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
