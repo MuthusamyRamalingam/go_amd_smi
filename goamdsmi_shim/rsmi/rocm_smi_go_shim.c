@@ -213,6 +213,15 @@ goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
+	
+	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_get(dv_ind, &gpu_power_avg_temp, RSMI_AVERAGE_POWER))
+	{
+		*gpu_power_avg = gpu_power_avg_temp;
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), (double)((*gpu_power_avg)/1000000));
+#endif			
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
 #else
 	for(int i = 0;i < 100; i++)
 	{
