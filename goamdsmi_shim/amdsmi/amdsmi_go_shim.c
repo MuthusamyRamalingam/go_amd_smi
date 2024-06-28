@@ -57,6 +57,7 @@
 #define MAX_LOGICALCORE_ACROSS_SYSTEM  768
 #define MAX_GPU_DEVICE_ACROSS_SYSTEM    24
 
+static uint32_t num_apuSockets				= 0;
 static uint32_t num_cpuSockets				= 0;
 static uint32_t num_cpuInitCompleted		= false;
 static uint32_t num_gpuSockets				= 0;
@@ -66,6 +67,7 @@ static uint32_t num_cpu_inAllSocket          	   = 0;
 static uint32_t num_cpu_physicalCore_inAllSocket   = 0;
 static uint32_t num_gpu_devices_inAllSocket        = 0;
 
+static amdsmi_socket_handle     amdsmi_apusocket_handle_all_socket[MAX_SOCKET_ACROSS_SYSTEM+MAX_GPU_DEVICE_ACROSS_SYSTEM]		= {0};
 static amdsmi_socket_handle     amdsmi_cpusocket_handle_all_socket[MAX_SOCKET_ACROSS_SYSTEM]			= {0};
 static amdsmi_socket_handle     amdsmi_gpusocket_handle_all_socket[MAX_GPU_DEVICE_ACROSS_SYSTEM]		= {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_across_socket[MAX_SOCKET_ACROSS_SYSTEM*MAX_CPU_PER_SOCKET]      = {0};
@@ -140,7 +142,52 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 #endif
 
-	if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
+	if( (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_APUS)) &&
+		(AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, nullptr)) &&
+	    (AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) &&
+		(0 != num_apuSockets))
+	{
+		num_cpuInitCompleted = true;
+		num_gpuInitCompleted = true;
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Success, Identified APU machine ApuNumSockets=%d\n",num_apuSockets);
+#endif	
+		for(uint32_t socket_counter = 0; socket_counter < num_apuSockets; socket_counter++)
+		{
+			uint32_t num_cpu		       = 0;
+			uint32_t num_cpu_physicalCores = 0;
+			uint32_t num_gpu_devices       = 0;
+			
+			//CPU
+			processor_type_t cpu_processor_type			= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
+			processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
+			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], cpu_processor_type, nullptr, &num_cpu)) &&
+				(0 != num_cpu) &&
+				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], cpu_processor_type, &amdsmi_processor_handle_all_cpu_across_socket[num_cpu_inAllSocket], &num_cpu)))
+			{
+				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], cpu_core_processor_type, nullptr, &num_cpu_physicalCores)) &&
+					(0 != num_cpu_physicalCores) &&
+					(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], cpu_core_processor_type, &amdsmi_processor_handle_all_cpu_physicalCore_across_socket[num_cpu_physicalCore_inAllSocket], &num_cpu_physicalCores)))
+				{
+					num_cpu_physicalCore_inAllSocket = num_cpu_physicalCore_inAllSocket+num_cpu_physicalCores;
+				}
+				num_cpu_inAllSocket = num_cpu_inAllSocket+num_cpu;
+				num_cpuSockets = num_cpuSockets+1;
+			}
+			
+			
+			//GPU
+			processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
+			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], gpu_device_processor_type, nullptr, &num_gpu_devices)) &&
+				(0 != num_gpu_devices) &&
+				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], gpu_device_processor_type, &amdsmi_processor_handle_all_gpu_device_across_socket[num_gpu_devices_inAllSocket], &num_gpu_devices)))
+			{
+				 num_gpu_devices_inAllSocket = num_gpu_devices_inAllSocket+num_gpu_devices;
+				 num_gpuSockets = num_gpuSockets+1;
+			}
+		}
+	}
+	else if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
 	{
 		num_cpuInitCompleted = true;
 		
@@ -153,8 +200,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 			printf("AMDSMI, Failed, AMDSMICPUInit:0, CpuNumSockets=0\n");
 #endif	
 			return GOAMDSMI_STATUS_FAILURE;
-		}
-		
+		}		
 		//CPU
 		for(uint32_t cpu_socket_counter = 0; cpu_socket_counter < num_cpuSockets; cpu_socket_counter++)
 		{
@@ -175,14 +221,6 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				}
 				num_cpu_inAllSocket = num_cpu_inAllSocket+num_cpu;
 			}
-		}
-		
-		if((0 == num_cpuSockets)||(0 == num_cpu_inAllSocket)||(0 == num_cpu_physicalCore_inAllSocket))
-		{
-#ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Failed, CPU Enumuration Success AMDSMICPUInit:0, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d,\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
-#endif	
-			return GOAMDSMI_STATUS_FAILURE;
 		}
 	}
 	else if(GOAMDSMI_GPU_INIT == goamdsmi_Init)	
@@ -205,22 +243,32 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		{
 			uint32_t num_gpu_devices       = 0;
 			
-			//processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
-			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], &num_gpu_devices, nullptr)) &&
+			processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
+			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], &gpu_device_processor_type, nullptr, &num_gpu_devices)) &&
 				(0 != num_gpu_devices) &&
-				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], &num_gpu_devices, &amdsmi_processor_handle_all_gpu_device_across_socket[num_gpu_devices_inAllSocket])))
+				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], gpu_device_processor_type, &amdsmi_processor_handle_all_gpu_device_across_socket[num_gpu_devices_inAllSocket], &num_gpu_devices)))
 			{
 				 num_gpu_devices_inAllSocket = num_gpu_devices_inAllSocket+num_gpu_devices;
 			}
 		}
-		
-		if((0 == num_gpuSockets)||(0 == num_gpu_devices_inAllSocket))
-		{
+	}
+	
+	//CPU
+	if((GOAMDSMI_CPU_INIT == goamdsmi_Init) && ((0 == num_cpuSockets)||(0 == num_cpu_inAllSocket)||(0 == num_cpu_physicalCore_inAllSocket)))
+	{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Failed, GPU Enumuration Failed AMDSMIGPUInit:0, GpuSocketCount:%d, GpuCount:%d\n", num_gpuSockets, num_gpu_devices_inAllSocket);
+		printf("AMDSMI, Failed, CPU Enumuration Failed AMDSMICPUInit:0, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d,\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
 #endif	
-			return GOAMDSMI_STATUS_FAILURE;
-		}
+		return GOAMDSMI_STATUS_FAILURE;
+	}
+	
+	//GPU
+	if((GOAMDSMI_GPU_INIT == goamdsmi_Init) && ((0 == num_gpuSockets)||(0 == num_gpu_devices_inAllSocket)))
+	{
+#ifdef ENABLE_DEBUG_LEVEL_1
+		printf("AMDSMI, Failed, GPU Enumuration Failed AMDSMIGPUInit:0, GpuSocketCount:%d, GpuCount:%d\n", num_gpuSockets, num_gpu_devices_inAllSocket);
+#endif	
+		return GOAMDSMI_STATUS_FAILURE;
 	}
 
 #ifdef ENABLE_DEBUG_LEVEL_1
