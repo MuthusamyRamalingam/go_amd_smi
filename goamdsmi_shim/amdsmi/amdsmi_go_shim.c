@@ -258,7 +258,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 			uint32_t num_gpu_devices       = 0;
 			
 			processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
-			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], gpu_device_processor_type, nullptr, &num_gpu_devices, )) &&
+			if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], gpu_device_processor_type, nullptr, &num_gpu_devices)) &&
 				(0 != num_gpu_devices) &&
 				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], gpu_device_processor_type, &amdsmi_processor_handle_all_gpu_device_across_socket[num_gpu_devices_inAllSocket], &num_gpu_devices)))
 			{
