@@ -125,14 +125,14 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		if((0 == num_cpuSockets)||(0 == num_cpu_inAllSocket)||(0 == num_cpu_physicalCore_inAllSocket))
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Failed, Returns previous enumurated AMDSMICPUInit:0, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d,\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
+			printf("AMDSMI, Failed, Returns previous enumurated AMDSMICPUInit:0, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
 #endif	
 			return GOAMDSMI_STATUS_FAILURE;
 		}
 		else 
 		{
 #ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Success, Returns previous enumurated AMDSMICPUInit:1, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d,\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
+			printf("AMDSMI, Success, Returns previous enumurated AMDSMICPUInit:1, CpuSocketCount:%d, CpuCount:%d, CpuPhysicalCoreCount:%d\n", num_cpuSockets, num_cpu_inAllSocket, num_cpu_physicalCore_inAllSocket);
 #endif	
 			return GOAMDSMI_STATUS_SUCCESS;
 		}
@@ -374,7 +374,7 @@ goamdsmi_status_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index, uint6
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
+		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, physicalCore_index, (int)(*core_energy), (double)((*core_energy)/1000000));
 #endif		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -389,7 +389,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_energy_get(uint32_t socket_index, uin
 	{
 		*socket_energy = socket_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, *socket_energy, (*socket_energy)/1000000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, (int)(*socket_energy), (double)((*socket_energy)/1000000));
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -419,7 +419,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index, uint
 	{
 		*socket_power = socket_power_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%.3f\n", socket_index, *socket_power, (*socket_power)/1000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%.3f\n", socket_index, *socket_power, (double)((*socket_power)/1000));
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -434,7 +434,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index, 
 	{
 		*socket_power_cap = socket_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%.3f\n", socket_index, *socket_power_cap, (*socket_power_cap)/1000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%.3f\n", socket_index, *socket_power_cap, (double)((*socket_power_cap)/1000));
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -533,7 +533,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_cap_get(uint32_t dv_ind, uint64_t*
 	{
 		*gpu_power_cap = amdsmi_power_cap_info_temp.power_cap;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuPowerCap:%d, GpuPowerCapInWatt:%.6f\n", dv_ind, *gpu_power_cap, (*gpu_power_cap)/1000000);
+		printf("AMDSMI, Success for Gpu:%d, GpuPowerCap:%d, GpuPowerCapInWatt:%.6f\n", dv_ind, (int)(*gpu_power_cap), (double)((*gpu_power_cap)/1000000));
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -549,7 +549,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind, uint64_t*
 	{
 		*gpu_power_avg = amdsmi_power_info_temp.average_socket_power;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, *gpu_power_avg, (*gpu_power_avg)/1000000);
+		printf("AMDSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), (double)((*gpu_power_avg)/1000000));
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -576,7 +576,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_temp_metric_get(uint32_t dv_ind, uint32_
 	{
 		*gpu_temperature = gpu_temperature_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, sensor, metric, *gpu_temperature, (*gpu_temperature)/1000);
+		printf("AMDSMI, Success for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:%d, GpuTemperatureInDegree:%.3f\n", dv_ind, sensor, metric, (int)(*gpu_temperature), (double)((*gpu_temperature)/1000));
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -607,7 +607,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind, u
 	{
 		*gpu_sclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuSclkFreq:%d, GpuSclkFreqMhz:%.6f\n", dv_ind, *gpu_sclk_freq, (*gpu_sclk_freq)/1000000);
+		printf("AMDSMI, Success for Gpu:%d, GpuSclkFreq:%d, GpuSclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_sclk_freq), (double)((*gpu_sclk_freq)/1000000));
 #endif			
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -623,7 +623,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_clk_freq_get_mclk(uint32_t dv_ind, u
 	{
 		*gpu_memclk_freq = freq.frequency[freq.current];
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Gpu:%d, GpuMclkFreq:%d, GpuMclkFreqMhz:%.6f\n", dv_ind, *gpu_memclk_freq, (*gpu_memclk_freq)/1000000);
+		printf("AMDSMI, Success for Gpu:%d, GpuMclkFreq:%d, GpuMclkFreqMhz:%.6f\n", dv_ind, (int)(*gpu_memclk_freq), (double)((*gpu_memclk_freq)/1000000));
 #endif		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
