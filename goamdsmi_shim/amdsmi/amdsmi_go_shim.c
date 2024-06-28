@@ -374,7 +374,7 @@ goamdsmi_status_t go_shim_amdsmicpu_core_energy_get(uint32_t thread_index, uint6
 	{
 		*core_energy = core_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%d\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
+		printf("AMDSMI, Success for Thread:%d PC:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, physicalCore_index, *core_energy, (*core_energy)/1000000);
 #endif		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -389,7 +389,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_energy_get(uint32_t socket_index, uin
 	{
 		*socket_energy = socket_energy_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%d\n", socket_index, *socket_energy, (*socket_energy)/1000000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, *socket_energy, (*socket_energy)/1000000);
 #endif				
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -419,7 +419,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_get(uint32_t socket_index, uint
 	{
 		*socket_power = socket_power_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%d\n", socket_index, *socket_power, (*socket_power)/1000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPower:%d, CpuSocketPowerWatt:%.3f\n", socket_index, *socket_power, (*socket_power)/1000);
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
@@ -434,7 +434,7 @@ goamdsmi_status_t go_shim_amdsmicpu_socket_power_cap_get(uint32_t socket_index, 
 	{
 		*socket_power_cap = socket_power_cap_temp;
 #ifdef ENABLE_DEBUG_LEVEL_1
-		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%d\n", socket_index, *socket_power_cap, (*socket_power_cap)/1000);
+		printf("AMDSMI, Success for Socket:%d, CpuSocketPowerCap:%d, CpuSocketPowerCapWatt:%.3f\n", socket_index, *socket_power_cap, (*socket_power_cap)/1000);
 #endif						
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
