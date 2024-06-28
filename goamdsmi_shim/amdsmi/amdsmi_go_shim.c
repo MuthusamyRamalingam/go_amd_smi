@@ -143,7 +143,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 #endif
 
-	/*if( (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_APUS)) &&
+	if( (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_APUS)) &&
 		(AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, nullptr)) &&
 	    (AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) &&
 		(0 != num_apuSockets))
@@ -189,14 +189,14 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 			}
 		}
 	}
-	else */if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
+	/*else if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
 	{
-		/*if(AMDSMI_STATUS_SUCCESS == amdsmi_shut_down())
-		{
-#ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Status, AMDSMIShutDown:1\n");
-#endif		
-		}*/	
+//		if(AMDSMI_STATUS_SUCCESS == amdsmi_shut_down())
+//		{
+//#ifdef ENABLE_DEBUG_LEVEL_1
+//			printf("AMDSMI, Status, AMDSMIShutDown:1\n");
+//#endif		
+//		}
 		cpuInitCompleted = true;
 		
 		if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_CPUS)) ||
@@ -233,12 +233,12 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 	else if(GOAMDSMI_GPU_INIT == goamdsmi_Init)	
 	{
-		/*if(AMDSMI_STATUS_SUCCESS == amdsmi_shut_down())
-		{
-#ifdef ENABLE_DEBUG_LEVEL_1
-			printf("AMDSMI, Status, AMDSMIShutDown:1\n");
-#endif		
-		}*/
+//		if(AMDSMI_STATUS_SUCCESS == amdsmi_shut_down())
+//		{
+//#ifdef ENABLE_DEBUG_LEVEL_1
+//			printf("AMDSMI, Status, AMDSMIShutDown:1\n");
+//#endif		
+//		}
 		gpuInitCompleted = true;
 		
 		if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_GPUS)) ||
@@ -266,7 +266,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				num_gpu_devices_inAllSocket = num_gpu_devices_inAllSocket+num_gpu_devices;
 			}
 		}
-	}
+	}*/
 	
 	//CPU
 	if((GOAMDSMI_CPU_INIT == goamdsmi_Init) && ((0 == num_cpuSockets)||(0 == num_cpu_inAllSocket)||(0 == num_cpu_physicalCore_inAllSocket)))
