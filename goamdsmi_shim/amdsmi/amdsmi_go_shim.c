@@ -143,7 +143,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 #endif
 
-	amdsmi_status_t amdsmi_Init_apus == amdsmi_init(AMDSMI_INIT_AMD_APUS);
+	amdsmi_status_t amdsmi_Init_apus = amdsmi_init(AMDSMI_INIT_AMD_APUS);
 	if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, nullptr)) &&
 	    (AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) &&
 		(0 != num_apuSockets))
