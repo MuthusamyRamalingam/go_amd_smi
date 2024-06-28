@@ -250,7 +250,8 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				(0 != num_gpu_devices) &&
 				(AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles(amdsmi_gpusocket_handle_all_socket[gpu_socket_counter], &num_gpu_devices, &amdsmi_processor_handle_all_gpu_device_across_socket[num_gpu_devices_inAllSocket])))
 			{
-				 num_gpu_devices_inAllSocket = num_gpu_devices_inAllSocket+num_gpu_devices;
+				printf("****num_gpu_devices:%d\n", num_gpu_devices);
+				num_gpu_devices_inAllSocket = num_gpu_devices_inAllSocket+num_gpu_devices;
 			}
 		}
 	}
