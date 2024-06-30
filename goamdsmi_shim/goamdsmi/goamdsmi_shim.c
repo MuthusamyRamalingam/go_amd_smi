@@ -56,9 +56,20 @@ static bool rsmi_init	= false;
 	
 static bool cpu_init	= true;
 static bool gpu_init	= true;
+
+bool enable_debug_level(int debug_level)
+{
+  if(ENABLE_DEBUG_LEVEL >= debug_level) return true;
+  return false;
+}
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 int goamdsmi_cpu_init()	
 {	
+if(enable_debug_level(3)) printf("main cmake passed 3\n");
+  if(enable_debug_level(2)) printf("main cmake passed 2\n");
+  if(enable_debug_level(1)) printf("main cmake passed 1\n");
+  if(enable_debug_level(0)) printf("main cmake passed 0\n");
+  
 	if(false == cpu_init)	return false;
 	
 	goamdsmi_status_t amdsmicpu_	= go_shim_amdsmicpu_init();

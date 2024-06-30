@@ -49,10 +49,4 @@ typedef enum {
   GOAMDSMI_GPU_INIT = 0x1,               //!< GPU Init
 } goamdsmi_Init_t;
 
-bool enable_debug_level(int debug_level)
-{
-	if(ENABLE_DEBUG_LEVEL >= debug_level)	return true;
-	return false;
-}
-
 #endif

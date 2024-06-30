@@ -48,6 +48,11 @@
 #ifdef ESMI_BUILD
 goamdsmi_status_t go_shim_esmi_init()
 {
+	if(enable_debug_level(3)) printf("esmi cmake passed 3\n");
+  if(enable_debug_level(2)) printf("esmi cmake passed 2\n");
+  if(enable_debug_level(1)) printf("esmi cmake passed 1\n");
+  if(enable_debug_level(0)) printf("esmi cmake passed 0\n");
+  
 	if(ESMI_SUCCESS == esmi_init()) 
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1

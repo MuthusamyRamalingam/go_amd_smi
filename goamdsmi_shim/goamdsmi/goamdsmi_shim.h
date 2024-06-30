@@ -36,6 +36,9 @@
  *
  */
 
+#include <stdbool.h>
+bool enable_debug_level(int debug_level);
+
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the AMDSMI or E-SMI library

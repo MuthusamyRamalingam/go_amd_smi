@@ -50,6 +50,11 @@
 #ifdef ROCM_BUILD
 goamdsmi_status_t go_shim_rsmi_init()
 {
+  if(enable_debug_level(3)) printf("rocm cmake passed 3\n");
+  if(enable_debug_level(2)) printf("rocm cmake passed 2\n");
+  if(enable_debug_level(1)) printf("rocm cmake passed 1\n");
+  if(enable_debug_level(0)) printf("rocm cmake passed 0\n");
+
 	if(RSMI_STATUS_SUCCESS == rsmi_init(0))
 	{
 #ifdef ENABLE_DEBUG_LEVEL_1
