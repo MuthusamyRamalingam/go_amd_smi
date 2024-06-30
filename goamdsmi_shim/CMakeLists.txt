@@ -61,8 +61,11 @@ add_definitions(-DENABLE_ESMI_LIB)
 include(deps/SetupAmdsmi.cmake)
 endif()
 
-if(ENABLE_DEBUG)
-add_definitions(-DENABLE_DEBUG_LEVEL_1)
+if(ENABLE_DEBUG_LEVEL)
+add_definitions(-DENABLE_DEBUG_LEVEL=${ENABLE_DEBUG_LEVEL})
+message("**** Enabling Debug Level=${ENABLE_DEBUG_LEVEL} ****")
+else()
+add_definitions(-DENABLE_DEBUG_LEVEL=0)
 endif()
 
 set(GOAMDSMI_SHIM "goamdsmi_shim")
