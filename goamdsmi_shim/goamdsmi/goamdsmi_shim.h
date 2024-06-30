@@ -36,6 +36,7 @@
  *
  */
 #include <stdbool.h>
+#include "goamdsmi.h"
 
 /**
  *  @brief Go language stub to initialize the Debug Level prints

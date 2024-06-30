@@ -41,7 +41,6 @@
 #include "../amdsmi/amdsmi_go_shim.h"
 #include "../esmi/esmi_go_shim.h"
 #include "../rsmi/rocm_smi_go_shim.h"
-#include "goamdsmi.h"
 #include <unistd.h>
 #include <stdbool.h>
 #ifdef ENABLE_DEBUG_LEVEL_1	
