@@ -42,10 +42,6 @@
 #include <amd_smi/amdsmi.h>
 #endif
 #include <unistd.h>
-#ifdef ENABLE_DEBUG_LEVEL_1	
-#include <stdio.h>
-#endif
-#include <stdbool.h>
 #define nullptr ((void*)0)
 
 #ifdef AMDSMI_BUILD

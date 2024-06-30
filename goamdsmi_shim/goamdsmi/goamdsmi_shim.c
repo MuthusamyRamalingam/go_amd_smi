@@ -42,10 +42,6 @@
 #include "../esmi/esmi_go_shim.h"
 #include "../rsmi/rocm_smi_go_shim.h"
 #include <unistd.h>
-#include <stdbool.h>
-#ifdef ENABLE_DEBUG_LEVEL_1	
-#include <stdio.h>
-#endif
 #include <stdlib.h>
 #include <string.h>
 static bool amdsmicpu_init	= false;

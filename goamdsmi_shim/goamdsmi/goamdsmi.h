@@ -39,6 +39,10 @@
 #ifndef GO_AMD_SMI_H_
 #define GO_AMD_SMI_H_
 
+#include <stdbool.h>
+#include <stdio.h>
+
+
 typedef enum {
   GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation was successful
   GOAMDSMI_STATUS_FAILURE = 0xFFFFFFFF,        //!< Operation was failure

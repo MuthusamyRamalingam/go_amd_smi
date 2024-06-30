@@ -41,9 +41,6 @@
 #ifdef ESMI_BUILD
 #include <e_smi.h>
 #endif
-#ifdef ENABLE_DEBUG_LEVEL_1	
-#include <stdio.h>
-#endif
 
 #ifdef ESMI_BUILD
 goamdsmi_status_t go_shim_esmi_init()

@@ -42,9 +42,6 @@
 #include <rocm_smi/rocm_smi.h>
 #endif
 #include <stdlib.h>
-#ifdef ENABLE_DEBUG_LEVEL_1	
-#include <stdio.h>
-#endif
 #define GPU_SENSOR_0 0
 
 #ifdef ROCM_BUILD

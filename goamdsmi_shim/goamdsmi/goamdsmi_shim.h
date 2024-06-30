@@ -35,7 +35,6 @@
  * the Advanced Micro Devices, Inc.
  *
  */
-#include <stdbool.h>
 #include "goamdsmi.h"
 
 /**
