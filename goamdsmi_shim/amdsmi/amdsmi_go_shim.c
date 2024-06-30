@@ -120,12 +120,6 @@ goamdsmi_status_t check_hsmp_driver()
 
 goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 {
-		if(enable_debug_level(3)) printf("amdsmi cmake passed 3\n");
-  if(enable_debug_level(2)) printf("amdsmi cmake passed 2\n");
-  if(enable_debug_level(1)) printf("amdsmi cmake passed 1\n");
-  if(enable_debug_level(0)) printf("amdsmi cmake passed 0\n");
-  
-	
 	if((GOAMDSMI_CPU_INIT == goamdsmi_Init) && (true == cpuInitCompleted))
 	{
 		if((0 == num_cpuSockets)||(0 == num_cpu_inAllSocket)||(0 == num_cpu_physicalCore_inAllSocket))

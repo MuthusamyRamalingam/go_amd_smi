@@ -49,4 +49,10 @@ typedef enum {
   GOAMDSMI_GPU_INIT = 0x1,               //!< GPU Init
 } goamdsmi_Init_t;
 
+typedef enum {
+  GOAMDSMI_DEBUG_LEVEL_0 = 0x0,               //!< Debug Level as 0
+  GOAMDSMI_DEBUG_LEVEL_1 = 0x1,               //!< Debug Level as 1
+  GOAMDSMI_DEBUG_LEVEL_2 = 0x2,               //!< Debug Level as 2
+  GOAMDSMI_DEBUG_LEVEL_3 = 0x3,               //!< Debug Level as 3
+} goamdsmi_Enable_Debug_Level_t;
 #endif
