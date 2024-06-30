@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 set(goamdsmi_headers
+  ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi.h
   ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi_shim.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../amdsmi/amdsmi_go_shim.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../esmi/esmi_go_shim.h
@@ -8,6 +9,7 @@ set(goamdsmi_headers
   CACHE INTERNAL "")
 
 set(goamdsmi_sources
+  ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi.c
   ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi_shim.c
   ${CMAKE_CURRENT_SOURCE_DIR}/../amdsmi/amdsmi_go_shim.c
   ${CMAKE_CURRENT_SOURCE_DIR}/../esmi/esmi_go_shim.c

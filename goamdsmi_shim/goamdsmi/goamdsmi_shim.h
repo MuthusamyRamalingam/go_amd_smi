@@ -37,16 +37,6 @@
  */
 #include "goamdsmi.h"
 
-/**
- *  @brief Go language stub to initialize the Debug Level prints
- *         -DENABLE_DEBUG_LEVEL=1 (or) -DENABLE_DEBUG_LEVEL=<Enable_Debug_level_number> must be passed at cmake time
- *
- *  @retval ::bool value of true upon enabling logs
- *  @retval false is returned upon if user does not want to enable logs.
- *
- */
-bool enable_debug_level(goamdsmi_Enable_Debug_Level_t debug_level);
-
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 /**
  *  @brief Go language stub to initialize the AMDSMI or E-SMI library

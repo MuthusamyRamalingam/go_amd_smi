@@ -35,39 +35,10 @@
  * the Advanced Micro Devices, Inc.
  *
  */
+#include "goamdsmi.h"
 
-#ifndef GO_AMD_SMI_H_
-#define GO_AMD_SMI_H_
-
-#include <stdbool.h>
-#include <stdio.h>
-
-
-typedef enum {
-  GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation was successful
-  GOAMDSMI_STATUS_FAILURE = 0xFFFFFFFF,        //!< Operation was failure
-} goamdsmi_status_t;
-
-typedef enum {
-  GOAMDSMI_CPU_INIT = 0x0,               //!< CPU Init
-  GOAMDSMI_GPU_INIT = 0x1,               //!< GPU Init
-} goamdsmi_Init_t;
-
-typedef enum {
-  GOAMDSMI_DEBUG_LEVEL_0 = 0x0,               //!< Debug Level as 0
-  GOAMDSMI_DEBUG_LEVEL_1 = 0x1,               //!< Debug Level as 1
-  GOAMDSMI_DEBUG_LEVEL_2 = 0x2,               //!< Debug Level as 2
-  GOAMDSMI_DEBUG_LEVEL_3 = 0x3,               //!< Debug Level as 3
-} goamdsmi_Enable_Debug_Level_t;
-
-/**
- *  @brief Go language stub to initialize the Debug Level prints
- *         -DENABLE_DEBUG_LEVEL=1 (or) -DENABLE_DEBUG_LEVEL=<Enable_Debug_level_number> must be passed at cmake time
- *
- *  @retval ::bool value of true upon enabling logs
- *  @retval false is returned upon if user does not want to enable logs.
- *
- */
-bool enable_debug_level(goamdsmi_Enable_Debug_Level_t debug_level);
-
-#endif
+bool enable_debug_level(goamdsmi_Enable_Debug_Level_t debug_level)
+{
+  if(ENABLE_DEBUG_LEVEL >= debug_level) return true;
+  return false;
+}

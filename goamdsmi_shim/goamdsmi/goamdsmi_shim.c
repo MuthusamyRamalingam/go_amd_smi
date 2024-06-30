@@ -51,12 +51,6 @@ static bool rsmi_init	= false;
 	
 static bool cpu_init	= true;
 static bool gpu_init	= true;
-
-bool enable_debug_level(goamdsmi_Enable_Debug_Level_t debug_level)
-{
-  if(ENABLE_DEBUG_LEVEL >= debug_level) return true;
-  return false;
-}
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 int goamdsmi_cpu_init()	
 {	

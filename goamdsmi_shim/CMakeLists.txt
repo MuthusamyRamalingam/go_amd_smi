@@ -146,6 +146,8 @@ set(go_amd_smi_includes)
 
 
 add_subdirectory(goamdsmi)
+list(APPEND go_amd_smi_headers goamdsmi/goamdsmi.h ${go_amd_smi_headers})
+list(APPEND go_amd_smi_sources goamdsmi/goamdsmi.c)
 list(APPEND go_amd_smi_headers goamdsmi/goamdsmi_shim.h ${go_amd_smi_headers})
 list(APPEND go_amd_smi_sources goamdsmi/goamdsmi_shim.c)
 list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi)
