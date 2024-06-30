@@ -501,11 +501,11 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_ave_get(uint32_t dv_ind, uint64_t*
 	if((dv_ind < num_gpu_devices_inAllSocket) && (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_metrics_info(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &metrics)))
 	{
 		*gpu_power_avg = metrics.average_socket_power;
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerAverageFromMetrics:%d, GpuPowerAverageFromMetricsinWatt:%d\n", dv_ind, (int)*gpu_power_avg, ((double)(*gpu_power_avg))/1000000);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerAverageFromMetrics:%d, GpuPowerAverageFromMetricsinWatt:%.6f\n", dv_ind, (int)*gpu_power_avg, ((double)(*gpu_power_avg))/1000000);}
 
 		*gpu_power_avg = metrics.current_socket_power;
 		//*gpu_power_avg = (*gpu_power_avg)*1000000;//to maintain backward compatibity with old ROCM SMI
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerCurrentFromMetrics:%d, GpuPowerCurrentFromMetricsinWatt:%d\n", dv_ind, (int)*gpu_power_avg, ((double)(*gpu_power_avg))/1000000);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerCurrentFromMetrics:%d, GpuPowerCurrentFromMetricsinWatt:%.6f\n", dv_ind, (int)*gpu_power_avg, ((double)(*gpu_power_avg))/1000000);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 //#endif
