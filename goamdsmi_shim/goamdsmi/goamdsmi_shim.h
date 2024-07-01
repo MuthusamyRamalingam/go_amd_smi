@@ -303,20 +303,20 @@ char* goamdsmi_gpu_dev_vendor_name_get(uint32_t dv_ind);
 int goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind);
 
 /**
- *  @brief Go language stub to get the GPU power average
+ *  @brief Go language stub to get the GPU power
  *
  *  @details This function will call the rsmi_dev_power_ave_get()
- *  function to return the gpu power average. This value is then
+ *  function to return the gpu power. This value is then
  *  passed as a int val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
  *
- *  @retval ::int GPU power average
+ *  @retval ::int GPU power
  *  @retval -1 is returned upon failure.
  *
  */
-int goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind);
+int goamdsmi_gpu_dev_power_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU current temperature

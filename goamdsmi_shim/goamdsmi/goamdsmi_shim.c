@@ -54,7 +54,11 @@ static bool gpu_init	= true;
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 int goamdsmi_cpu_init()	
 {	
-	if(false == cpu_init)	return false;
+	if(false == cpu_init)
+	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated CpuInit:0\n");}
+		return false;
+	}
 	
 	goamdsmi_status_t amdsmicpu_	= go_shim_amdsmicpu_init();
 	goamdsmi_status_t esmi_			= go_shim_esmi_init();
@@ -170,7 +174,11 @@ int goamdsmi_cpu_core_boostlimit_get(uint32_t thread_index)
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 int goamdsmi_gpu_init()
 {
-	if(false == gpu_init)	return false;
+	if(false == gpu_init)
+	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated GpuInit:0\n");}
+		return false;
+	}
 	goamdsmi_status_t amdsmigpu_	= go_shim_amdsmigpu_init();
 	goamdsmi_status_t rsmi_			= go_shim_rsmi_init();
 	
@@ -197,7 +205,7 @@ int goamdsmi_gpu_num_monitor_devices()
 	uint32_t gpu_num_monitor_devices = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_num_monitor_devices(&gpu_num_monitor_devices))){return gpu_num_monitor_devices;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_num_monitor_devices(&gpu_num_monitor_devices)))	 {return gpu_num_monitor_devices;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_num_monitor_devices(&gpu_num_monitor_devices)))	    {return gpu_num_monitor_devices;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuNumMonitorDevices:0\n");}
 	return 0;
@@ -278,19 +286,19 @@ int goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind)
 {
 	uint64_t gpu_power_cap = 0;
 	
-	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_cap_get(dv_ind, &gpu_power_cap)))	{return gpu_power_cap;}
+	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_cap_get(dv_ind, &gpu_power_cap))){return gpu_power_cap;}
 	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_cap_get(dv_ind, &gpu_power_cap)))		{return gpu_power_cap;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerCap:-1\n", dv_ind);}
 	return -1;
 }
 
-int goamdsmi_gpu_dev_power_ave_get(uint32_t dv_ind)
+int goamdsmi_gpu_dev_power_get(uint32_t dv_ind)
 {
-	uint64_t gpu_power_avg = 0;
+	uint64_t gpu_power = 0;
 	
-	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_ave_get(dv_ind, &gpu_power_avg))){return gpu_power_avg;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_ave_get(dv_ind, &gpu_power_avg)))	 {return gpu_power_avg;}
+	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_ave_get(dv_ind, &gpu_power))){return gpu_power;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_ave_get(dv_ind, &gpu_power)))	    {return gpu_power;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerAverage:-1\n", dv_ind);}
 	return -1;
@@ -301,7 +309,7 @@ int goamdsmi_gpu_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t 
 	uint64_t gpu_temperature = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature))){return gpu_temperature;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature)))	 {return gpu_temperature;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_temp_metric_get(dv_ind, sensor, metric, &gpu_temperature)))	    {return gpu_temperature;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d Sensor:%d Metric:%d, GpuTemperature:-1\n", dv_ind, sensor, metric);}
 	return -1;
@@ -312,7 +320,7 @@ int goamdsmi_gpu_dev_overdrive_level_get(uint32_t dv_ind)
 	uint32_t gpu_overdrive_level = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_overdrive_level_get(dv_ind, &gpu_overdrive_level))){return gpu_overdrive_level;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_overdrive_level_get(dv_ind, &gpu_overdrive_level)))	 {return gpu_overdrive_level;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_overdrive_level_get(dv_ind, &gpu_overdrive_level)))	    {return gpu_overdrive_level;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuOverdriveLevel:-1\n", dv_ind);}
 	return -1;
@@ -323,7 +331,7 @@ int goamdsmi_gpu_dev_mem_overdrive_level_get(uint32_t dv_ind)
 	uint32_t gpu_mem_overdrive_level = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_overdrive_level_get(dv_ind, &gpu_mem_overdrive_level))){return gpu_mem_overdrive_level;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_overdrive_level_get(dv_ind, &gpu_mem_overdrive_level)))	 {return gpu_mem_overdrive_level;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_overdrive_level_get(dv_ind, &gpu_mem_overdrive_level)))	    {return gpu_mem_overdrive_level;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuMemoryOverdriveLevel:-1\n", dv_ind);}
 	return -1;
@@ -334,7 +342,7 @@ int goamdsmi_gpu_dev_perf_level_get(uint32_t dv_ind)
 	uint32_t gpu_perf = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_perf_level_get(dv_ind, &gpu_perf))){return gpu_perf;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_perf_level_get(dv_ind, &gpu_perf)))	 {return gpu_perf;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_perf_level_get(dv_ind, &gpu_perf)))	    {return gpu_perf;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPerfLevel:-1\n", dv_ind);}
 	return -1;
@@ -345,7 +353,7 @@ int goamdsmi_gpu_dev_gpu_clk_freq_get_sclk(uint32_t dv_ind)
 	uint64_t gpu_sclk_freq = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_gpu_clk_freq_get_sclk(dv_ind, &gpu_sclk_freq))){return gpu_sclk_freq;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_gpu_clk_freq_get_sclk(dv_ind, &gpu_sclk_freq)))	 {return gpu_sclk_freq;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_gpu_clk_freq_get_sclk(dv_ind, &gpu_sclk_freq)))	    {return gpu_sclk_freq;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuSclkFreq:-1\n", dv_ind);}
 	return -1;
@@ -400,7 +408,7 @@ int goamdsmi_gpu_od_volt_freq_range_max_get_mclk(uint32_t dv_ind)
 	uint64_t gpu_max_memclk = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_od_volt_freq_range_max_get_mclk(dv_ind, &gpu_max_memclk))){return gpu_max_memclk;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_od_volt_freq_range_max_get_mclk(dv_ind, &gpu_max_memclk)))		{return gpu_max_memclk;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_od_volt_freq_range_max_get_mclk(dv_ind, &gpu_max_memclk)))	   {return gpu_max_memclk;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuMemclkMaxfreq:-1\n", dv_ind);}
 	return -1;
@@ -422,7 +430,7 @@ int goamdsmi_gpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind)
 	uint64_t gpu_memory_busy_percent = 0;
 	
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(dv_ind, &gpu_memory_busy_percent))){return gpu_memory_busy_percent;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_gpu_memory_busy_percent_get(dv_ind, &gpu_memory_busy_percent)))	 {return gpu_memory_busy_percent;}	
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_gpu_memory_busy_percent_get(dv_ind, &gpu_memory_busy_percent)))	    {return gpu_memory_busy_percent;}	
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuMemoryBusyPerc:-1\n", dv_ind);}
 	return -1;

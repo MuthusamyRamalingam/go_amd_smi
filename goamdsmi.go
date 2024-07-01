@@ -87,8 +87,8 @@ func GO_gpu_dev_power_cap_get(i int) (C.int) {
     return C.goamdsmi_gpu_dev_power_cap_get(C.uint(i))
 }
 
-func GO_gpu_dev_power_ave_get(i int) (C.int) {
-    return C.goamdsmi_gpu_dev_power_ave_get(C.uint(i))
+func GO_gpu_dev_power_get(i int) (C.int) {
+    return C.goamdsmi_gpu_dev_power_get(C.uint(i))
 }
 
 func GO_gpu_dev_temp_metric_get(i int, sensor int, metric int) (C.int) {

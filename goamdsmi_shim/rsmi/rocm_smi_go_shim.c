@@ -43,6 +43,7 @@
 #endif
 #include <stdlib.h>
 #define GPU_SENSOR_0 0
+char powerTypesToString[3][30] = {"RSMI_AVERAGE_POWER", "RSMI_CURRENT_POWER", "RSMI_INVALID_POWER"};
 
 #ifdef ROCM_BUILD
 goamdsmi_status_t go_shim_rsmi_init()
@@ -178,28 +179,28 @@ goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
-goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power_avg)
+goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power)
 {
-	*gpu_power_avg					= 0;
-	uint64_t gpu_power_avg_temp	 	= 0;
+	*gpu_power					= 0;
+	uint64_t gpu_power_temp	 	= 0;
 
-	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_ave_get(dv_ind, GPU_SENSOR_0, &gpu_power_avg_temp))
+	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_ave_get(dv_ind, GPU_SENSOR_0, &gpu_power_temp))
 	{
-		*gpu_power_avg = gpu_power_avg_temp;
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power_avg), ((double)(*gpu_power_avg))/1000000);}
+		*gpu_power = gpu_power_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(*gpu_power), ((double)(*gpu_power))/1000000);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 
 	RSMI_POWER_TYPE power_type = RSMI_INVALID_POWER;
-	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_get(dv_ind, &gpu_power_avg_temp, &power_type))
+	if(RSMI_STATUS_SUCCESS == rsmi_dev_power_get(dv_ind, &gpu_power_temp, &power_type))
 	{
-		*gpu_power_avg = gpu_power_avg_temp;
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success for Gpu:%d PowerType:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)power_type, (int)(*gpu_power_avg), ((double)(*gpu_power_avg))/1000000);}
+		*gpu_power = gpu_power_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success for Gpu:%d PowerType:%d, PowerTypeStr:%s, GpuPower:%d, GpuPowerinWatt:%.6f\n", dv_ind, (int)power_type, powerTypesToString[power_type], (int)(*gpu_power), ((double)(*gpu_power))/1000000);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	else
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Failed for Gpu:%d PowerType:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)power_type, (int)(*gpu_power_avg), ((double)(*gpu_power_avg))/1000000);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Failed for Gpu:%d PowerType:%d, PowerTypeStr:%s, GpuPower:%d, GpuPowerinWatt:%.6f\n", dv_ind, (int)power_type, powerTypesToString[power_type], (int)(*gpu_power), ((double)(*gpu_power))/1000000);}
 	}
 
 	return GOAMDSMI_STATUS_FAILURE;
@@ -426,7 +427,7 @@ goamdsmi_status_t go_shim_rsmi_dev_pci_id_get(uint32_t dv_ind, uint64_t* gpu_pci
 goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char** gpu_vendor_name)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_vbios_version_get(uint32_t dv_ind, char** vbios_version)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_power_cap)	{return GOAMDSMI_STATUS_FAILURE;}
-goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power_avg)	{return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power)		{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_temp_metric_get(uint32_t dv_ind, uint32_t sensor, uint32_t metric, uint64_t* gpu_temperature)	{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_overdrive_level_get(uint32_t dv_ind, uint32_t* gpu_overdrive_level)			{return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_rsmi_dev_mem_overdrive_level_get(uint32_t dv_ind, uint32_t* gpu_mem_overdrive_level)	{return GOAMDSMI_STATUS_FAILURE;}

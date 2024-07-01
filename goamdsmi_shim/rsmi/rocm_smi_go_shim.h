@@ -179,21 +179,21 @@ goamdsmi_status_t go_shim_rsmi_dev_vendor_name_get(uint32_t dv_ind, char** gpu_v
 goamdsmi_status_t go_shim_rsmi_dev_power_cap_get(uint32_t dv_ind, uint64_t* gpu_power_cap);
 
 /**
- *  @brief Go language stub to get the GPU power average
+ *  @brief Go language stub to get the GPU power
  *
- *  @details This function will call the rsmi_dev_power_ave_get()
- *  function to return the gpu power average. This value is then
+ *  @details This function will call the rsmi_dev_power_get()
+ *  function to return the gpu power. This value is then
  *  passed as a uint64_t val to the Go routine that
  *  called it.
  *
  *  @param[in] ::uint32_t device index
- *  @param[in] ::uint64_t* GPU power average
+ *  @param[in] ::uint64_t* GPU power
  *
  *  @retval GOAMDSMI_STATUS_SUCCESS is returned upon success.
  *  @retval GOAMDSMI_STATUS_FAILURE is returned upon failure.
  *
  */
-goamdsmi_status_t go_shim_rsmi_dev_power_ave_get(uint32_t dv_ind, uint64_t* gpu_power_avg);
+goamdsmi_status_t go_shim_rsmi_dev_power_get(uint32_t dv_ind, uint64_t* gpu_power);
 
 /**
  *  @brief Go language stub to get the GPU current temperature
