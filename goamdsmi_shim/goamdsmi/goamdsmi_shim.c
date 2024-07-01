@@ -297,8 +297,8 @@ int goamdsmi_gpu_dev_power_get(uint32_t dv_ind)
 {
 	uint64_t gpu_power = 0;
 	
-	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_ave_get(dv_ind, &gpu_power))){return gpu_power;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_ave_get(dv_ind, &gpu_power)))	    {return gpu_power;}
+	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_get(dv_ind, &gpu_power))){return gpu_power;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_get(dv_ind, &gpu_power)))	    {return gpu_power;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerAverage:-1\n", dv_ind);}
 	return -1;
