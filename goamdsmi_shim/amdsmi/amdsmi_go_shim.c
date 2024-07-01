@@ -145,7 +145,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 #endif
 
-	if ((AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) && (AMDSMI_STATUS_SUCCESS == check_amdgpu_driver())) 
+	if ((AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) && (AMDSMI_STATUS_SUCCESS == check_hsmp_driver())) 
 	{
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_APUS)) &&
 			(AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, nullptr)) &&
