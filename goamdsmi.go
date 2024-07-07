@@ -152,7 +152,7 @@ func GO_cpu_init() (int) {
 	return int(C.goamdsmi_cpu_init())
 }
 
-func GO_cpu_number_of_sockets_get(number_of_sockets *uint) (int) {
+func GO_cpu_number_of_sockets_get(number_of_sockets *int) (int) {
 	return int(C.goamdsmi_cpu_number_of_sockets_get(number_of_sockets))
 }
 

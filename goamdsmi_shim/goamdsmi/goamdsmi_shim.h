@@ -162,7 +162,7 @@ int goamdsmi_cpu_number_of_threads_get();
  *  @retval ::int value of the socket number
  *  @retval Zero is returned upon failure.
  */
-int goamdsmi_cpu_number_of_sockets_get(uint32_t* number_of_sockets);
+int goamdsmi_cpu_number_of_sockets_get(int* number_of_sockets);
 
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
 /**

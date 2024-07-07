@@ -94,12 +94,13 @@ int goamdsmi_cpu_number_of_threads_get()
 	return 0;
 }
 
-int goamdsmi_cpu_number_of_sockets_get(uint32_t* number_of_sockets)
+int goamdsmi_cpu_number_of_sockets_get(int* number_of_sockets)
 {
 	*number_of_sockets = 0;
+	uint32_t number_of_sockets_temp = 0;
 	
-	if		((amdsmicpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_number_of_sockets_get(number_of_sockets))){return 0;}
-	else if	((esmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(number_of_sockets)))     {return 0;}
+	if		((amdsmicpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_number_of_sockets_get(&number_of_sockets_temp))){*number_of_sockets = number_of_sockets_temp;return 0;}
+	else if	((esmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(&number_of_sockets_temp)))     {*number_of_sockets = number_of_sockets_temp;return 0;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, CpuNumSockets:0\n");}
 	return -1;
