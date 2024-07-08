@@ -42,10 +42,16 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#define GOAMDSMI_FUNCTION_FAILURE 0x0             //!< Operation was successful
+#define GOAMDSMI_FUNCTION_SUCCESS 0x1             //!< Operation was failure
+
+#define GOAMDSMI_VALUE_0            0
+#define GOAMDSMI_VALUE_NA          -1
+#define GOAMDSMI_STRING_NA         "NA"
 
 typedef enum {
   GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation was successful
-  GOAMDSMI_STATUS_FAILURE = 0xFFFFFFFF,        //!< Operation was failure
+  GOAMDSMI_STATUS_FAILURE = -1,                //!< Operation was failure
 } goamdsmi_status_t;
 
 typedef enum {
