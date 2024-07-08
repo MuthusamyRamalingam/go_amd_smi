@@ -46,7 +46,9 @@
 #define GOAMDSMI_FUNCTION_SUCCESS 0x1             //!< Operation was failure
 
 #define GOAMDSMI_VALUE_0            0
-#define GOAMDSMI_VALUE_NA          -1
+#define GOAMDSMI_UINT16_MAX        0xFFFF
+#define GOAMDSMI_UINT32_MAX        0xFFFFFFFF
+#define GOAMDSMI_UINT64_MAX        0xFFFFFFFFFFFFFFFF
 #define GOAMDSMI_STRING_NA         "NA"
 
 typedef enum {
