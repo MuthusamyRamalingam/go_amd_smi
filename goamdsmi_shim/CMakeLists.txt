@@ -13,14 +13,14 @@ cmake_minimum_required(VERSION 3.5.0)
 #
 #      example #cmake -DCMAKE_BUILD_TYPE=Release ..
 #
-#   2) Set ENABLE_GTEST to eighter "ON" or "OFF".
+#   2) Set ENABLE_GTEST to either "ON" or "OFF".
 #      If not set, the default value is "OFF"
 #
 #      example #cmake -DENABLE_GTEST=ON ..
 #
-#   3) Set ENABLE_CODE_COV to eighter "ON" or "OFF".
+#   3) Set ENABLE_CODE_COV to either "ON" or "OFF".
 #      If not set, the default value is "OFF"
-#      Code Coveraage is not preferred in "Release" build type.
+#      Code Coverage is not preferred in "Release" build type.
 #
 #      example #cmake -DENABLE_CODE_COV=ON ..
 #
@@ -28,13 +28,30 @@ cmake_minimum_required(VERSION 3.5.0)
 #      If not set, the default value is "disbaled"
 #
 #      example #cmake -DENABLE_STATIC_LIB=1 ..
-
+#
+#   3) Set -DWITH_ESMI and -DWITH_ROCM_SMI to either "ON" or "OFF".
+#      If not set, the default value is "OFF" for WITH_ESMI, "OFF" for WITH_ROCM_SMI and "ON" for WITH_AMDSMI.
+#      This cmake options builds required library APIs as per user need.
+#
+#      example #Below possible combinations.
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
+#
 #   Build Steps:
 #   1) #mkdir build
 #   2) #cd build
-#   3) #cmake ..
+#   3) #cmake ../amd_smi.cmake ../
+#      The above command will pick default -DWITH_ESMI=OFF -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON
+#      (or)
+#      #cmake -C ../amd_smi.cmake ../
+#      The above '-C' option will pick default -DWITH_ESMI=ON -DWITH_ROCM_SMI=ON -DWITH_AMDSMI=ON
 #   4) #make
-#
+#   5) #make install
 
 
 option(WITH_ESMI         "Support e-smi (EPYC cpus)"              OFF)
