@@ -113,7 +113,7 @@ uint64_t goamdsmi_cpu_core_energy_get(uint32_t thread_index)
 	else if	((esmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_core_energy_get(thread_index, &core_energy)))	 	{return core_energy;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Thread:%d, CpuCoreEnergy:-1\n", thread_index);}
-	return goamdsmi_cpu_core_energy_get;
+	return core_energy;
 }
 
 uint64_t goamdsmi_cpu_socket_energy_get(uint32_t socket_index)
