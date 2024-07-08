@@ -106,7 +106,7 @@ goamdsmi_status_t go_shim_esmi_core_energy_get(uint32_t thread_index, uint64_t* 
 	if(ESMI_SUCCESS == esmi_core_energy_get(thread_index, &core_energy_temp))
 	{
 		*core_energy = core_energy_temp;
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success for Thread:%d, CpuCoreEnergy:%d, CpuCoreEnergyJoules:%.6f\n", thread_index, (*core_energy), ((double)(*core_energy))/1000000);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success for Thread:%d, CpuCoreEnergy:%ld, CpuCoreEnergyJoules:%.6f\n", thread_index, (*core_energy), ((double)(*core_energy))/1000000);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
@@ -121,7 +121,7 @@ goamdsmi_status_t go_shim_esmi_socket_energy_get(uint32_t socket_index, uint64_t
 	if(ESMI_SUCCESS == esmi_socket_energy_get(socket_index, &socket_energy_temp))
 	{
 		*socket_energy = socket_energy_temp;
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%d, CpuSocketEnergyJoules:%.6f\n", socket_index, (*socket_energy), ((double)(*socket_energy))/1000000);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success for Socket:%d, CpuSocketEnergy:%ld, CpuSocketEnergyJoules:%.6f\n", socket_index, (*socket_energy), ((double)(*socket_energy))/1000000);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	
