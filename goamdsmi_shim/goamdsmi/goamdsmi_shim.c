@@ -288,7 +288,7 @@ uint64_t goamdsmi_gpu_dev_power_cap_get(uint32_t dv_ind)
 	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_dev_power_cap_get(dv_ind, &gpu_power_cap))){return gpu_power_cap;}
 	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_dev_power_cap_get(dv_ind, &gpu_power_cap)))		{return gpu_power_cap;}
 
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerCap:%d\n", dv_ind, GOAMDSMI_UINT64_MAX);}
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerCap:%ld\n", dv_ind, GOAMDSMI_UINT64_MAX);}
 	return GOAMDSMI_UINT64_MAX;
 }
 
