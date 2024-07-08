@@ -98,8 +98,8 @@ uint32_t goamdsmi_cpu_number_of_sockets_get()
 {
 	uint32_t number_of_sockets = GOAMDSMI_VALUE_0;
 	
-	if		((amdsmicpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_number_of_sockets_get(&number_of_sockets_temp))){return number_of_sockets;}
-	else if	((esmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(&number_of_sockets_temp)))     {return number_of_sockets;}
+	if		((amdsmicpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmicpu_number_of_sockets_get(&number_of_sockets))){return number_of_sockets;}
+	else if	((esmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_esmi_number_of_sockets_get(&number_of_sockets)))     {return number_of_sockets;}
 
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, CpuNumSockets:0\n");}
 	return number_of_sockets;
