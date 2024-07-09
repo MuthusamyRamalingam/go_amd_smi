@@ -149,7 +149,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 #endif
 
-	if ((AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) && (AMDSMI_STATUS_SUCCESS == check_hsmp_driver())) 
+	if ((GOAMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) && (GOAMDSMI_STATUS_SUCCESS == check_hsmp_driver())) 
 	{
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified APU machine and going to enumurate APU\n");}
 
@@ -202,7 +202,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Going to enumurate only CPU\n");}
 		cpuInitCompleted = true;
 		
-		if (AMDSMI_STATUS_SUCCESS == check_hsmp_driver()) 
+		if (GOAMDSMI_STATUS_SUCCESS == check_hsmp_driver()) 
 		{
 			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified CPU Driver and going to enumurate only CPU\n");}
 
@@ -246,7 +246,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Going to enumurate only GPU\n");}
 		gpuInitCompleted = true;
 		
-		if (AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) 
+		if (GOAMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) 
 		{
 			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified GPU Driver and going to enumurate only GPU\n");}
 
