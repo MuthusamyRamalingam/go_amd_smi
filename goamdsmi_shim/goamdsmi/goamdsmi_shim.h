@@ -41,11 +41,11 @@
 /**
  *  @brief Go language stub to initialize the AMDSMI or E-SMI library
  *
- *  @retval ::int value of 1 upon success
- *  @retval Zero is returned upon failure.
+ *  @retval ::bool value of true upon success
+ *  @retval false is returned upon failure.
  *
  */
-int goamdsmi_cpu_init();
+bool goamdsmi_cpu_init();
 
 /**
  *  @brief Go language stub to get the core energy for a given core
@@ -168,21 +168,21 @@ uint32_t goamdsmi_cpu_number_of_sockets_get();
 /**
  *  @brief Go language stub to initialize the ROCm-SMI library
  *
- *  @retval ::int value of 1 upon success
- *  @retval Zero is returned upon failure.
+ *  @retval ::bool value of true upon success
+ *  @retval false is returned upon failure.
  *
  */
-int goamdsmi_gpu_init();
+bool goamdsmi_gpu_init();
 
 /**
  *  @brief Go language stub to shut down the ROCm-SMI library
  *  and do necessary clean up
  *
- *  @retval ::int value of 1 upon success
- *  @retval Zero is returned upon failure.
+ *  @retval ::bool value of true upon success
+ *  @retval false is returned upon failure.
  *
  */
-int goamdsmi_gpu_shutdown();
+bool goamdsmi_gpu_shutdown();
 
 /**
  *  @brief Go language stub to get the number of GPU devices
