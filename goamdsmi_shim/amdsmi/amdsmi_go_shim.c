@@ -103,20 +103,12 @@ goamdsmi_status_t go_shim_amdsmi_present()
 
 goamdsmi_status_t check_amdgpu_driver()
 {
-	if(GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDGPU_DRIVER_NAME, AMDGPU_INITSTATE_FILE))
-	{
-		return GOAMDSMI_STATUS_SUCCESS;
-	}
-	return GOAMDSMI_STATUS_FAILURE;
+	return is_file_present(AMDGPU_DRIVER_NAME, AMDGPU_INITSTATE_FILE));
 }
 
 goamdsmi_status_t check_hsmp_driver()
 {
-	if(GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDHSMP_DRIVER_NAME, AMDHSMP_INITSTATE_FILE))
-	{
-		return GOAMDSMI_STATUS_SUCCESS;
-	}
-	return GOAMDSMI_STATUS_FAILURE;
+	return  is_file_present(AMDHSMP_DRIVER_NAME, AMDHSMP_INITSTATE_FILE));
 }
 
 goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
