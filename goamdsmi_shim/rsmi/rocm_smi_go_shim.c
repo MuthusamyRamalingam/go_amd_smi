@@ -50,7 +50,7 @@ goamdsmi_status_t go_shim_rsmi_init()
 {
 	if(RSMI_STATUS_SUCCESS == rsmi_init(0))
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success, GpuInit:%d\n", GOAMDSMI_FUNCTION_SUCCESS);}		
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success, GpuInit:%d\n", GOAMDSMI_STATUS_SUCCESS);}		
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;
@@ -60,7 +60,7 @@ goamdsmi_status_t go_shim_rsmi_shutdown()
 {
     if (RSMI_STATUS_SUCCESS == rsmi_shut_down())
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success, GpuShutdown:%d\n", GOAMDSMI_FUNCTION_SUCCESS);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ROCMSMI, Success, GpuShutdown:%d\n", GOAMDSMI_STATUS_SUCCESS);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;

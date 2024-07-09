@@ -47,8 +47,8 @@ goamdsmi_status_t go_shim_esmi_init()
 {
 	if(ESMI_SUCCESS == esmi_init()) 
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success, CpuInit:%d\n", GOAMDSMI_FUNCTION_SUCCESS);}
-		GOAMDSMI_STATUS_SUCCESS;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("ESMI, Success, CpuInit:%d\n", GOAMDSMI_STATUS_SUCCESS);}
+		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;
 }
