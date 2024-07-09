@@ -103,12 +103,12 @@ goamdsmi_status_t go_shim_amdsmi_present()
 
 goamdsmi_status_t check_amdgpu_driver()
 {
-	return is_file_present(AMDGPU_DRIVER_NAME, AMDGPU_INITSTATE_FILE));
+	return is_file_present(AMDGPU_DRIVER_NAME, AMDGPU_INITSTATE_FILE);
 }
 
 goamdsmi_status_t check_hsmp_driver()
 {
-	return  is_file_present(AMDHSMP_DRIVER_NAME, AMDHSMP_INITSTATE_FILE));
+	return  is_file_present(AMDHSMP_DRIVER_NAME, AMDHSMP_INITSTATE_FILE);
 }
 
 goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
