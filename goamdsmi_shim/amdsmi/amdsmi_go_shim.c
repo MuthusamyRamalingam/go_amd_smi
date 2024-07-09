@@ -53,6 +53,16 @@
 #define MAX_LOGICALCORE_ACROSS_SYSTEM  768
 #define MAX_GPU_DEVICE_ACROSS_SYSTEM    24
 
+#define AMDSMI_DRIVER_NAME     "AMDSMI"
+#define AMDSMI_LIB_FILE	       "/opt/rocm/lib/libamd_smi.so"
+#define AMDSMI_LIB64_FILE	   "/opt/rocm/lib64/libamd_smi.so"
+
+#define AMDGPU_DRIVER_NAME     "AMDGPUDriver"
+#define AMDGPU_INITSTATE_FILE  "/sys/module/amdgpu/initstate"
+
+#define AMDHSMP_DRIVER_NAME    "AMDHSMPDriver"
+#define AMDHSMP_INITSTATE_FILE "/sys/module/amd_hsmp/initstate"
+
 static uint32_t num_apuSockets				= 0;
 static uint32_t num_cpuSockets				= 0;
 static uint32_t num_gpuSockets				= 0;
@@ -71,16 +81,21 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_across_socket[MA
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_physicalCore_across_socket[MAX_PHYSICALCORE_ACROSS_SYSTEM]      = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_socket[MAX_GPU_DEVICE_ACROSS_SYSTEM]				= {0};
 
-goamdsmi_status_t go_shim_amdsmi_present()
+goamdsmi_status_t is_file_present(const char* driver_name, const char* file_name)
 {
-	if(0 == access("/opt/rocm/lib/libamd_smi.so", F_OK)) 
+	if(0 == access(file_name, F_OK)) 
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, AMDSMI found /opt/rocm/lib/libamd_smi.so\n");}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, %s found \"%s\"\n", driver_name, file_name);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
-	if(0 == access("/opt/rocm/lib64/libamd_smi.so", F_OK)) 
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, %s not found, missing \"%s\"\n", driver_name, file_name);}
+	return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmi_present()
+{
+	if((GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDSMI_DRIVER_NAME, AMDSMI_LIB_FILE)) || (GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDSMI_DRIVER_NAME, AMDSMI_LIB64_FILE)))
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, AMDSMI found /opt/rocm/lib64/libamd_smi.so\n");}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;
@@ -88,9 +103,8 @@ goamdsmi_status_t go_shim_amdsmi_present()
 
 goamdsmi_status_t check_amdgpu_driver()
 {
-	if(0 == access("/sys/module/amdgpu/initstate", F_OK)) 
+	if(GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDGPU_DRIVER_NAME, AMDGPU_INITSTATE_FILE))
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, AMDGPUDriver found /sys/module/amdgpu/initstate\n");}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;
@@ -98,9 +112,8 @@ goamdsmi_status_t check_amdgpu_driver()
 
 goamdsmi_status_t check_hsmp_driver()
 {
-	if(0 == access("/sys/module/amd_hsmp/initstate", F_OK)) 
+	if(GOAMDSMI_STATUS_SUCCESS == is_file_present(AMDHSMP_DRIVER_NAME, AMDHSMP_INITSTATE_FILE))
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, AMDSMIDriver found /sys/module/amd_hsmp/initstate\n");}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	return GOAMDSMI_STATUS_FAILURE;
@@ -147,6 +160,8 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 
 	if ((AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) && (AMDSMI_STATUS_SUCCESS == check_hsmp_driver())) 
 	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified APU machine and going to enumurate APU\n");}
+
 		if( (AMDSMI_STATUS_SUCCESS == amdsmi_init(AMDSMI_INIT_AMD_APUS)) &&
 			(AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, nullptr)) &&
 			(AMDSMI_STATUS_SUCCESS == amdsmi_get_socket_handles(&num_apuSockets, &amdsmi_apusocket_handle_all_socket[0])) &&
@@ -194,6 +209,8 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 	else if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
 	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified and going to enumurate only CPU\n");}
+
 		cpuInitCompleted = true;
 		
 		if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_CPUS)) ||
@@ -228,6 +245,8 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 	else if(GOAMDSMI_GPU_INIT == goamdsmi_Init)	
 	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified and going to enumurate only GPU\n");}
+
 		gpuInitCompleted = true;
 		
 		if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_GPUS)) ||
