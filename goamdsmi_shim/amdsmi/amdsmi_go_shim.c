@@ -85,10 +85,10 @@ goamdsmi_status_t is_file_present(const char* driver_name, const char* file_name
 {
 	if(0 == access(file_name, F_OK)) 
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, %s found \"%s\"\n", driver_name, file_name);}
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success, %s found \"%s\" and returns:%d\n", driver_name, file_name, GOAMDSMI_STATUS_SUCCESS);}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, %s not found, missing \"%s\"\n", driver_name, file_name);}
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, %s not found, missing \"%s\" and returns:%d\n", driver_name, file_name, GOAMDSMI_STATUS_FAILURE);}
 	return GOAMDSMI_STATUS_FAILURE;
 }
 
@@ -167,7 +167,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				uint32_t num_cpu		       = 0;
 				uint32_t num_cpu_physicalCores = 0;
 				uint32_t num_gpu_devices       = 0;
-			
+
 				//CPU
 				processor_type_t cpu_processor_type			= AMDSMI_PROCESSOR_TYPE_AMD_CPU;
 				processor_type_t cpu_core_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_CPU_CORE;
@@ -184,8 +184,7 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 					num_cpu_inAllSocket = num_cpu_inAllSocket+num_cpu;
 					num_cpuSockets = num_cpuSockets+1;
 				}
-			
-			
+
 				//GPU
 				processor_type_t gpu_device_processor_type	= AMDSMI_PROCESSOR_TYPE_AMD_GPU;
 				if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_processor_handles_by_type(amdsmi_apusocket_handle_all_socket[socket_counter], gpu_device_processor_type, nullptr, &num_gpu_devices)) &&
@@ -200,12 +199,13 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 	else if(GOAMDSMI_CPU_INIT == goamdsmi_Init)
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified and going to enumurate only CPU\n");}
-
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Going to enumurate only CPU\n");}
 		cpuInitCompleted = true;
 		
 		if (AMDSMI_STATUS_SUCCESS == check_hsmp_driver()) 
 		{
+			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified CPU Driver and going to enumurate only CPU\n");}
+
 			if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_CPUS)) ||
 				(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_cpuSockets, nullptr)) || 
 				(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_cpuSockets, &amdsmi_cpusocket_handle_all_socket[0])) ||
@@ -214,6 +214,10 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Failed, AMDSMICPUInit:0, CpuNumSockets=0\n");}
 				return GOAMDSMI_STATUS_FAILURE;
 			}		
+		}
+		else
+		{
+			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status, Missing CPU Driver and not going to enumurate only CPU\n");}
 		}
 		//CPU
 		for(uint32_t cpu_socket_counter = 0; cpu_socket_counter < num_cpuSockets; cpu_socket_counter++)
@@ -239,12 +243,13 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 	}
 	else if(GOAMDSMI_GPU_INIT == goamdsmi_Init)	
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified and going to enumurate only GPU\n");}
-
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Going to enumurate only GPU\n");}
 		gpuInitCompleted = true;
 		
 		if (AMDSMI_STATUS_SUCCESS == check_amdgpu_driver()) 
 		{
+			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Status, Identified GPU Driver and going to enumurate only GPU\n");}
+
 			if( (AMDSMI_STATUS_SUCCESS != amdsmi_init(AMDSMI_INIT_AMD_GPUS)) ||
 				(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_gpuSockets, nullptr)) || 
 				(AMDSMI_STATUS_SUCCESS != amdsmi_get_socket_handles(&num_gpuSockets, &amdsmi_gpusocket_handle_all_socket[0])) ||
@@ -253,6 +258,10 @@ goamdsmi_status_t go_shim_amdsmiapu_init(goamdsmi_Init_t goamdsmi_Init)
 				if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Failed, AMDSMIGPUInit:0, GpuNumSockets=0\n");}
 				return GOAMDSMI_STATUS_FAILURE;
 			}
+		}
+		else
+		{
+			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status, Missing GPU Driver and not going to enumurate only GPU\n");}
 		}
 		
 		//GPU
