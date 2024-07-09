@@ -639,24 +639,31 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_
      uint64_t gpu_memory_usage_temp = 0;
 	 uint64_t gpu_memory_total_temp = 0;
 
-    if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_usage(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp)))
+#if 0
+	if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_usage(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp))&& 
+		(AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_total(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp)))
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place1, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
-		if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_total(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp)))
-		{
-			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place2, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
+		*gpu_memory_busy_percent = (uint64_t)(gpu_memory_usage_temp*100)/gpu_memory_total_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+#else
+	amdsmi_status_t ret1 = amdsmi_get_gpu_memory_usage(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp);
+	amdsmi_status_t ret2 = amdsmi_get_gpu_memory_total(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp);
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place1, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld ret1:%d ret2:%d\n", dv_ind, (*gpu_memory_busy_percent), ret1, ret2);}
+	if( (AMDSMI_STATUS_SUCCESS == ret1) && (AMDSMI_STATUS_SUCCESS == ret2))
+	{
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place2, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
 
-			*gpu_memory_busy_percent = (uint64_t)(gpu_memory_usage_temp*100)/gpu_memory_total_temp;
-			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
-			return GOAMDSMI_STATUS_SUCCESS;
-		}
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place3, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
+		*gpu_memory_busy_percent = (uint64_t)(gpu_memory_usage_temp*100)/gpu_memory_total_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
+		return GOAMDSMI_STATUS_SUCCESS;
 	}
 	else
 	{
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI place4, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
 	}
-	
+#endif
 	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
     return GOAMDSMI_STATUS_FAILURE;
 }
