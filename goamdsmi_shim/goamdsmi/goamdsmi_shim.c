@@ -52,12 +52,12 @@ static bool rsmi_init	= false;
 static bool cpu_init	= true;
 static bool gpu_init	= true;
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
-int goamdsmi_cpu_init()	
+bool goamdsmi_cpu_init()	
 {	
 	if(false == cpu_init)
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated CpuInit:%d\n", GOAMDSMI_STATUS_FAILURE);}
-		return GOAMDSMI_STATUS_FAILURE;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated CpuInit:false\n");}
+		return false;
 	}
 	
 	goamdsmi_status_t amdsmicpu_	= go_shim_amdsmicpu_init();
@@ -65,11 +65,11 @@ int goamdsmi_cpu_init()
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmicpu_)	{amdsmicpu_init = true;}
 	if(GOAMDSMI_STATUS_SUCCESS == esmi_)		{esmi_init = true;}
-	if(amdsmicpu_init || esmi_init)				return GOAMDSMI_STATUS_SUCCESS;
+	if(amdsmicpu_init || esmi_init)				return true;
 
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, CpuInit:%d\n", GOAMDSMI_STATUS_FAILURE);}
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, CpuInit:false\n");}
 	cpu_init = false;
-	return GOAMDSMI_STATUS_FAILURE;
+	return false;
 }
 
 uint32_t goamdsmi_cpu_threads_per_core_get()
@@ -172,32 +172,32 @@ uint32_t goamdsmi_cpu_core_boostlimit_get(uint32_t thread_index)
 }
 
 ////////////////////////////////////////////////------------GPU------------////////////////////////////////////////////////
-int goamdsmi_gpu_init()
+bool goamdsmi_gpu_init()
 {
 	if(false == gpu_init)
 	{
-		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated GpuInit:%d\n", GOAMDSMI_STATUS_FAILURE);}
-		return GOAMDSMI_STATUS_FAILURE;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated GpuInit:false\n");}
+		return false;
 	}
 	goamdsmi_status_t amdsmigpu_	= go_shim_amdsmigpu_init();
 	goamdsmi_status_t rsmi_			= go_shim_rsmi_init();
 	
 	if(GOAMDSMI_STATUS_SUCCESS == amdsmigpu_)	{amdsmigpu_init = true;}
 	if(GOAMDSMI_STATUS_SUCCESS == rsmi_)		{rsmi_init = true;}
-	if(amdsmigpu_init || rsmi_init)				return GOAMDSMI_STATUS_SUCCESS;
+	if(amdsmigpu_init || rsmi_init)				return true;
 
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuInit:%d\n", GOAMDSMI_STATUS_FAILURE);}
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuInit:false\n");}
 	gpu_init = false;
-	return GOAMDSMI_STATUS_FAILURE;
+	return false;
 }
 
-int goamdsmi_gpu_shutdown()
+bool goamdsmi_gpu_shutdown()
 {	
-	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_shutdown()))	{return GOAMDSMI_STATUS_SUCCESS;}
-	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_shutdown()))		{return GOAMDSMI_STATUS_SUCCESS;}
+	if		((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_shutdown()))	{return true;}
+	else if	((rsmi_init)     &&(GOAMDSMI_STATUS_SUCCESS == go_shim_rsmi_shutdown()))		{return true;}
 
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuShutdown:%d\n", GOAMDSMI_STATUS_FAILURE);}
-	return GOAMDSMI_STATUS_FAILURE;
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuShutdown:false\n");}
+	return false;
 }
 
 uint32_t goamdsmi_gpu_num_monitor_devices()

@@ -49,8 +49,8 @@
 #define GOAMDSMI_STRING_NA         "NA"
 
 typedef enum {
-  GOAMDSMI_STATUS_FAILURE = 0x0,               //!< Operation failed
-  GOAMDSMI_STATUS_SUCCESS = 0x1,               //!< Operation successful
+  GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation successful
+  GOAMDSMI_STATUS_FAILURE = 0x1,               //!< Operation failed
 } goamdsmi_status_t;
 
 typedef enum {

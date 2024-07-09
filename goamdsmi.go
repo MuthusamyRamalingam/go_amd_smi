@@ -51,12 +51,12 @@ package goamdsmi
 import "C"
 
 //GPU ROCM or AMDSMI calls
-func GO_gpu_init() (uint) {
-	return uint(C.goamdsmi_gpu_init())
+func GO_gpu_init() (bool) {
+	return bool(C.goamdsmi_gpu_init())
 }
 
-func GO_gpu_shutdown() (uint) {
-	return uint(C.goamdsmi_gpu_shutdown())
+func GO_gpu_shutdown() (bool) {
+	return bool(C.goamdsmi_gpu_shutdown())
 }
 
 func GO_gpu_num_monitor_devices() (uint) {
@@ -148,8 +148,8 @@ func GO_gpu_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 }
 
 //CPU ESMI or AMDSMI calls
-func GO_cpu_init() (uint) {
-	return uint(C.goamdsmi_cpu_init())
+func GO_cpu_init() (bool) {
+	return bool(C.goamdsmi_cpu_init())
 }
 
 func GO_cpu_number_of_sockets_get() (uint) {
