@@ -646,7 +646,8 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
 		return GOAMDSMI_STATUS_SUCCESS;
 	}
-		
+	
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
     return GOAMDSMI_STATUS_FAILURE;
 }
 
