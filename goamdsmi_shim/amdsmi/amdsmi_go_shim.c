@@ -635,16 +635,48 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind, ui
 
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind, uint64_t* gpu_memory_busy_percent)
 {
-	return GOAMDSMI_STATUS_FAILURE;
+	*gpu_memory_busy_percent 		= 0;
+     uint64_t gpu_memory_usage_temp = 0;
+	 uint64_t gpu_memory_total_temp = 0;
+
+    if( (AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_usage(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp))&& 
+		(AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_total(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp)))
+	{
+		*gpu_memory_busy_percent = (uint64_t)(gpu_memory_usage_temp*100)/gpu_memory_total_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryBusyPerc:%ld\n", dv_ind, (*gpu_memory_busy_percent));}
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+		
+    return GOAMDSMI_STATUS_FAILURE;
 }
 
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_usage_get(uint32_t dv_ind, uint64_t* gpu_memory_usage)
 {
+	*gpu_memory_usage				= 0;
+    uint64_t gpu_memory_usage_temp	= 0;
+
+    if(AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_usage(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_usage_temp))
+	{
+        *gpu_memory_usage = (uint64_t)gpu_memory_usage_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryUsage:%ld\n", dv_ind, (*gpu_memory_usage));}
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+		
     return GOAMDSMI_STATUS_FAILURE;
 }
 
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_memory_total)
 {
+	*gpu_memory_total				= 0;
+    uint64_t gpu_memory_total_temp	= 0;
+
+    if(AMDSMI_STATUS_SUCCESS == amdsmi_get_gpu_memory_total(dv_ind, AMDSMI_MEM_TYPE_VRAM, &gpu_memory_total_temp))
+	{
+        *gpu_memory_total = (uint64_t)gpu_memory_total_temp;
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuMemoryTotal:%ld\n", dv_ind, (*gpu_memory_total));}
+		return GOAMDSMI_STATUS_SUCCESS;
+	}
+		
     return GOAMDSMI_STATUS_FAILURE;
 }
 #else
