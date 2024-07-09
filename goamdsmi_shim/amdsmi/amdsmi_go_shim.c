@@ -52,6 +52,7 @@
 #define MAX_PHYSICALCORE_ACROSS_SYSTEM 384
 #define MAX_LOGICALCORE_ACROSS_SYSTEM  768
 #define MAX_GPU_DEVICE_ACROSS_SYSTEM    24
+#define MAX_GPU_POWER_FROM_DRIVER		0xFFFF
 
 #define AMDSMI_DRIVER_NAME     "AMDSMI"
 #define AMDSMI_LIB_FILE	       "/opt/rocm/lib/libamd_smi.so"
@@ -518,7 +519,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_get(uint32_t dv_ind, uint64_t* gpu
 		gpu_power_temp = amdsmi_power_info_temp.average_socket_power;
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerAverage:%d, GpuPowerAverageinWatt:%.6f\n", dv_ind, (int)(gpu_power_temp), ((double)(gpu_power_temp))/1000000);}
 
-		if(0xFFFF == gpu_power_temp)
+		if(MAX_GPU_POWER_FROM_DRIVER == gpu_power_temp)
 		{
 			gpu_power_temp = amdsmi_power_info_temp.current_socket_power;
 			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerCurrent:%d, GpuPowerCurrentinWatt:%.6f\n", dv_ind, (int)(gpu_power_temp), ((double)(gpu_power_temp))/1000000);}
@@ -535,7 +536,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_get(uint32_t dv_ind, uint64_t* gpu
 		gpu_power_temp = metrics.average_socket_power;
 		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerAverageFromMetrics:%d, GpuPowerAverageFromMetricsinWatt:%.6f\n", dv_ind, (int)gpu_power_temp, ((double)(gpu_power_temp))/1000000);}
 
-		if(0xFFFF == gpu_power_temp)
+		if(MAX_GPU_POWER_FROM_DRIVER == gpu_power_temp)
 		{
 			gpu_power_temp = metrics.current_socket_power;
 			if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerCurrentFromMetrics:%d, GpuPowerCurrentFromMetricsinWatt:%.6f\n", dv_ind, (int)gpu_power_temp, ((double)(gpu_power_temp))/1000000);}
