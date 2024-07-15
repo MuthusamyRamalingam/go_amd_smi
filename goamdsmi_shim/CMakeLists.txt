@@ -34,13 +34,13 @@ cmake_minimum_required(VERSION 3.5.0)
 #      This cmake options builds required library APIs as per user need.
 #
 #      example #Below possible combinations.
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
 #	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
 #	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
 #
 #   Build Steps:
 #   1) #mkdir build
@@ -54,9 +54,9 @@ cmake_minimum_required(VERSION 3.5.0)
 #   5) #make install
 
 
-option(WITH_ESMI         "Support e-smi (EPYC cpus)"              OFF)
-option(WITH_ROCM_SMI     "Support Rocm smi (MI200)"               OFF)
-option(WITH_AMDSMI       "Support Amd smi (EPYC cpus, MI200)"     ON)
+option(WITH_ESMI         "Support cpu family"			OFF)
+option(WITH_ROCM_SMI     "Support gpu family"			OFF)
+option(WITH_AMDSMI       "Support unified cpu and gpu"		ON)
 
 set(ESMI_DIR "" CACHE PATH "path to e_smi installation")
 set(ROCM_SMI_DIR "" CACHE PATH "path to rocm_smi installation")
@@ -181,21 +181,6 @@ list(APPEND go_amd_smi_headers amdsmi/amdsmi_go_shim.h ${go_amd_smi_headers})
 list(APPEND go_amd_smi_sources amdsmi/amdsmi_go_shim.c)
 list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/amdsmi)
 
-#add_subdirectory(esmi)
-#list(APPEND go_amd_smi_headers esmi/esmi_go_shim.h ${go_amd_smi_headers})
-#list(APPEND go_amd_smi_sources esmi/esmi_go_shim.c)
-#list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/esmi)
-#
-#add_subdirectory(rsmi)
-#list(APPEND go_amd_smi_headers rsmi/rocm_smi_go_shim.h ${go_amd_smi_headers})
-#list(APPEND go_amd_smi_sources rsmi/rocm_smi_go_shim.c)
-#list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/rsmi)
-#
-#add_subdirectory(amdsmi)
-#list(APPEND go_amd_smi_headers amdsmi/amdsmi_go_shim.h ${go_amd_smi_headers})
-#list(APPEND go_amd_smi_sources amdsmi/amdsmi_go_shim.c)
-#list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/amdsmi)
-
 add_library(${GOAMDSMI_SHIM_TARGET} SHARED
 	    ${go_amd_smi_sources}
 	    ${go_amd_smi_headers}
@@ -233,8 +218,8 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL Release)
 endif ()
 
 set(go_amd_smi_install_headers
-	goamdsmi/goamdsmi.h
-	goamdsmi/goamdsmi_shim.h
+    goamdsmi/goamdsmi.h
+    goamdsmi/goamdsmi_shim.h
     esmi/esmi_go_shim.h
     rsmi/rocm_smi_go_shim.h
     amdsmi/amdsmi_go_shim.h
@@ -247,4 +232,3 @@ install(FILES ${go_amd_smi_install_headers}
 	DESTINATION include)
 
 include_directories(${go_amd_smi_includes})
-

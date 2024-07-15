@@ -14,4 +14,3 @@ set(WITH_AMDSMI ON CACHE BOOL "")
 set(ESMI_DIR "/opt/e-sms/e_smi" CACHE PATH "")
 set(ROCM_SMI_DIR "/opt/rocm" CACHE PATH "")
 set(AMDSMI_DIR "/opt/rocm" CACHE PATH "")
-
