@@ -66,7 +66,7 @@ goamdsmi_status_t go_shim_esmi_threads_per_core_get(uint32_t* threads_per_core);
 goamdsmi_status_t go_shim_esmi_number_of_threads_get(uint32_t* number_of_threads);
 
 /**
- *  @brief Go stub to get the total number of processor sockets 
+ *  @brief Go stub to get the total number of processor sockets
  *  available in the system
  *
  *  @param[in] ::uint32_t* value of num of cpu sockets

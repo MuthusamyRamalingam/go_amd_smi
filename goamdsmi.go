@@ -40,7 +40,7 @@ package goamdsmi
 
 /*
 #cgo CFLAGS: -Wall -I/opt/goamdsmi/include
-#cgo LDFLAGS: -L/opt/e-sms/e_smi/lib -L/opt/rocm/lib -L/opt/rocm/lib -L/opt/rocm/lib64 -L/opt/goamdsmi/lib -lgoamdsmi_shim64 -Wl,--unresolved-symbols=ignore-in-object-files
+#cgo LDFLAGS: -L/opt/e-sms/e_smi/lib -L/opt/rocm/lib -L/opt/rocm/lib64 -L/opt/goamdsmi/lib -lgoamdsmi_shim64 -Wl,--unresolved-symbols=ignore-in-object-files
 #include <stdint.h>
 #include <goamdsmi.h>
 #include <goamdsmi_shim.h>
@@ -187,5 +187,3 @@ func GO_cpu_socket_power_cap_get(i int) (C.uint32_t) {
 func GO_cpu_prochot_status_get(i int) (C.uint32_t) {
 	return C.goamdsmi_cpu_prochot_status_get(C.uint(i))
 }
-
-
