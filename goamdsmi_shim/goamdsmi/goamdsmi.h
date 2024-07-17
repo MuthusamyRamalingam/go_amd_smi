@@ -56,11 +56,7 @@
  *  @retval false is returned upon if user does not want to enable logs.
  *
  */
-#define enable_debug_level(debug_level) \
-        {\
-            if(ENABLE_DEBUG_LEVEL >= debug_level) return true;\
-            return false;\
-        }
+#define enable_debug_level(debug_level) ((ENABLE_DEBUG_LEVEL >= debug_level)?true:false)
 
 typedef enum {
   GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation successful
