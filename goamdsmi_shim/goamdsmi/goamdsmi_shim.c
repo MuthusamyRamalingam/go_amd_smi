@@ -60,11 +60,13 @@ bool goamdsmi_cpu_init()
         return false;
     }
     
-    goamdsmi_status_t amdsmicpu_ = go_shim_amdsmicpu_init();
-    goamdsmi_status_t esmi_      = go_shim_esmi_init();
+    goamdsmi_status_t amdsmicpu_  = go_shim_amdsmicpu_init();
+    if   (GOAMDSMI_STATUS_SUCCESS == amdsmicpu_)   {amdsmicpu_init = true;}
+    else { 
+        goamdsmi_status_t esmi_   = go_shim_esmi_init();
+        if(GOAMDSMI_STATUS_SUCCESS == esmi_)       {esmi_init = true;}
+    }
     
-    if(GOAMDSMI_STATUS_SUCCESS == amdsmicpu_)   {amdsmicpu_init = true;}
-    if(GOAMDSMI_STATUS_SUCCESS == esmi_)        {esmi_init = true;}
     if(amdsmicpu_init || esmi_init)             return true;
 
     if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, CpuInit:false\n");}
@@ -179,11 +181,13 @@ bool goamdsmi_gpu_init()
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("GOAMDSMI, Status, Returns previous enumurated GpuInit:false\n");}
         return false;
     }
-    goamdsmi_status_t amdsmigpu_   = go_shim_amdsmigpu_init();
-    goamdsmi_status_t rsmi_        = go_shim_rsmi_init();
-    
-    if(GOAMDSMI_STATUS_SUCCESS == amdsmigpu_)   {amdsmigpu_init = true;}
-    if(GOAMDSMI_STATUS_SUCCESS == rsmi_)        {rsmi_init = true;}
+    goamdsmi_status_t amdsmigpu_  = go_shim_amdsmigpu_init();
+    if   (GOAMDSMI_STATUS_SUCCESS == amdsmigpu_)   {amdsmigpu_init = true;}
+    else { 
+        goamdsmi_status_t rsmi_   = go_shim_rsmi_init();
+        if(GOAMDSMI_STATUS_SUCCESS == rsmi_)       {rsmi_init = true;}
+    }
+
     if(amdsmigpu_init || rsmi_init)             return true;
 
     if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed, GpuInit:false\n");}

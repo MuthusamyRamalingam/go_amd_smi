@@ -42,11 +42,25 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define GOAMDSMI_VALUE_0            0
+#define GOAMDSMI_VALUE_0           0
 #define GOAMDSMI_UINT16_MAX        0xFFFF
 #define GOAMDSMI_UINT32_MAX        0xFFFFFFFF
 #define GOAMDSMI_UINT64_MAX        0xFFFFFFFFFFFFFFFF
 #define GOAMDSMI_STRING_NA         "NA"
+
+/**
+ *  @brief Go language stub to initialize the Debug Level prints
+ *         -DENABLE_DEBUG_LEVEL=1 (or) -DENABLE_DEBUG_LEVEL=<Enable_Debug_level_number> must be passed at cmake time
+ *
+ *  @retval ::bool value of true upon enabling logs
+ *  @retval false is returned upon if user does not want to enable logs.
+ *
+ */
+#define enable_debug_level(debug_level)\
+        {\
+            if(ENABLE_DEBUG_LEVEL >= debug_level) return true;\
+            return false;\
+        }
 
 typedef enum {
   GOAMDSMI_STATUS_SUCCESS = 0x0,               //!< Operation successful
@@ -64,15 +78,5 @@ typedef enum {
   GOAMDSMI_DEBUG_LEVEL_2 = 0x2,               //!< Debug Level as 2
   GOAMDSMI_DEBUG_LEVEL_3 = 0x3,               //!< Debug Level as 3
 } goamdsmi_Enable_Debug_Level_t;
-
-/**
- *  @brief Go language stub to initialize the Debug Level prints
- *         -DENABLE_DEBUG_LEVEL=1 (or) -DENABLE_DEBUG_LEVEL=<Enable_Debug_level_number> must be passed at cmake time
- *
- *  @retval ::bool value of true upon enabling logs
- *  @retval false is returned upon if user does not want to enable logs.
- *
- */
-bool enable_debug_level(goamdsmi_Enable_Debug_Level_t debug_level);
 
 #endif

@@ -34,13 +34,13 @@ cmake_minimum_required(VERSION 3.5.0)
 #      This cmake options builds required library APIs as per user need.
 #
 #      example #Below possible combinations.
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_ROCM_SMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
 #
 #   Build Steps:
 #   1) #mkdir build
@@ -164,7 +164,6 @@ set(go_amd_smi_includes)
 
 add_subdirectory(goamdsmi)
 list(APPEND go_amd_smi_headers goamdsmi/goamdsmi.h ${go_amd_smi_headers})
-list(APPEND go_amd_smi_sources goamdsmi/goamdsmi.c)
 list(APPEND go_amd_smi_headers goamdsmi/goamdsmi_shim.h ${go_amd_smi_headers})
 list(APPEND go_amd_smi_sources goamdsmi/goamdsmi_shim.c)
 list(APPEND go_amd_smi_includes ${CMAKE_CURRENT_SOURCE_DIR}/goamdsmi)
