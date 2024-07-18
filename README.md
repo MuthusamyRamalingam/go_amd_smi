@@ -9,8 +9,8 @@
 # GO AMD SMI (WIP)
 
 GO AMD SMI provides GO binding for [E-SMI In-Band C library](https://github.com/amd/esmi_ib_library.git),
-[ROCm SMI Library](https://github.com/RadeonOpenCompute/rocm_smi_lib.git), 
-[AMDSMI Library](https://github.com/ROCm/amdsmi), and any
+[ROCm SMI Library](https://github.com/ROCm/rocm_smi_lib.git), 
+[AMDSMI Library](https://github.com/ROCm/amdsmi.git), and any
 GO language application that needs to link with these libraries and call the APIs
 from the GO application. The GO binding are imported in the
 [AMD SMI Exporter](https://github.com/amd/amd_smi_exporter.git) to export information
@@ -44,7 +44,7 @@ The GO SMI binding may be imported into go code by adding the following import l
 ** NOTE: ** The GO SMI binding depends on the following libraries:
 
 	- E-SMI inband library ("https://github.com/amd/esmi_ib_library")
-	- ROCm SMI library("https://github.com/RadeonOpenCompute/rocm_smi_lib")
+	- ROCm SMI library("https://github.com/ROCm/rocm_smi_lib")
 	- AMDSMI library("https://github.com/ROCm/amdsmi")
 	- goamdsmi_shim library ("https://github.com/amd/goamdsmi/goamdsmi_shim")
 
