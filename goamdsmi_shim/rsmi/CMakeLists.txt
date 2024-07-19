@@ -9,7 +9,6 @@ set(go_amd_smi_rocm_smi_sources
     CACHE INTERNAL "")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${go_amd_smi_rocm_smi_includes})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../goamdsmi ${go_amd_smi_rocm_smi_includes})
 
 add_library(go_amd_smi_rocm_smi OBJECT
             ${go_amd_smi_rocm_smi_sources}
