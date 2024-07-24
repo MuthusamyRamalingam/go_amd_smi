@@ -9,7 +9,7 @@
 # GO AMD SMI (WIP)
 
 GO AMD SMI provides GO binding for [E-SMI In-Band C library](https://github.com/amd/esmi_ib_library.git),
-[ROCm SMI Library](https://github.com/ROCm/rocm_smi_lib.git), 
+[ROCm SMI Library](https://github.com/ROCm/rocm_smi_lib.git),
 [AMDSMI Library](https://github.com/ROCm/amdsmi.git), and any
 GO language application that needs to link with these libraries and call the APIs
 from the GO application. The GO binding are imported in the
@@ -57,7 +57,7 @@ directories respectively by default, or subject to config changes applied to the
 Please refer to the README.md of the E-SMI, ROCm SMI and AMDSMI repositories for build and installation
  instructions. The following header file(s) are included in this repository:
 
-    * ```goamdsmi.h```
+	* ```goamdsmi.h```
 	* ```goamdsmi_shim.h```
 	* ```esmi_go_shim.h```
 	* ```rocm_smi_go_shim.h```
@@ -194,10 +194,10 @@ The built library will appear in the `build` folder.
 	package collect
 
 	import "https://github.com/amd/goamdsmi"
-	
+
 	var UINT16_MAX = uint16(0xFFFF)
-    var UINT32_MAX = uint32(0xFFFFFFFF)
-    var UINT64_MAX = uint64(0xFFFFFFFFFFFFFFFF)
+        var UINT32_MAX = uint32(0xFFFFFFFF)
+        var UINT64_MAX = uint64(0xFFFFFFFFFFFFFFFF)
 
 	type AMDParams struct {
 		CoreEnergy [768]float64
@@ -219,7 +219,7 @@ The built library will appear in the `build` folder.
 		GPUUsage [24]float64
 		GPUMemoryUsage [24]float64
 	}
-	
+
 	func (amdParams *AMDParams) Init() {
 		amdParams.Sockets = 0
 		amdParams.Threads = 0
