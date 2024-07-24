@@ -444,6 +444,7 @@ goamdsmi_status_t go_shim_amdsmigpu_init()
             return GOAMDSMI_STATUS_SUCCESS;
         }
     }
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Failed, InitAMDSMIGPUInit:%d, GpuSocketCount:%d, GpuCount:%d\n", GOAMDSMI_STATUS_FAILURE, num_gpuSockets, num_gpu_devices_inAllSocket);}
     return GOAMDSMI_STATUS_FAILURE;
 }
 
