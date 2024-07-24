@@ -536,7 +536,7 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_power_get(uint32_t dv_ind, uint64_t* gpu
         gpu_power_temp = metrics.average_socket_power;
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerAverageFromMetrics:%llu, GpuPowerAverageFromMetricsinWatt:%.6f\n", dv_ind, (unsigned long long)gpu_power_temp, ((double)(gpu_power_temp))/1000000);}
 
-		if(MAX_GPU_POWER_FROM_DRIVER == gpu_power_temp)
+        if(MAX_GPU_POWER_FROM_DRIVER == gpu_power_temp)
         {
             gpu_power_temp = metrics.current_socket_power;
             if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerCurrentFromMetrics:%llu, GpuPowerCurrentFromMetricsinWatt:%.6f\n", dv_ind, (unsigned long long)gpu_power_temp, ((double)(gpu_power_temp))/1000000);}
