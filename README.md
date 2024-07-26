@@ -83,7 +83,7 @@ Building the library is achieved by following the typical CMake build sequence, 
 #### ```$ cd goamdsmi_shim```
 #### ```$ mkdir -p build```
 #### ```$ cd build```
-#### ```$ cmake ../amd_smi.cmake ../```
+#### ```$ cmake -DAMDSMI_DIR=/opt/rocm ../amd_smi.cmake ../```
 #### ```$ make```
 The built library will appear in the `build` folder.
 
@@ -91,15 +91,17 @@ The built library will appear in the `build` folder.
 #### ```$ sudo make install```
 
 ** NOTE: ** The below combinations useful for compilation as per user requirement:
+#### ```$ cmake -DAMDSMI_DIR=/opt/rocm ../amd_smi.cmake ../```
 #### ```$ cmake ../amd_smi.cmake ../```
 #### ```# The above command will pick default -DWITH_ESMI=OFF -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON```
 #### ```(or)```
+#### ```$ cmake -C -DAMDSMI_DIR=/opt/rocm -DESMI_DIR=/opt/e-sms/e_smi -DROCM_SMI_DIR=/opt/rocm ../amd_smi.cmake ../```
 #### ```$ cmake -C ../amd_smi.cmake ../```
 #### ```# The '-C' option will pick default -DWITH_ESMI=ON -DWITH_ROCM_SMI=ON -DWITH_AMDSMI=ON```
 #### ```(or)```
-#### ```$ cmake -DWITH_ESMI=ON  -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=OFF ../amd_smi.cmake ../```
-#### ```$ cmake -DWITH_ESMI=OFF -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF ../amd_smi.cmake ../```
-#### ```$ cmake -DWITH_ESMI=OFF -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  ../amd_smi.cmake ../```
+#### ```$ cmake -DWITH_ESMI=ON  -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=OFF -DESMI_DIR=/opt/e-sms/e_smi ../amd_smi.cmake ../```
+#### ```$ cmake -DWITH_ESMI=OFF -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF -DROCM_SMI_DIR=/opt/rocm ../amd_smi.cmake ../```
+#### ```$ cmake -DWITH_ESMI=OFF -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  -DAMDSMI_DIR=/opt/rocm ../amd_smi.cmake ../```
 #### ```The command useful if user needs to build as per the requirement```
 
 <a name="api"></a>

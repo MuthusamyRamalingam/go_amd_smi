@@ -29,27 +29,31 @@ cmake_minimum_required(VERSION 3.5.0)
 #
 #      example #cmake -DENABLE_STATIC_LIB=1 ..
 #
-#   3) Set -DWITH_ESMI and -DWITH_ROCM_SMI to either "ON" or "OFF".
+#   5) Set -DWITH_ESMI and -DWITH_ROCM_SMI to either "ON" or "OFF".
 #      If not set, the default value is "OFF" for WITH_ESMI, "OFF" for WITH_ROCM_SMI and "ON" for WITH_AMDSMI.
 #      This cmake options builds required library APIs as per user need.
 #
 #      example #Below possible combinations.
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=OFF ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
-#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=ON  ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF -DESMI_DIR=/opt/e-sms/e_smi -DROCM_SMI_DIR=/opt/rocm ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=ON  -DWITH_AMDSMI=OFF -DROCM_SMI_DIR=/opt/rocm ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=ON   -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=OFF -DESMI_DIR=/opt/e-sms/e_smi ../amd_smi.cmake ../
+#	       #cmake -DWITH_ESMI=OFF  -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON  -DAMDSMI_DIR=/opt/rocm ../amd_smi.cmake ../
 #
 #   Build Steps:
 #   1) #mkdir build
 #   2) #cd build
-#   3) #cmake ../amd_smi.cmake ../
+#   3) #cmake -DAMDSMI_DIR=/opt/rocm ../amd_smi.cmake ../
+#      #cmake ../amd_smi.cmake ../
 #      The above command will pick default -DWITH_ESMI=OFF -DWITH_ROCM_SMI=OFF -DWITH_AMDSMI=ON
 #      (or)
+#      #cmake -C -DAMDSMI_DIR=/opt/rocm -DESMI_DIR=/opt/e-sms/e_smi -DROCM_SMI_DIR=/opt/rocm ../amd_smi.cmake ../
 #      #cmake -C ../amd_smi.cmake ../
 #      The above '-C' option will pick default -DWITH_ESMI=ON -DWITH_ROCM_SMI=ON -DWITH_AMDSMI=ON
+#
+#      Note: 
+#          Please make sure you have choosen the right installed directory path for ESMI_DIR, ROCM_SMI_DIR or AMDSMI_DIR during cmake time
+#              Example: During cmake time set the installed directory appropriate based on build selection.
+#                     -DAMDSMI_DIR=/opt/rocm (or) -DROCM_SMI_DIR=/opt/rocm (or) -DESMI_DIR=/opt/e-sms/e_smi 
 #   4) #make
 #   5) #make install
 
