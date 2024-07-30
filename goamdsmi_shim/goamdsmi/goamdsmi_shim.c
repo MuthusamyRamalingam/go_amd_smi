@@ -497,7 +497,7 @@ uint32_t goamdsmi_gpu_ppt_residency_acc_get(uint32_t dv_ind)
     return GOAMDSMI_UINT32_MAX;
 }
 
-uint32_t goamdsmi_thermal_residency_acc_get(uint32_t dv_ind)
+uint32_t goamdsmi_gpu_thermal_residency_acc_get(uint32_t dv_ind)
 {
     uint32_t thermal_residency_acc = GOAMDSMI_UINT32_MAX;
     

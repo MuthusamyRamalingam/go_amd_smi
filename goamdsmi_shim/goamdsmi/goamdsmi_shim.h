@@ -606,7 +606,7 @@ uint32_t goamdsmi_gpu_ppt_residency_acc_get(uint32_t dv_ind);
  *  @retval 0xFFFFFFFF is returned upon failure.
  *
  */
-uint32_t goamdsmi_thermal_residency_acc_get(uint32_t dv_ind);
+uint32_t goamdsmi_gpu_thermal_residency_acc_get(uint32_t dv_ind);
 
 /**
  *  @brief Go language stub to get the GPU GFX Busy
