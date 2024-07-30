@@ -477,13 +477,13 @@ bool goamdsmi_gpu_accumulate_hsmp_metrices(uint32_t dv_ind)
     return false;
 }
 
-uint32_t goamdsmi_gpu_gfx_busy_acc_get(uint32_t dv_ind)
+uint64_t goamdsmi_gpu_gfx_busy_acc_get(uint32_t dv_ind)
 {
-    uint32_t gfx_busy_acc = GOAMDSMI_UINT64_MAX;
+    uint64_t gfx_busy_acc = GOAMDSMI_UINT64_MAX;
     
     if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_gfx_busy_acc_get(dv_ind, &gfx_busy_acc))) {return gfx_busy_acc;}
 
-    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuGfxBusyAcc:%d\n", dv_ind, GOAMDSMI_UINT64_MAX);}
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuGfxBusyAcc:%ld\n", dv_ind, GOAMDSMI_UINT64_MAX);}
     return GOAMDSMI_UINT64_MAX;
 }
 
