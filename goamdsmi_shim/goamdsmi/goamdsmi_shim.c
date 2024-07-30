@@ -62,12 +62,12 @@ bool goamdsmi_cpu_init()
     
     goamdsmi_status_t amdsmicpu_  = go_shim_amdsmicpu_init();
     if   (GOAMDSMI_STATUS_SUCCESS == amdsmicpu_)   {amdsmicpu_init = true;}
-    else { 
+    else {
         goamdsmi_status_t esmi_   = go_shim_esmi_init();
         if(GOAMDSMI_STATUS_SUCCESS == esmi_)       {esmi_init = true;}
     }
     
-    if(amdsmicpu_init || esmi_init) 
+    if(amdsmicpu_init || esmi_init)
     {
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Success, CpuInit:true\n");}
         return true;
@@ -187,7 +187,7 @@ bool goamdsmi_gpu_init()
     }
     goamdsmi_status_t amdsmigpu_  = go_shim_amdsmigpu_init();
     if   (GOAMDSMI_STATUS_SUCCESS == amdsmigpu_)   {amdsmigpu_init = true;}
-    else { 
+    else {
         goamdsmi_status_t rsmi_   = go_shim_rsmi_init();
         if(GOAMDSMI_STATUS_SUCCESS == rsmi_)       {rsmi_init = true;}
     }
@@ -468,4 +468,73 @@ uint64_t goamdsmi_gpu_dev_gpu_memory_total_get(uint32_t dv_ind)
     if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuMemoryTotal:%ld\n", dv_ind, GOAMDSMI_UINT64_MAX);}
     return GOAMDSMI_UINT64_MAX;
 }
+
+bool goamdsmi_gpu_accumulate_hsmp_metrices(uint32_t dv_ind)
+{
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_accumulate_hsmp_metrices(dv_ind))) {return true;}
+    
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuMetricesCalcPerc:false\n", dv_ind);}
+    return false;
+}
+
+uint32_t goamdsmi_gpu_gfx_busy_acc_get(uint32_t dv_ind)
+{
+    uint32_t gfx_busy_acc = GOAMDSMI_UINT64_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_gfx_busy_acc_get(dv_ind, &gfx_busy_acc))) {return gfx_busy_acc;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuGfxBusyAcc:%d\n", dv_ind, GOAMDSMI_UINT64_MAX);}
+    return GOAMDSMI_UINT64_MAX;
+}
+
+uint32_t goamdsmi_gpu_ppt_residency_acc_get(uint32_t dv_ind)
+{
+    uint32_t ppt_residency_acc = GOAMDSMI_UINT32_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_ppt_residency_acc_get(dv_ind, &ppt_residency_acc))) {return ppt_residency_acc;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPptResidencyAcc:%d\n", dv_ind, GOAMDSMI_UINT32_MAX);}
+    return GOAMDSMI_UINT32_MAX;
+}
+
+uint32_t goamdsmi_thermal_residency_acc_get(uint32_t dv_ind)
+{
+    uint32_t thermal_residency_acc = GOAMDSMI_UINT32_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_thermal_residency_acc_get(dv_ind, &thermal_residency_acc))) {return thermal_residency_acc;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuThermalResidencyAcc:%d\n", dv_ind, GOAMDSMI_UINT32_MAX);}
+    return GOAMDSMI_UINT32_MAX;
+}
+
+uint32_t goamdsmi_gpu_gfx_busy_get(uint32_t dv_ind)
+{
+    uint32_t gfx_busy = GOAMDSMI_UINT32_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_gfx_busy_get(dv_ind, &gfx_busy))) {return gfx_busy;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuGfxBusy:%d\n", dv_ind, GOAMDSMI_UINT32_MAX);}
+    return GOAMDSMI_UINT32_MAX;
+}
+
+uint32_t goamdsmi_gpu_pviol_percent_get(uint32_t dv_ind)
+{
+    uint32_t pviol_percent = GOAMDSMI_UINT32_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_pviol_percent_get(dv_ind, &pviol_percent))) {return pviol_percent;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuPowerViolPerc:%d\n", dv_ind, GOAMDSMI_UINT32_MAX);}
+    return GOAMDSMI_UINT32_MAX;
+}
+
+uint32_t goamdsmi_gpu_tviol_percent_get(uint32_t dv_ind)
+{
+    uint32_t tviol_percent = GOAMDSMI_UINT32_MAX;
+    
+    if      ((amdsmigpu_init)&&(GOAMDSMI_STATUS_SUCCESS == go_shim_amdsmigpu_tviol_percent_get(dv_ind, &tviol_percent))) {return tviol_percent;}
+
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("GOAMDSMI, Failed for Gpu:%d, GpuThermalViolPerc:%d\n", dv_ind, GOAMDSMI_UINT32_MAX);}
+    return GOAMDSMI_UINT32_MAX;
+}
+
 

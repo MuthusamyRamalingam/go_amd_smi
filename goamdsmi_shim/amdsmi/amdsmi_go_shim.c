@@ -82,6 +82,45 @@ static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_across_socket[MA
 static amdsmi_processor_handle  amdsmi_processor_handle_all_cpu_physicalCore_across_socket[MAX_PHYSICALCORE_ACROSS_SYSTEM]   = {0};
 static amdsmi_processor_handle  amdsmi_processor_handle_all_gpu_device_across_socket[MAX_GPU_DEVICE_ACROSS_SYSTEM]           = {0};
 
+static bool hsmp_metrics_table_read_success   = false;
+static uint64_t gfxBusyAcc_current            = 0;
+static uint32_t gfxBusy_current               = 0;
+
+static uint32_t accCounter_prev               = 0;
+static uint32_t accCounter_current            = 0;
+
+static uint32_t prochotResidencyAcc_prev      = 0;
+static uint32_t prochotResidencyAcc_current   = 0;
+static uint32_t pptResidencyAcc_prev          = 0;
+static uint32_t pptResidencyAcc_current       = 0;
+static uint32_t socketThmResidencyAcc_prev    = 0;
+static uint32_t socketThmResidencyAcc_current = 0;
+static uint32_t vrmThmResidencyAcc_prev       = 0;
+static uint32_t vrmThmResidencyAcc_current    = 0;
+static uint32_t hbmThmResidencyAcc_prev       = 0;
+static uint32_t hbmThmResidencyAcc_current    = 0;
+
+static uint32_t prochotResidencyAcc_actualDelta   = 0;
+static uint32_t pptResidencyAcc_actualDelta       = 0;
+static uint32_t socketThmResidencyAcc_actualDelta = 0;
+static uint32_t vrmThmResidencyAcc_actualDelta    = 0;
+static uint32_t hbmThmResidencyAcc_actualDelta    = 0;
+
+static uint32_t prochotViol_perc   = 0;
+static uint32_t pptViol_perc       = 0;
+static uint32_t socketThmViol_perc = 0;
+static uint32_t vrmThmViol_perc    = 0;
+static uint32_t hbmThmViol_perc    = 0;
+
+#define calculate_perc(value_actual, ref_actual) (((value_actual)*100)/(ref_actual))
+uint32_t calculate_actual_delta(uint32_t value_cur, uint32_t value_prev)
+{
+	uint32_t value_actual = 0;
+	if(value_prev > value_cur) value_actual = (GOAMDSMI_UINT32_MAX - value_prev)+value_cur;
+	else                       value_actual = value_cur - value_prev;
+	return value_actual;
+}
+
 goamdsmi_status_t is_file_present(const char* driver_name, const char* file_name)
 {
     if(0 == access(file_name, F_OK)) 
@@ -444,7 +483,7 @@ goamdsmi_status_t go_shim_amdsmigpu_init()
             return GOAMDSMI_STATUS_SUCCESS;
         }
     }
-	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Failed, InitAMDSMIGPUInit:%d, GpuSocketCount:%d, GpuCount:%d\n", GOAMDSMI_STATUS_FAILURE, num_gpuSockets, num_gpu_devices_inAllSocket);}
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_2)) {printf("AMDSMI, Failed, InitAMDSMIGPUInit:%d, GpuSocketCount:%d, GpuCount:%d\n", GOAMDSMI_STATUS_FAILURE, num_gpuSockets, num_gpu_devices_inAllSocket);}
     return GOAMDSMI_STATUS_FAILURE;
 }
 
@@ -689,6 +728,154 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_total_get(uint32_t dv_ind, ui
         
     return GOAMDSMI_STATUS_FAILURE;
 }
+
+goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
+{
+    amdsmi_hsmp_metrics_table_t amdsmi_hsmp_metrics_table_temp;
+
+    hsmp_metrics_table_read_success = false;
+    if(AMDSMI_STATUS_SUCCESS == amdsmi_get_hsmp_metrics_table(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_hsmp_metrics_table_temp))
+    {
+        hsmp_metrics_table_read_success = true;
+
+		//Prev
+		//if(0 == gfxBusyAcc_prev)            gfxBusyAcc_prev            = amdsmi_hsmp_metrics_table_temp.socket_gfx_busy_acc;
+
+        if(0 == accCounter_prev)            accCounter_prev            = amdsmi_hsmp_metrics_table_temp.accumulation_counter;
+        if(0 == prochotResidencyAcc_prev)   prochotResidencyAcc_prev   = amdsmi_hsmp_metrics_table_temp.prochot_residency_acc;
+        if(0 == pptResidencyAcc_prev)       pptResidencyAcc_prev       = amdsmi_hsmp_metrics_table_temp.ppt_residency_acc;
+        if(0 == socketThmResidencyAcc_prev) socketThmResidencyAcc_prev = amdsmi_hsmp_metrics_table_temp.socket_thm_residency_acc;
+        if(0 == vrmThmResidencyAcc_prev)    vrmThmResidencyAcc_prev    = amdsmi_hsmp_metrics_table_temp.vr_thm_residency_acc;
+        if(0 == hbmThmResidencyAcc_prev)    hbmThmResidencyAcc_prev    = amdsmi_hsmp_metrics_table_temp.hbm_thm_residency_acc;
+
+
+		//Current
+		gfxBusyAcc_current            = amdsmi_hsmp_metrics_table_temp.socket_gfx_busy_acc;
+		gfxBusy_current               = amdsmi_hsmp_metrics_table_temp.socket_gfx_busy;
+
+        accCounter_current            = amdsmi_hsmp_metrics_table_temp.accumulation_counter;
+        prochotResidencyAcc_current   = amdsmi_hsmp_metrics_table_temp.prochot_residency_acc;
+        pptResidencyAcc_current       = amdsmi_hsmp_metrics_table_temp.ppt_residency_acc;
+        socketThmResidencyAcc_current = amdsmi_hsmp_metrics_table_temp.socket_thm_residency_acc;
+        vrmThmResidencyAcc_current    = amdsmi_hsmp_metrics_table_temp.vr_thm_residency_acc;
+        hbmThmResidencyAcc_current    = amdsmi_hsmp_metrics_table_temp.hbm_thm_residency_acc;
+
+		//Delta
+		accCounter_actualDelta            = calculate_actual_delta(accCounter_current,            accCounter_prev);
+		prochotResidencyAcc_actualDelta   = calculate_actual_delta(prochotResidencyAcc_current,   prochotResidencyAcc_prev);
+        pptResidencyAcc_actualDelta       = calculate_actual_delta(pptResidencyAcc_current,       pptResidencyAcc_prev);
+        socketThmResidencyAcc_actualDelta = calculate_actual_delta(socketThmResidencyAcc_current, socketThmResidencyAcc_prev);
+        vrmThmResidencyAcc_actualDelta    = calculate_actual_delta(vrmThmResidencyAcc_current,    vrmThmResidencyAcc_prev);
+        hbmThmResidencyAcc_actualDelta    = calculate_actual_delta(hbmThmResidencyAcc_current,    hbmThmResidencyAcc_prev);
+
+		//Perc
+        prochotViol_perc   = calculate_perc(prochotResidencyAcc_actualDelta,   accCounter_actualDelta);
+        pptViol_perc       = calculate_perc(pptResidencyAcc_actualDelta,       accCounter_actualDelta);
+        socketThmViol_perc = calculate_perc(socketThmResidencyAcc_actualDelta, accCounter_actualDelta);
+        vrmThmViol_perc    = calculate_perc(vrmThmResidencyAcc_actualDelta,    accCounter_actualDelta);
+        hbmThmViol_perc    = calculate_perc(hbmThmResidencyAcc_actualDelta,    accCounter_actualDelta);
+
+		//Debug Logs
+		if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, GfxBusyAcc:%llu, GfxBusy:%lu\n", dv_ind, (unsigned long long)(*gfxBusyAcc_current), (unsigned long)(*gfxBusy_current));}
+
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, AccCounterCur:%lu, AccCounterPrev:%lu, AccCounter:%lu\n", dv_ind, (unsigned long)(*accCounter_current), (unsigned long)(*accCounter_prev), (unsigned long)(*accCounter_actualDelta));}
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, ProchotResidencyAccCur:%lu, ProchotResidencyAccPrev:%lu, ProchotResidencyAcc:%lu\n", dv_ind, (unsigned long)(*prochotResidencyAcc_current), (unsigned long)(*prochotResidencyAcc_prev), (unsigned long)(*prochotResidencyAcc_actualDelta));}
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, PptResidencyAccCur:%lu, PptResidencyAccPrev:%lu, PptResidencyAcc:%lu\n", dv_ind, (unsigned long)(*pptResidencyAcc_current), (unsigned long)(*pptResidencyAcc_prev), (unsigned long)(*pptResidencyAcc_actualDelta));}
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, SocketThmResidencyAccCur:%lu, SocketThmResidencyAccPrev:%lu, SocketThmResidencyAcc:%lu\n", dv_ind, (unsigned long)(*socketThmResidencyAcc_current), (unsigned long)(*socketThmResidencyAcc_prev), (unsigned long)(*socketThmResidencyAcc_actualDelta));}
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, VrmThmResidencyAccCur:%lu, VrmThmResidencyAccPrev:%lu, VrmThmResidencyAcc:%lu\n", dv_ind, (unsigned long)(*vrmThmResidencyAcc_current), (unsigned long)(*vrmThmResidencyAcc_prev), (unsigned long)(*vrmThmResidencyAcc_actualDelta));}
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, HbmThmResidencyAccCur:%lu, HbmThmResidencyAccPrev:%lu, HbmThmResidencyAcc:%lu\n", dv_ind, (unsigned long)(*hbmThmResidencyAcc_current), (unsigned long)(*hbmThmResidencyAcc_prev), (unsigned long)(*hbmThmResidencyAcc_actualDelta));}
+
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, ProchotViolPerc:%lu, PptViolPerc:%lu, SocketThmViolPerc:%lu, VrmThmViolPerc:%lu, HbmThmViolPerc:%lu\n", dv_ind, (unsigned long)(*prochotViol_perc), (unsigned long)(*pptViol_perc), (unsigned long)(*socketThmViol_perc), (unsigned long)(*vrmThmViol_perc), (unsigned long)(*hbmThmViol_perc));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuMetricesCalcPerc:%d\n", dv_ind, GOAMDSMI_STATUS_FAILURE);}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_gfx_busy_acc_get(uint32_t dv_ind, uint64_t* gfx_busy_acc)
+{
+    *gfx_busy_acc       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *gfx_busy_acc = gfxBusyAcc_current;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuGfxBusyAcc:%llu\n", dv_ind, (unsigned long long)(*gfx_busy_acc));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuGfxBusyAcc:%llu\n", dv_ind, (unsigned long long)(*gfx_busy_acc));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_ppt_residency_acc_get(uint32_t dv_ind, uint32_t* ppt_residency_acc)
+{
+    *ppt_residency_acc       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *ppt_residency_acc = pptResidencyAcc_actualDelta;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPptResidencyAcc:%lu\n", dv_ind, (unsigned long)(*ppt_residency_acc));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuPptResidencyAcc:%lu\n", dv_ind, (unsigned long)(*ppt_residency_acc));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_thermal_residency_acc_get(uint32_t dv_ind, uint32_t* thermal_residency_acc)
+{
+    *thermal_residency_acc       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *thermal_residency_acc = socketThmResidencyAcc_actualDelta;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuThermalResidencyAcc:%lu\n", dv_ind, (unsigned long)(*thermal_residency_acc));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuThermalResidencyAcc:%lu\n", dv_ind, (unsigned long)(*thermal_residency_acc));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_gfx_busy_get(uint32_t dv_ind, uint32_t* gfx_busy)
+{
+    *gfx_busy       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *gfx_busy = gfxBusy_current;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuGfxBusy:%lu\n", dv_ind, (unsigned long)(*gfx_busy));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuGfxBusy:%lu\n", dv_ind, (unsigned long)(*gfx_busy));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_pviol_percent_get(uint32_t dv_ind, uint32_t* pviol_percent)
+{
+    *pviol_percent       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *pviol_percent = pptViol_perc;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuPowerViolPerc:%lu\n", dv_ind, (unsigned long)(*pviol_percent));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuPowerViolPerc:%lu\n", dv_ind, (unsigned long)(*pviol_percent));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
+goamdsmi_status_t go_shim_amdsmigpu_tviol_percent_get(uint32_t dv_ind, uint32_t* tviol_percent)
+{
+    *tviol_percent       = 0;
+
+    if(hsmp_metrics_table_read_success)
+    {
+        *tviol_percent = socketThmViol_perc;
+        if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, GpuThermalViolPerc:%lu\n", dv_ind, (unsigned long)(*tviol_percent));}
+        return GOAMDSMI_STATUS_SUCCESS;
+    }
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuThermalViolPerc:%lu\n", dv_ind, (unsigned long)(*tviol_percent));}
+    return GOAMDSMI_STATUS_FAILURE;
+}
+
 #else
 ////////////////////////////////////////////////------------CPU------------////////////////////////////////////////////////
 goamdsmi_status_t go_shim_amdsmicpu_init()                                                                 {return GOAMDSMI_STATUS_FAILURE;}
@@ -727,4 +914,8 @@ goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_busy_percent_get(uint32_t dv_ind, ui
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_busy_percent_get(uint32_t dv_ind, uint64_t* gpu_memory_busy_percent)                    {return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_usage_get(uint32_t dv_ind, uint64_t* gpu_memory_usage)              {return GOAMDSMI_STATUS_FAILURE;}
 goamdsmi_status_t go_shim_amdsmigpu_dev_gpu_memory_total_get(uint32_t dv_ind, uint64_t* gpu_memory_total)              {return GOAMDSMI_STATUS_FAILURE;}
+
+goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)                                   {return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_amdsmigpu_pviol_percent_get(uint32_t dv_ind, uint32_t* pviol_percent)                        {return GOAMDSMI_STATUS_FAILURE;}
+goamdsmi_status_t go_shim_amdsmigpu_tviol_percent_get(uint32_t dv_ind, uint32_t* tviol_percent)                        {return GOAMDSMI_STATUS_FAILURE;}
 #endif

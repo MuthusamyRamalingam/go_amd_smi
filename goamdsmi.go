@@ -147,6 +147,34 @@ func GO_gpu_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 	return C.goamdsmi_gpu_dev_gpu_memory_total_get(C.uint(i))
 }
 
+func GO_gpu_hsmp_metrices_calculate_percent() (bool) {
+	return bool(C.goamdsmi_gpu_accumulate_hsmp_metrices())
+}
+
+func GO_gpu_gfx_busy_acc_get(i int) (C.uint64_t) {
+	return C.goamdsmi_gpu_gfx_busy_acc_get(C.uint(i))
+}
+
+func GO_gpu_ppt_residency_acc_get(i int) (C.uint32_t) {
+	return C.goamdsmi_gpu_ppt_residency_acc_get(C.uint(i))
+}
+
+func GO_gpu_thermal_residency_acc_get(i int) (C.uint32_t) {
+	return C.goamdsmi_gpu_thermal_residency_acc_get(C.uint(i))
+}
+
+func GO_gpu_gfx_busy_get(i int) (C.uint32_t) {
+	return C.goamdsmi_gpu_gfx_busy_get(C.uint(i))
+}
+
+func GO_gpu_pviol_percent_get(i int) (C.uint32_t) {
+	return C.goamdsmi_gpu_pviol_percent_get(C.uint(i))
+}
+
+func GO_gpu_tviol_percent_get(i int) (C.uint32_t) {
+	return C.goamdsmi_gpu_tviol_percent_get(C.uint(i))
+}
+
 //CPU ESMI or AMDSMI calls
 func GO_cpu_init() (bool) {
 	return bool(C.goamdsmi_cpu_init())
