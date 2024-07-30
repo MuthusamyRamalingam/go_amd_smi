@@ -735,7 +735,8 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
     amdsmi_hsmp_metrics_table_t amdsmi_hsmp_metrics_table_temp;
 
     hsmp_metrics_table_read_success = false;
-    if(AMDSMI_STATUS_SUCCESS == amdsmi_get_hsmp_metrics_table(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_hsmp_metrics_table_temp))
+	amdsmi_status_t amdsmi_status_temp = amdsmi_get_hsmp_metrics_table(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_hsmp_metrics_table_temp);
+    if(AMDSMI_STATUS_SUCCESS == amdsmi_status_temp)
     {
         hsmp_metrics_table_read_success = true;
 
@@ -788,7 +789,7 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, ProchotViolPerc:%lu, PptViolPerc:%lu, SocketThmViolPerc:%lu, VrmThmViolPerc:%lu, HbmThmViolPerc:%lu\n", dv_ind, (unsigned long)(prochotViol_perc), (unsigned long)(pptViol_perc), (unsigned long)(socketThmViol_perc), (unsigned long)(vrmThmViol_perc), (unsigned long)(hbmThmViol_perc));}
         return GOAMDSMI_STATUS_SUCCESS;
     }
-    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuAccumulateHsmpMetrices:%d\n", dv_ind, GOAMDSMI_STATUS_FAILURE);}
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuAccumulateHsmpMetrices:%d, GpuAccumulateHsmpMetricesRetStatus:%d\n", dv_ind, GOAMDSMI_STATUS_FAILURE, (int)amdsmi_status_temp);}
     return GOAMDSMI_STATUS_FAILURE;
 }
 
