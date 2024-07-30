@@ -147,7 +147,7 @@ func GO_gpu_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 	return C.goamdsmi_gpu_dev_gpu_memory_total_get(C.uint(i))
 }
 
-func GO_gpu_hsmp_metrices_calculate_percent() (bool) {
+func GO_gpu_accumulate_hsmp_metrices() (bool) {
 	return bool(C.goamdsmi_gpu_accumulate_hsmp_metrices())
 }
 
