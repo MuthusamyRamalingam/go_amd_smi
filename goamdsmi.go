@@ -147,8 +147,8 @@ func GO_gpu_dev_gpu_memory_total_get (i int) (C.uint64_t) {
 	return C.goamdsmi_gpu_dev_gpu_memory_total_get(C.uint(i))
 }
 
-func GO_gpu_accumulate_hsmp_metrices() (bool) {
-	return bool(C.goamdsmi_gpu_accumulate_hsmp_metrices())
+func GO_gpu_accumulate_hsmp_metrices(i int) (bool) {
+	return bool(C.goamdsmi_gpu_accumulate_hsmp_metrices(C.uint(i)))
 }
 
 func GO_gpu_gfx_busy_acc_get(i int) (C.uint64_t) {
