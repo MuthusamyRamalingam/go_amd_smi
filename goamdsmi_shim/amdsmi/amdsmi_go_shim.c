@@ -788,7 +788,7 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_1)) {printf("AMDSMI, Success for Gpu:%d, ProchotViolPerc:%lu, PptViolPerc:%lu, SocketThmViolPerc:%lu, VrmThmViolPerc:%lu, HbmThmViolPerc:%lu\n", dv_ind, (unsigned long)(prochotViol_perc), (unsigned long)(pptViol_perc), (unsigned long)(socketThmViol_perc), (unsigned long)(vrmThmViol_perc), (unsigned long)(hbmThmViol_perc));}
         return GOAMDSMI_STATUS_SUCCESS;
     }
-    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuMetricesCalcPerc:%d\n", dv_ind, GOAMDSMI_STATUS_FAILURE);}
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Failed for Gpu:%d, GpuAccumulateHsmpMetrices:%d\n", dv_ind, GOAMDSMI_STATUS_FAILURE);}
     return GOAMDSMI_STATUS_FAILURE;
 }
 
