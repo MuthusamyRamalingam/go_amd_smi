@@ -775,7 +775,7 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
         hbmThmResidencyAcc_current    = amdsmi_hsmp_metrics_table_temp.hbm_thm_residency_acc;
 
         //Delta
-		accCounter_actualDelta            = calculate_actual_delta(accCounter_current,            accCounter_prev);
+		/*accCounter_actualDelta            = calculate_actual_delta(accCounter_current,            accCounter_prev);
 		prochotResidencyAcc_actualDelta   = calculate_actual_delta(prochotResidencyAcc_current,   prochotResidencyAcc_prev);
         pptResidencyAcc_actualDelta       = calculate_actual_delta(pptResidencyAcc_current,       pptResidencyAcc_prev);
         socketThmResidencyAcc_actualDelta = calculate_actual_delta(socketThmResidencyAcc_current, socketThmResidencyAcc_prev);
@@ -787,7 +787,7 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
         pptViol_perc       = calculate_perc(pptResidencyAcc_actualDelta,       accCounter_actualDelta);
         socketThmViol_perc = calculate_perc(socketThmResidencyAcc_actualDelta, accCounter_actualDelta);
         vrmThmViol_perc    = calculate_perc(vrmThmResidencyAcc_actualDelta,    accCounter_actualDelta);
-        hbmThmViol_perc    = calculate_perc(hbmThmResidencyAcc_actualDelta,    accCounter_actualDelta);
+        hbmThmViol_perc    = calculate_perc(hbmThmResidencyAcc_actualDelta,    accCounter_actualDelta);*/
 
         //Debug Logs
         if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Success for Gpu:%d, GfxBusyAcc:%llu, GfxBusy:%lu\n", dv_ind, (unsigned long long)(gfxBusyAcc_current), (unsigned long)(gfxBusy_current));}
