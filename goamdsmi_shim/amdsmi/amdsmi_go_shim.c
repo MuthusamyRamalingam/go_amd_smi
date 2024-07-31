@@ -740,7 +740,15 @@ goamdsmi_status_t go_shim_amdsmigpu_accumulate_hsmp_metrices(uint32_t dv_ind)
     amdsmi_status_t amdsmi_status_proto_ver_temp = amdsmi_get_cpu_hsmp_proto_ver(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind],  &proto_ver);
     if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status for Gpu:%d, GpuCpuHsmpProtoVer:%lu, GpuCpuHsmpProtoVerRetStatus:%d\n", dv_ind, (unsigned long)proto_ver, (int)amdsmi_status_proto_ver_temp);}
 
+	amdsmi_status_proto_ver_temp = amdsmi_get_cpu_hsmp_proto_ver(amdsmi_processor_handle_all_cpu_across_socket[0],  &proto_ver);
+    if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status for CPU:0, GpuCpuHsmpProtoVer:%lu, GpuCpuHsmpProtoVerRetStatus:%d\n", (unsigned long)proto_ver, (int)amdsmi_status_proto_ver_temp);}
+
 	amdsmi_status_t amdsmi_status_temp = amdsmi_get_hsmp_metrics_table(amdsmi_processor_handle_all_gpu_device_across_socket[dv_ind], &amdsmi_hsmp_metrics_table_temp);
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status for Gpu:%d, GpuAccumulateHsmpMetricesRetStatus:%d\n", dv_ind, (int)amdsmi_status_temp);}
+
+	amdsmi_status_temp = amdsmi_get_hsmp_metrics_table(amdsmi_processor_handle_all_cpu_across_socket[0], &amdsmi_hsmp_metrics_table_temp);
+	if (enable_debug_level(GOAMDSMI_DEBUG_LEVEL_3)) {printf("AMDSMI, Status for CPU:0, GpuAccumulateHsmpMetricesRetStatus:%d\n", (int)amdsmi_status_temp);}
+
     if(AMDSMI_STATUS_SUCCESS == amdsmi_status_temp)
     {
         hsmp_metrics_table_read_success = true;
